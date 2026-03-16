@@ -1270,7 +1270,10 @@ function hideSplash() {
 }
 
 function initApp() {
-  // CATALOG_BY_MODEL is a live Proxy — no rebuild needed
+  // Force Proxy to build from CATALOG_DATA so alias map below has keys to iterate
+  if(window.CATALOG_DATA && window.CATALOG_DATA.length) {
+    CATALOG_BY_MODEL[window.CATALOG_DATA[0].m];
+  }
   // Alias map: catalog IDs → guide model IDs so products appear in correct panels
   const _aliases = {
     'CASCADIA':'CASCADIA_G1','CASCADIA_G2':'CASCADIA_G2','CASCADIA_G1':'CASCADIA_G1',
@@ -1358,7 +1361,7 @@ const PAGE_SIZE = 36;
 
 function renderCatalogSection(modelId, col) {
   catState = {modelId, filter:'ALL', search:'', page:0};
-  const prods = CATALOG_BY_GUIDE_MODEL[modelId] || CATALOG_BY_MODEL[modelId] || [];
+  const prods = CATALOG_BY_MODEL[modelId] || [];
   
   if(prods.length === 0) return '<div class="cat-section"><div class="cat-body"><div class="cat-empty">No hay piezas del catálogo para este modelo.</div></div></div>';
   
@@ -1394,7 +1397,7 @@ function getCatProds() {
   const q = catState.search.toLowerCase().trim();
   return all.filter(p => {
     if(catState.filter !== 'ALL' && p.k !== catState.filter) return false;
-    if(q && !p.c.includes(q) && !p.d.toLowerCase().includes(q)) return false;
+    if(q && !(p.c||'').toLowerCase().includes(q) && !(p.d||p.c||'').toLowerCase().includes(q)) return false;
     return true;
   });
 }
@@ -1433,7 +1436,7 @@ function renderCatGrid() {
       <div class="cat-img">${imgHTML}</div>
       <div class="cat-info">
         <div class="cat-code">#${p.c}</div>
-        <div class="cat-desc">${p.d}</div>
+        <div class="cat-desc">${p.d||p.c||''}</div>
         <span class="cat-badge ${badgeClass}">${p.b}</span>
       </div>
     </div>`;
