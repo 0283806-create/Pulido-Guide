@@ -218,7 +218,24 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── FOOTER ── */
 .ft{border-top:1px solid var(--bor);background:var(--sur);padding:1.5rem 2rem;text-align:center;font-size:11.5px;color:var(--dim);margin-top:3rem;}
-#load-status{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--sur);border:1px solid var(--bor2);border-radius:var(--rad);padding:.55rem .9rem;font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace;z-index:999;transition:opacity .5s;}
+
+/* ── SPLASH SCREEN ── */
+#splash{position:fixed;inset:0;z-index:9999;background:#080e1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;transition:opacity .6s ease,visibility .6s ease;}
+#splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.splash-logo{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:.15em;color:#fff;}
+.splash-logo span{color:#42a5f5;}
+.splash-sub{font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#2a3d58;margin-top:-1.5rem;}
+.splash-truck{font-size:52px;animation:truckRide 1.4s ease-in-out infinite;}
+@keyframes truckRide{0%,100%{transform:translateY(0) rotate(-1deg);}50%{transform:translateY(-8px) rotate(1deg);}}
+.splash-bar-wrap{width:260px;height:3px;background:#1a2d47;border-radius:10px;overflow:hidden;}
+.splash-bar{height:100%;width:0%;background:linear-gradient(90deg,#42a5f5,#1e88e5);border-radius:10px;transition:width .3s ease;}
+.splash-txt{font-size:11.5px;font-family:'DM Mono',monospace;color:#2a3d58;letter-spacing:.06em;min-height:16px;text-align:center;}
+.splash-dots{display:flex;gap:6px;align-items:center;}
+.splash-dots span{width:6px;height:6px;border-radius:50%;background:#1a2d47;animation:dotPulse 1.2s ease-in-out infinite;}
+.splash-dots span:nth-child(2){animation-delay:.2s;}
+.splash-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes dotPulse{0%,100%{background:#1a2d47;transform:scale(1);}50%{background:#42a5f5;transform:scale(1.4);}}
+#load-status{display:none;}
 
 /* ══════════════════════════════════════
    CATÁLOGO DE PIEZAS — sección debajo del detalle
@@ -272,7 +289,17 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 </style>
 </head>
 <body>
-<div id="load-status">Cargando…</div>
+<div id="splash">
+  <div class="splash-truck">🚛</div>
+  <div>
+    <div class="splash-logo">PULIDO <span>TRUCKS</span> &amp; PARTS</div>
+    <div class="splash-sub">Guía Visual de Cofres</div>
+  </div>
+  <div class="splash-bar-wrap"><div class="splash-bar" id="splash-bar"></div></div>
+  <div class="splash-txt" id="splash-txt">Iniciando…</div>
+  <div class="splash-dots"><span></span><span></span><span></span></div>
+</div>
+<div id="load-status"></div>
 <header class="hdr">
   <div class="logo">PULIDO <span>TRUCKS</span> &amp; PARTS</div>
   <div class="hdr-tag">Guía Visual · Cofres</div>
@@ -691,7 +718,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 </div><!-- /shell -->
 <footer class="ft">Pulido Trucks &amp; Parts · Guía interna de identificación de cofres v7 · Uso exclusivo del equipo de ventas</footer>
 
-<script src="catalog.js"></script>
+<script src="catalog.js" defer></script>
 <script>
 const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO": "🪞", "ZEPELIN": "💛", "PARRILLA": "🟫", "LODERA": "🛞", "SPOILER": "🌬️", "CUBIERTA": "📦", "VOLANTE": "🎯", "ADORNO": "✨", "TANQUE": "⛽", "MANIJA": "🚪", "PALANCA": "🕹️", "VICERA": "🧢", "CHAPA": "🔑", "ESCAPE": "💨", "ACCESORIO": "⚙️", "SALPICADERO": "🛡️", "PLAFON": "💡"};
 // ══════════════════════════════════════════════════
@@ -1073,14 +1100,55 @@ function mostrarRes(id){
 }
 function reiniciar(){qstep=0;document.getElementById('res-c').classList.remove('vis');document.getElementById('res-c').innerHTML='';renderQuiz();}
 
-// Pre-load status
-let loaded=0;
-const allMods=[...DATA.FRT.modelos,...DATA.KW.modelos,...DATA.INT.modelos];
-allMods.forEach(mod=>{
-  const img=new Image(); img.onload=img.onerror=()=>{loaded++;const s=document.getElementById('load-status');if(!s)return;if(loaded<allMods.length){s.textContent=`Cargando fotos ${loaded}/${allMods.length}…`;}else{s.textContent=`✓ ${loaded} fotos listas`;s.style.color='var(--green)';setTimeout(()=>{s.style.opacity='0';setTimeout(()=>s.remove(),600);,
-   ident:[['💡','<strong>DRL LED delgados y modernos</strong> — línea de luz diurna inconfundible'],['📅','<strong>2018-presente</strong> — el más moderno de International'],['🔲','Parabrisas panorámico curvado, similar al ProStar pero más moderno'],['🔧','Motor <strong>A26 exclusivo</strong> (solo en LT625) o Cummins X15'],['🎯','Los DRL LED delgados horizontales = LT625. Si son redondos = otro modelo']]},2500);}};img.src=mod.foto;
-});
-renderGrid(); renderQuiz();
+// ── SPLASH + INIT ────────────────────────────────────────
+function setSplash(pct, txt) {
+  const bar = document.getElementById('splash-bar');
+  const label = document.getElementById('splash-txt');
+  if(bar) bar.style.width = pct + '%';
+  if(label) label.textContent = txt;
+}
+function hideSplash() {
+  const s = document.getElementById('splash');
+  if(s){ s.classList.add('hide'); setTimeout(()=>s.remove(), 700); }
+}
+
+function initApp() {
+  setSplash(20, 'Construyendo vista de modelos…');
+  renderGrid();
+  setSplash(50, 'Preparando identificador…');
+  renderQuiz();
+  setSplash(70, 'Precargando fotos de camiones…');
+
+  let loaded = 0;
+  const allMods = [...DATA.FRT.modelos,...DATA.KW.modelos,...DATA.INT.modelos];
+  const total = allMods.length;
+
+  allMods.forEach(mod => {
+    const img = new Image();
+    img.onload = img.onerror = () => {
+      loaded++;
+      const pct = 70 + Math.round((loaded / total) * 26);
+      setSplash(pct, `Cargando fotos ${loaded}/${total}…`);
+      if(loaded >= total) {
+        setSplash(100, '¡Todo listo!');
+        setTimeout(hideSplash, 600);
+      }
+    };
+    img.src = mod.foto;
+  });
+
+  setTimeout(hideSplash, 5000);
+}
+
+// Init — catalog.js carga con defer
+if(typeof CATALOG_DATA !== 'undefined') {
+  initApp();
+} else {
+  setSplash(8, 'Descargando catálogo (8 MB)…');
+  const catScript = document.querySelector('script[src="catalog.js"]');
+  if(catScript) catScript.addEventListener('load', initApp);
+  let _p = setInterval(()=>{ if(typeof CATALOG_DATA!=='undefined'){ clearInterval(_p); initApp(); }}, 150);
+}
 
 // ══ CATALOG ENGINE ══════════════════════════════════════
 const CATALOG = window.CATALOG_DATA || [];
