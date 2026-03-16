@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "*.js",   "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/catalog.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog.js" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
