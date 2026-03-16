@@ -98,8 +98,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .det.vis{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
-.det-photo{width:100%;height:260px;overflow:hidden;position:relative;background:#0a0a0a;}
-.det-photo img{width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform .4s;}
+.det-photo{width:100%;height:300px;overflow:hidden;position:relative;background:#080e1a;cursor:zoom-in;}
+.det-photo img{width:100%;height:100%;object-fit:contain;object-position:center center;display:block;background:#080e1a;}
 .det-photo:hover img{filter:brightness(1.06);}
 .det-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,26,.85) 0%,rgba(8,14,26,.1) 50%,transparent 100%);pointer-events:none;}
 .det-info-row{display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem 1.75rem;}
@@ -1197,9 +1197,21 @@ function selMod(mod,card,grid,d){
   det.insertAdjacentHTML('beforeend',`<div class="det-body"><div><div class="sec-t">Especificaciones del cofre</div><div class="specs">${specs}</div><div style="margin-top:1.2rem"><div class="sec-t">Motores compatibles</div><div class="chips">${chips}</div></div></div><div><div class="sec-t">Descripción del cofre</div><div class="iblock cofre">${mod.cofre}</div><div class="sec-t" style="margin-top:1rem">Cómo identificarlo</div><div class="iblock nota"><span class="nota-ic">⚠</span>${mod.nota}</div></div></div>`);
   det.classList.add('vis');
   // Append catalog section
+  // Build catalog section - works whether catalog is loaded or not
   const catHTML = renderCatalogSection(mod.id, d.col);
   det.insertAdjacentHTML('beforeend', catHTML);
   renderCatGrid();
+  // If catalog not yet loaded, re-render when it does
+  if(CATALOG.length === 0){
+    const _modId=mod.id, _col=d.col;
+    const _waitCat = setInterval(()=>{
+      if(CATALOG.length > 0){
+        clearInterval(_waitCat);
+        const sect = det.querySelector('.cat-section');
+        if(sect){ sect.outerHTML = renderCatalogSection(_modId, _col); renderCatGrid(); }
+      }
+    }, 200);
+  }
   det.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function setQMarca(m,btn){
@@ -1479,19 +1491,22 @@ function openLightbox(mainSrc, caption, modelId){
   for(const u of extras){ if(!seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
   _lbIdx = 0;
   document.getElementById('lightbox-caption').textContent = caption||'';
-  _renderCarousel();
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
+  // Small delay so the open transition plays before image loads
+  setTimeout(_renderCarousel, 30);
 }
 
 function _renderCarousel(){
   const main = document.getElementById('lb-main');
   const thumbs = document.getElementById('lb-thumbs');
   const counter = document.getElementById('lb-counter');
-  // Main photo
+  // Main photo - fade transition on image change
   const url = _lbUrls[_lbIdx];
+  main.style.opacity = '0';
+  main.onload = () => { main.style.opacity = '1'; };
+  main.onerror = () => { main.src = url; main.style.opacity = '1'; };
   main.src = _wsrv(url);
-  main.onerror = ()=>{ main.src=url; };
   // Counter
   counter.textContent = _lbUrls.length>1 ? (_lbIdx+1)+' / '+_lbUrls.length : '';
   // Thumbnails
@@ -1541,7 +1556,7 @@ document.addEventListener('keydown',e=>{
   <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:92vw;">
     <button class="lb-prev lb-nav" onclick="lbNav(-1);event.stopPropagation()">‹</button>
     <button class="lb-next lb-nav" onclick="lbNav(1);event.stopPropagation()">›</button>
-    <img id="lb-main" src="" alt="" style="max-width:90vw;max-height:72vh;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .28s ease;transform:scale(.85);opacity:0;">
+    <img id="lb-main" src="" alt="" style="max-width:94vw;max-height:88vh;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:opacity .28s ease;opacity:0;">
     <div id="lb-thumbs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:90vw;"></div>
     <div id="lb-counter" style="font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;"></div>
   </div>
