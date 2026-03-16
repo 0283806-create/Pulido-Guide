@@ -1440,7 +1440,10 @@ let _lbUrls=[], _lbIdx=0;
 
 function _wsrv(url){
   if(!url) return '';
-  return 'https://wsrv.nl/?url='+encodeURIComponent(url.replace('https://',''))+'&w=1200&output=jpg&q=85';
+  // Decode first to avoid double-encoding %28→%2528 etc.
+  let clean = url;
+  try { clean = decodeURIComponent(url); } catch(e) {}
+  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace('https://',''))+'&w=1100&output=jpg&q=85';
 }
 
 function openLightbox(mainSrc, caption, modelId){
