@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Guía Visual + Catálogo — Pulido Trucks & Parts</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0d0d0d;--sur:#161616;--sur2:#1e1e1e;--sur3:#242424;
+  --bor:#252525;--bor2:#333;--bor3:#404040;
+  --txt:#e4e0da;--muted:#7a7670;--dim:#3e3d3a;
+  --frt:#d4a843;--frt-bg:#16120400;--frt-bg2:#1a1608;--frt-bor:#3a2c0a;--frt-li:#f0d080;
+  --kw:#4a9fd4;--kw-bg:#080f18;--kw-bor:#153040;--kw-li:#80c8f0;
+  --int:#c44830;--int-bg:#180c08;--int-bor:#3a1810;--int-li:#e87060;
+  --green:#4caf79;--warn:#c8a830;
+  --rad:8px;--rad-lg:12px;--rad-xl:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+
+/* ── HEADER ── */
+.hdr{position:sticky;top:0;z-index:300;background:rgba(13,13,13,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--bor);padding:0 1.75rem;height:52px;display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.12em;}.logo span{color:var(--frt);}
+.hdr-tag{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+
+/* ── SHELL ── */
+.shell{max-width:1100px;margin:0 auto;padding:2.5rem 1.25rem 6rem;}
+
+/* ── HERO ── */
+.hero{margin-bottom:2.5rem;}
+.hero-eye{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,7vw,70px);line-height:.92;letter-spacing:.03em;margin-bottom:1rem;}
+.hero-h1 em{font-style:normal;color:var(--frt);}
+.hero-p{max-width:500px;font-size:14px;color:var(--muted);line-height:1.75;}
+
+/* ── MODO BAR ── */
+.modo-bar{display:flex;gap:5px;margin-bottom:2.5rem;background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:4px;}
+.modo-btn{flex:1;padding:9px 12px;border-radius:var(--rad);border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;}
+.modo-btn:hover{color:var(--txt);background:var(--sur2);}
+.modo-btn.active{background:var(--sur3);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.4);}
+
+/* ── MARCA BUTTONS ── */
+.marca-row{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.marca-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;border-radius:var(--rad);border:1px solid var(--bor);background:var(--sur);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;}
+.marca-btn:hover{border-color:var(--bor2);color:var(--txt);}
+.marca-btn.af{background:var(--frt-bg2);border-color:var(--frt);color:var(--frt-li);}
+.marca-btn.ak{background:var(--kw-bg);border-color:var(--kw);color:var(--kw-li);}
+.marca-btn.ai{background:var(--int-bg);border-color:var(--int);color:var(--int-li);}
+.mdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.df{background:var(--frt);}.dk{background:var(--kw);}.di{background:var(--int);}
+
+/* ── INTRO MARCA ── */
+.mintro{display:none;border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;margin-bottom:2rem;}
+.mintro.vis{display:block;}
+.mintro-hdr{padding:1.25rem 1.5rem;border-bottom:1px solid var(--bor);}
+.mhf{background:var(--frt-bg2);}.mhk{background:var(--kw-bg);}.mhi{background:var(--int-bg);}
+.mintro-nombre{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.06em;margin-bottom:4px;}
+.mintro-desc{font-size:13px;color:var(--muted);max-width:640px;line-height:1.7;}
+.mintro-body{background:var(--sur);padding:1.25rem 1.5rem;overflow-x:auto;}
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;min-width:480px;}
+.tbl th{text-align:left;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);padding:7px 10px;border-bottom:1px solid var(--bor);}
+.tbl td{padding:7px 10px;border-bottom:1px solid var(--bor);color:var(--muted);line-height:1.5;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{font-weight:500;color:var(--txt);font-family:'DM Mono',monospace;white-space:nowrap;font-size:12px;}
+.tbl td.num{color:var(--frt);font-family:'DM Mono',monospace;font-weight:500;}
+.tbl tr:hover td{background:var(--sur2);}
+
+/* ── GRID ── */
+.modelos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:2rem;}
+.mod-card{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;cursor:pointer;transition:border-color .18s,transform .18s;position:relative;}
+.mod-card:hover{border-color:var(--bor3);transform:translateY(-3px);}
+.mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;opacity:0;transition:opacity .18s;}
+.mod-card:hover::before,.mod-card.sel::before{opacity:1;}
+.mod-card.cf::before{background:var(--frt);}.mod-card.ck::before{background:var(--kw);}.mod-card.ci::before{background:var(--int);}
+.mod-card.sel.cf{border-color:var(--frt);background:#100e04;}
+.mod-card.sel.ck{border-color:var(--kw);background:#04080f;}
+.mod-card.sel.ci{border-color:var(--int);background:#0f0604;}
+
+/* ── FOTO CARD ── */
+.mod-photo{height:165px;overflow:hidden;position:relative;background:#0a0a0a;}
+.mod-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;transition:transform .45s;}
+.mod-card:hover .mod-photo img{transform:scale(1.06);}
+.mod-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.82) 0%,rgba(8,8,8,.1) 50%,transparent 100%);pointer-events:none;z-index:1;}
+.mod-badges{position:absolute;bottom:9px;left:10px;right:10px;display:flex;gap:5px;flex-wrap:wrap;z-index:3;}
+.badge{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;padding:2px 7px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.72);color:rgba(255,255,255,.72);white-space:nowrap;}
+.badge-long{color:rgba(240,210,100,.92);border-color:rgba(212,168,67,.3);}
+
+/* ── INFO CARD ── */
+.mod-info{padding:11px 13px 13px;}
+.mod-nombre{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.05em;margin-bottom:1px;}
+.mod-anios{font-size:10.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:5px;}
+.mod-tag{font-size:11.5px;color:var(--muted);line-height:1.45;}
+
+/* ── PANEL DETALLE ── */
+.det{display:none;border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;margin-bottom:2rem;animation:fadeUp .22s ease;}
+.det.vis{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.det-hdr{padding:1.5rem 1.75rem;border-bottom:1px solid var(--bor);display:flex;gap:1.5rem;align-items:flex-start;}
+.det-photo{width:290px;height:175px;border-radius:var(--rad-lg);overflow:hidden;flex-shrink:0;background:#0a0a0a;}
+.det-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+.det-info{flex:1;min-width:0;}
+.det-badge{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:9px;}
+.bf{background:var(--frt-bor);color:var(--frt-li);}
+.bk{background:var(--kw-bor);color:var(--kw-li);}
+.bi{background:var(--int-bor);color:var(--int-li);}
+.det-nombre{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.04em;line-height:1;margin-bottom:4px;}
+.cf2{color:var(--frt);}.ck2{color:var(--kw);}.ci2{color:var(--int);}
+.det-sub{font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;}
+.det-quick{display:flex;gap:7px;flex-wrap:wrap;}
+.dq{background:var(--sur2);border:1px solid var(--bor2);border-radius:var(--rad);padding:7px 12px;text-align:center;min-width:72px;}
+.dq-val{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;line-height:1;}
+.dq-lab{font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+@media(max-width:600px){.det-hdr{flex-direction:column;}.det-photo{width:100%;height:200px;}}
+.det-body{padding:1.5rem 1.75rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+@media(max-width:640px){.det-body{grid-template-columns:1fr;}}
+.sec-t{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--bor);}
+.specs{display:flex;flex-direction:column;gap:6px;}
+.srow{display:flex;justify-content:space-between;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--bor);}
+.srow:last-child{border-bottom:none;}
+.sk{font-size:12px;color:var(--muted);}
+.sv{font-size:12.5px;font-weight:500;font-family:'DM Mono',monospace;color:var(--txt);text-align:right;}
+.sv.hi{color:var(--frt);font-size:14px;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+.chip{font-size:10.5px;font-weight:500;padding:3px 9px;border-radius:20px;font-family:'DM Mono',monospace;border:1px solid;}
+.chf{background:var(--frt-bor);color:var(--frt-li);border-color:#4a3810;}
+.chk{background:var(--kw-bor);color:var(--kw-li);border-color:#1a3d55;}
+.chi{background:var(--int-bor);color:var(--int-li);border-color:#4a2015;}
+.iblock{background:var(--sur2);border-radius:var(--rad);padding:.85rem 1rem;font-size:13px;color:var(--muted);line-height:1.72;margin-bottom:8px;}
+.iblock.cofre{border-left:2px solid var(--bor3);}
+.iblock.nota{border-left:2px solid var(--warn);}
+.iblock strong{color:var(--txt);font-weight:500;}
+.nota-ic{color:var(--warn);margin-right:5px;}
+
+/* ── QUIZ ── */
+.quiz-wrap{display:none;}.quiz-wrap.vis{display:block;}
+.qpanel{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;animation:fadeUp .2s ease;}
+.qprog{height:2px;background:var(--bor);}
+.qprog-bar{height:100%;transition:width .35s ease;}
+.qhdr{padding:1rem 1.4rem;border-bottom:1px solid var(--bor);background:var(--sur2);display:flex;align-items:center;justify-content:space-between;}
+.qhdr-t{font-size:13px;font-weight:500;color:var(--txt);}
+.qhdr-step{font-size:10px;font-family:'DM Mono',monospace;color:var(--dim);}
+.qbody{padding:1.4rem;}
+.qvend{display:flex;gap:12px;align-items:flex-start;margin-bottom:1.25rem;}
+.vavatar{width:34px;height:34px;border-radius:50%;background:var(--sur2);border:1px solid var(--bor2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.vburbuja{background:var(--sur2);border:1px solid var(--bor2);border-radius:0 var(--rad-lg) var(--rad-lg) var(--rad-lg);padding:.85rem 1rem;flex:1;}
+.vlabel{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:4px;}
+.vpreg{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:4px;}
+.vdet{font-size:12.5px;color:var(--muted);line-height:1.65;margin-top:5px;padding-top:5px;border-top:1px solid var(--bor);}
+.qopciones{display:flex;flex-direction:column;gap:7px;padding-left:46px;}
+.qopcion{padding:10px 14px;border:1px solid var(--bor);border-radius:var(--rad);background:var(--sur2);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:all .13s;line-height:1.5;display:flex;align-items:center;gap:10px;}
+.qopcion:hover{border-color:var(--bor2);background:var(--sur3);}
+.oletra{width:21px;height:21px;border-radius:50%;background:var(--bor);font-size:10.5px;font-weight:600;font-family:'DM Mono',monospace;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;}
+.rbox{display:none;animation:fadeUp .25s ease;}.rbox.vis{display:block;}
+.rsuc{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;}
+.rhdr{padding:1.4rem 1.75rem;border-bottom:1px solid var(--bor);display:flex;gap:1.5rem;align-items:flex-start;}
+.r-photo{width:230px;height:138px;border-radius:var(--rad-lg);overflow:hidden;flex-shrink:0;background:#0a0a0a;}
+.r-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+@media(max-width:560px){.rhdr{flex-direction:column;}.r-photo{width:100%;height:175px;}}
+.rcheck{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.rcf{background:var(--frt-bor);color:var(--frt);}.rck{background:var(--kw-bor);color:var(--kw);}.rci{background:var(--int-bor);color:var(--int);}
+.rlabel{font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:2px;}
+.rtitle{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:.05em;}
+.rsub{font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-top:2px;}
+.rbody{padding:1.5rem 1.75rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+@media(max-width:600px){.rbody{grid-template-columns:1fr;}}
+.btn-r{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--rad);border:1px solid var(--bor2);background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;margin-top:1rem;transition:all .13s;}
+.btn-r:hover{color:var(--txt);background:var(--sur2);}
+
+/* ══════════════════════════════════════
+   GLOSARIO — Estilo Wikipedia técnica
+══════════════════════════════════════ */
+.glos-wrap{display:none;}.glos-wrap.vis{display:block;}
+.glos-toc{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;}
+.glos-toc-title{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:.75rem;}
+.glos-toc-list{display:flex;flex-wrap:wrap;gap:6px;}
+.glos-toc-item{font-size:12px;color:var(--muted);padding:4px 12px;background:var(--sur2);border:1px solid var(--bor);border-radius:20px;cursor:pointer;transition:all .13s;font-family:'DM Mono',monospace;}
+.glos-toc-item:hover{color:var(--txt);border-color:var(--bor2);}
+.glos-entry{margin-bottom:3rem;}
+.glos-anchor{scroll-margin-top:70px;}
+.glos-entry-hdr{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;padding-bottom:.75rem;border-bottom:2px solid var(--bor);margin-bottom:1.25rem;}
+.glos-sigla{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.06em;}
+.glos-fullname{font-size:16px;font-weight:500;color:var(--txt);}
+.glos-cat{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:2px 9px;border-radius:20px;margin-left:auto;}
+.gcat-f{background:var(--frt-bor);color:var(--frt-li);}
+.gcat-k{background:var(--kw-bor);color:var(--kw-li);}
+.gcat-i{background:var(--int-bor);color:var(--int-li);}
+.gcat-g{background:var(--sur2);color:var(--muted);border:1px solid var(--bor2);}
+.glos-lead{font-size:14px;color:var(--muted);line-height:1.78;margin-bottom:1.25rem;}
+.glos-lead strong{color:var(--txt);}
+.glos-lead em{font-style:italic;color:var(--txt);}
+.glos-svg-wrap{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:1.25rem;margin:1.25rem 0;overflow:auto;}
+.glos-subtitle{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:1.25rem 0 .6rem;padding-bottom:4px;border-bottom:1px solid var(--bor);}
+.glos-2col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+@media(max-width:560px){.glos-2col{grid-template-columns:1fr;}}
+.glos-box{background:var(--sur2);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:1rem 1.1rem;}
+.glos-box-t{font-size:12px;font-weight:600;margin-bottom:.5rem;}
+.glos-box p{font-size:12.5px;color:var(--muted);line-height:1.65;margin-bottom:.5rem;}
+.glos-box p strong{color:var(--txt);}
+.glos-chips-sm{display:flex;flex-wrap:wrap;gap:4px;margin-top:.6rem;}
+.gchip{font-size:10.5px;font-weight:500;padding:2px 8px;border-radius:20px;font-family:'DM Mono',monospace;}
+.gcf{background:var(--frt-bor);color:var(--frt-li);border:1px solid #4a3810;}
+.gck{background:var(--kw-bor);color:var(--kw-li);border:1px solid #1a3d55;}
+.gci{background:var(--int-bor);color:var(--int-li);border:1px solid #4a2015;}
+.glos-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:1rem 0;}
+.glos-table th{text-align:left;font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);padding:8px 10px;border-bottom:2px solid var(--bor);}
+.glos-table td{padding:8px 10px;border-bottom:1px solid var(--bor);color:var(--muted);line-height:1.5;vertical-align:top;}
+.glos-table tr:last-child td{border-bottom:none;}
+.glos-table td:first-child{font-weight:500;color:var(--txt);font-family:'DM Mono',monospace;white-space:nowrap;}
+.glos-table td.num{color:var(--frt);font-family:'DM Mono',monospace;font-weight:600;}
+.glos-table tr:hover td{background:var(--sur2);}
+.warn-box{background:var(--int-bg);border:1px solid var(--int-bor);border-radius:var(--rad-lg);padding:1rem 1.25rem;margin:1rem 0;font-size:13px;color:var(--int-li);line-height:1.7;}
+.warn-box strong{color:#f09080;}
+.note-box{background:var(--sur2);border-left:3px solid var(--warn);border-radius:0 var(--rad) var(--rad) 0;padding:.85rem 1rem;font-size:12.5px;color:var(--muted);line-height:1.68;margin:1rem 0;}
+.note-box strong{color:var(--txt);}
+.glos-divider{border:none;border-top:1px solid var(--bor);margin:2.5rem 0;}
+
+/* ── FOOTER ── */
+.ft{border-top:1px solid var(--bor);background:var(--sur);padding:1.5rem 2rem;text-align:center;font-size:11.5px;color:var(--dim);margin-top:3rem;}
+#load-status{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--sur);border:1px solid var(--bor2);border-radius:var(--rad);padding:.55rem .9rem;font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace;z-index:999;transition:opacity .5s;}
+
+/* ══════════════════════════════════════
+   CATÁLOGO DE PIEZAS — sección debajo del detalle
+══════════════════════════════════════ */
+.cat-section{border-top:1px solid var(--bor);margin-top:0;}
+.cat-hdr{padding:1.25rem 1.75rem;background:var(--sur2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;}
+.cat-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:.06em;display:flex;align-items:center;gap:.6rem;}
+.cat-title-icon{font-size:18px;}
+.cat-count{font-size:11px;font-family:'DM Mono',monospace;color:var(--muted);background:var(--sur3);padding:3px 9px;border-radius:20px;border:1px solid var(--bor2);}
+.cat-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.cat-search{background:var(--sur);border:1px solid var(--bor2);border-radius:var(--rad);padding:7px 12px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;width:200px;outline:none;transition:border-color .15s;}
+.cat-search:focus{border-color:var(--bor3);}
+.cat-search::placeholder{color:var(--dim);}
+.cat-filters{padding:.75rem 1.75rem;border-bottom:1px solid var(--bor);display:flex;gap:6px;flex-wrap:wrap;background:var(--sur);}
+.cat-filter-btn{font-size:11px;font-weight:600;padding:4px 11px;border-radius:20px;border:1px solid var(--bor2);background:transparent;color:var(--muted);cursor:pointer;font-family:'DM Mono',monospace;transition:all .15s;letter-spacing:.04em;display:flex;align-items:center;gap:5px;}
+.cat-filter-btn:hover{color:var(--txt);border-color:var(--bor3);}
+.cat-filter-btn.active{background:var(--sur3);color:var(--txt);border-color:var(--bor3);}
+.cat-filter-btn .fcount{font-size:10px;color:var(--dim);}
+.cat-body{padding:1.25rem 1.75rem;}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;}
+.cat-card{background:var(--sur2);border:1px solid var(--bor);border-radius:var(--rad-lg);overflow:hidden;transition:border-color .15s,transform .15s;cursor:default;}
+.cat-card:hover{border-color:var(--bor3);transform:translateY(-1px);}
+.cat-img{height:100px;overflow:hidden;position:relative;background:var(--sur3);display:flex;align-items:center;justify-content:center;}
+.cat-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
+.cat-img-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:100%;}
+.cat-img-icon{font-size:24px;opacity:.5;}
+.cat-info{padding:8px 10px;}
+.cat-code{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--frt);margin-bottom:2px;}
+.cat-desc{font-size:11px;color:var(--muted);line-height:1.4;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.cat-badge{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:20px;margin-top:4px;}
+.cbf{background:var(--frt-bor);color:var(--frt-li);}
+.cbk{background:var(--kw-bor);color:var(--kw-li);}
+.cbi{background:var(--int-bor);color:var(--int-li);}
+.cat-empty{text-align:center;padding:2.5rem 1rem;color:var(--dim);font-size:13px;}
+.cat-pagination{display:flex;align-items:center;justify-content:center;gap:8px;padding:1.25rem;border-top:1px solid var(--bor);}
+.cat-pg-btn{padding:6px 14px;border:1px solid var(--bor2);border-radius:var(--rad);background:transparent;color:var(--muted);cursor:pointer;font-size:12px;font-family:'DM Mono',monospace;transition:all .15s;}
+.cat-pg-btn:hover{border-color:var(--bor3);color:var(--txt);}
+.cat-pg-btn:disabled{opacity:.3;cursor:default;}
+.cat-pg-info{font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;}
+
+</style>
+</head>
+<body>
+<div id="load-status">Cargando…</div>
+<header class="hdr">
+  <div class="logo">PULIDO <span>TRUCKS</span> &amp; PARTS</div>
+  <div class="hdr-tag">Guía Visual · Cofres</div>
+</header>
+<div class="shell">
+  <div class="hero">
+    <div class="hero-eye">Manual interno del vendedor · v7</div>
+    <h1 class="hero-h1">Guía Visual<br><em>Cofres</em></h1>
+    <p class="hero-p">Fotografías de cada modelo con especificaciones, motores y glosario técnico. Al dar clic en un camión ve sus piezas del catálogo 2025.</p>
+  </div>
+
+  <div class="modo-bar">
+    <button class="modo-btn active" onclick="setModo('cat',this)">📋 Catálogo visual</button>
+    <button class="modo-btn" onclick="setModo('quiz',this)">🔍 Identificador guiado</button>
+    <button class="modo-btn" onclick="setModo('glos',this)">📖 Glosario técnico</button>
+  </div>
+
+  <!-- ══ CATÁLOGO ══ -->
+  <div id="panel-cat">
+    <div class="marca-row">
+      <button class="marca-btn af" onclick="setMarca('FRT',this)"><span class="mdot df"></span>Freightliner</button>
+      <button class="marca-btn" onclick="setMarca('KW',this)"><span class="mdot dk"></span>Kenworth</button>
+      <button class="marca-btn" onclick="setMarca('INT',this)"><span class="mdot di"></span>International</button>
+    </div>
+    <div id="intro-FRT" class="mintro vis">
+      <div class="mintro-hdr mhf"><div class="mintro-nombre cf2">Freightliner</div>
+        <div class="mintro-desc">Propiedad de Daimler AG — el fabricante de camiones más vendido en Norteamérica. Motores Detroit DD (exclusivos del Cascadia), Cummins, CAT y Mercedes MBE en modelos anteriores.</div></div>
+      <div class="mintro-body"><table class="tbl"><thead><tr><th>Modelo</th><th>Años</th><th>Long. cofre</th><th>BBC</th><th>Señal visual clave</th></tr></thead><tbody>
+        <tr><td>FLD112</td><td>1987–2003</td><td class="num">52.5"</td><td>112"</td><td>Cofre corto, eje muy atrás (setback)</td></tr>
+        <tr><td>FLD120</td><td>1989–2010</td><td class="num">60.5"</td><td>120"</td><td>Cofre largo curvado, motor grande</td></tr>
+        <tr><td>FLD120 Classic XL</td><td>1991–2010</td><td class="num">~70"</td><td>132"</td><td>Filtros de aire dobles externos laterales</td></tr>
+        <tr><td>Century C112</td><td>1996–2010</td><td class="num">~46"</td><td>112"</td><td>4 faros rectangulares separados, corto</td></tr>
+        <tr><td>Century C120</td><td>1996–2010</td><td class="num">~54"</td><td>120"</td><td>4 faros rectangulares separados, largo</td></tr>
+        <tr><td>Columbia 120</td><td>2001–2011</td><td class="num">57"</td><td>120"</td><td>Faros ovalados tipo gota</td></tr>
+        <tr><td>Cascadia Gen1</td><td>2008–2017</td><td class="num">50.5"</td><td>125"</td><td>Bloque de faro integrado, extensiones cortas</td></tr>
+        <tr><td>Cascadia Gen2/P4</td><td>2018–hoy</td><td class="num">52.5"</td><td>126"</td><td>Bloque de faro rediseñado, extensiones largas</td></tr>
+        <tr><td>M2 106</td><td>2002–hoy</td><td class="num">39"</td><td>106"</td><td>Cofre más corto de Freightliner, cabina cuadrada</td></tr>
+        <tr><td>M2 112</td><td>2004–hoy</td><td class="num">43.5"</td><td>112"</td><td>Igual al M2 pero nariz 4.5" más larga</td></tr>
+      </tbody></table></div>
+    </div>
+    <div id="intro-KW" class="mintro">
+      <div class="mintro-hdr mhk"><div class="mintro-nombre ck2">Kenworth</div>
+        <div class="mintro-desc">Fundado en 1923, subsidiaria de PACCAR. El camión preferido del operador independiente. Motores: PACCAR MX propios, Cummins, CAT y Detroit en modelos anteriores.</div></div>
+      <div class="mintro-body"><table class="tbl"><thead><tr><th>Modelo</th><th>Años</th><th>Long. cofre</th><th>BBC</th><th>Señal visual clave</th></tr></thead><tbody>
+        <tr><td>W900</td><td>1961–hoy</td><td class="num">~60"</td><td>120"</td><td>Rejilla cromada grande, cofre recto cuadrado</td></tr>
+        <tr><td>W900L</td><td>1979–hoy</td><td class="num">~72"</td><td>130"</td><td>Como W900 pero cofre 12" más largo</td></tr>
+        <tr><td>T600</td><td>1984–2007</td><td class="num">~52"</td><td>112"</td><td>Nariz inclinada "anteater", eje muy atrás</td></tr>
+        <tr><td>T660</td><td>2008–2017</td><td class="num">~54"</td><td>116"</td><td>Sucesor del T600, perfil inclinado moderno</td></tr>
+        <tr><td>T800</td><td>1987–hoy</td><td class="num">~56"</td><td>116–126"</td><td>Cofre cuadrado, fenders separados (vocacional)</td></tr>
+        <tr><td>T680</td><td>2013–hoy</td><td class="num">~52"</td><td>122"</td><td>Parabrisas panorámico una pieza, cabina ancha</td></tr>
+        <tr><td>T880</td><td>2015–hoy</td><td class="num">~60"</td><td>121–130"</td><td>Misma cabina T680 pero vocacional</td></tr>
+      </tbody></table></div>
+    </div>
+    <div id="intro-INT" class="mintro">
+      <div class="mintro-hdr mhi"><div class="mintro-nombre ci2">International</div>
+        <div class="mintro-desc">Navistar International. Serie 9000: línea histórica clase 8. ProStar: problemático motor MaxxForce. LT625: modelo actual competidor del Cascadia. Motor propio A26 exclusivo del LT.</div></div>
+      <div class="mintro-body"><table class="tbl"><thead><tr><th>Modelo</th><th>Años</th><th>Long. cofre</th><th>BBC</th><th>Señal visual clave</th></tr></thead><tbody>
+        <tr><td>9100i</td><td>1998–2003</td><td class="num">~46"</td><td>112"</td><td>Solo day cab, eje setback extremo</td></tr>
+        <tr><td>9200i</td><td>1993–2007</td><td class="num">~46"</td><td>112"</td><td>Day cab o sleeper, eje setback extremo</td></tr>
+        <tr><td>9400i</td><td>1990–2017</td><td class="num">~54"</td><td>120"</td><td>Diseño aerodinámico, carretera larga</td></tr>
+        <tr><td>9900i</td><td>1999–2017</td><td class="num">~54"</td><td>120"</td><td>Rejilla cromada cuadrada grande, owner-op</td></tr>
+        <tr><td>9900ix</td><td>2003–2017</td><td class="num">~64"</td><td>130"</td><td>Long-nose extremo, BBC 130"</td></tr>
+        <tr><td>ProStar</td><td>2008–2018</td><td class="num">~56"</td><td>122"</td><td>Parabrisas curvo panorámico</td></tr>
+        <tr><td>LT625</td><td>2018–hoy</td><td class="num">~58"</td><td>125"</td><td>DRL LED delgado, motor A26 exclusivo</td></tr>
+      </tbody></table></div>
+    </div>
+    <div id="mod-grid"></div>
+    <div id="det-panel" class="det"></div>
+  </div>
+
+  <!-- ══ QUIZ ══ -->
+  <div id="panel-quiz" class="quiz-wrap">
+    <div class="marca-row">
+      <button class="marca-btn af" onclick="setQMarca('FRT',this)"><span class="mdot df"></span>Freightliner</button>
+      <button class="marca-btn" onclick="setQMarca('KW',this)"><span class="mdot dk"></span>Kenworth</button>
+      <button class="marca-btn" onclick="setQMarca('INT',this)"><span class="mdot di"></span>International</button>
+    </div>
+    <div id="quiz-c"></div>
+    <div id="res-c" class="rbox"></div>
+  </div>
+
+  <!-- ══ GLOSARIO TÉCNICO ══ -->
+  <div id="panel-glos" class="glos-wrap">
+    <div class="glos-toc">
+      <div class="glos-toc-title">Índice de términos técnicos</div>
+      <div class="glos-toc-list">
+        <span class="glos-toc-item" onclick="scrollTo('g-bbc')">BBC</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-long')">Long. de cofre</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-setback')">Set-Back / Set-Forward</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-sba')">SBA</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-splitfender')">Split Fender</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-gen')">Gen1 / Gen2 / P4</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-longnose')">Long-nose</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-daycab')">Day Cab / Sleeper</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-maxx')">MaxxForce ⚠</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-cooling')">Cooling Package</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-egr')">EGR / DPF / SCR</span>
+        <span class="glos-toc-item" onclick="scrollTo('g-aero')">Aerodinámica</span>
+      </div>
+    </div>
+
+    <!-- BBC -->
+    <div class="glos-entry glos-anchor" id="g-bbc">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">BBC</div>
+        <div class="glos-fullname">Bumper to Back of Cab</div>
+        <div class="glos-cat gcat-g">Medida fundamental</div>
+      </div>
+      <p class="glos-lead">El <strong>BBC</strong> (Bumper to Back of Cab — "de la defensa al fondo de la cabina") es la medida estándar más importante en la industria para clasificar los camiones de cofre. Se mide en pulgadas desde el extremo del parachoques delantero hasta la pared trasera de la cabina, e incluye tanto el cofre (motor) como la cabina del conductor.</p>
+      <div class="glos-svg-wrap">
+        <svg viewBox="0 0 560 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto">
+          <defs>
+            <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#d4a843" stroke-width="1.5"/></marker>
+            <marker id="aht" viewBox="0 0 8 8" refX="1" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M7 1L1 4L7 7" fill="none" stroke="#d4a843" stroke-width="1.5"/></marker>
+            <marker id="ah2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#f0d080" stroke-width="1.5"/></marker>
+            <marker id="aht2" viewBox="0 0 8 8" refX="1" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M7 1L1 4L7 7" fill="none" stroke="#f0d080" stroke-width="1.5"/></marker>
+          </defs>
+          <!-- Cofre -->
+          <rect x="14" y="42" width="94" height="56" rx="4" fill="#1a1608" stroke="#d4a843" stroke-width="1.5"/>
+          <text x="61" y="74" font-family="DM Sans,sans-serif" font-size="10" fill="#888" text-anchor="middle">COFRE</text>
+          <!-- Rueda delantera -->
+          <circle cx="50" cy="103" r="13" fill="#111" stroke="#d4a843" stroke-width="1.5"/>
+          <circle cx="50" cy="103" r="5" fill="#1a1608"/>
+          <!-- Cabina -->
+          <rect x="108" y="24" width="126" height="74" rx="4" fill="#1a1608" stroke="#d4a843" stroke-width="1.5"/>
+          <text x="171" y="64" font-family="DM Sans,sans-serif" font-size="10" fill="#888" text-anchor="middle">CABINA</text>
+          <!-- Rueda trasera cabina -->
+          <circle cx="185" cy="103" r="13" fill="#111" stroke="#d4a843" stroke-width="1.5"/>
+          <circle cx="185" cy="103" r="5" fill="#1a1608"/>
+          <!-- Trailer (gris) -->
+          <rect x="234" y="36" width="210" height="62" rx="3" fill="#141414" stroke="#2a2a2a" stroke-width="1"/>
+          <text x="339" y="72" font-family="DM Sans,sans-serif" font-size="10" fill="#333" text-anchor="middle">TRAILER (no cuenta en BBC)</text>
+          <!-- Ruedas trailer -->
+          <circle cx="348" cy="103" r="13" fill="#111" stroke="#333" stroke-width="1"/>
+          <circle cx="380" cy="103" r="13" fill="#111" stroke="#333" stroke-width="1"/>
+          <!-- BBC flecha -->
+          <line x1="14" y1="16" x2="234" y2="16" stroke="#d4a843" stroke-width="1.5" marker-start="url(#aht)" marker-end="url(#ah)"/>
+          <text x="124" y="11" font-family="DM Mono,monospace" font-size="9.5" fill="#d4a843" text-anchor="middle" font-weight="500">BBC — Bumper to Back of Cab (ej: 120")</text>
+          <!-- Long cofre flecha -->
+          <line x1="14" y1="124" x2="108" y2="124" stroke="#f0d080" stroke-width="1.2" marker-start="url(#aht2)" marker-end="url(#ah2)"/>
+          <text x="61" y="120" font-family="DM Mono,monospace" font-size="8.5" fill="#f0d080" text-anchor="middle">Long. cofre</text>
+          <!-- BUMPER línea -->
+          <line x1="14" y1="40" x2="14" y2="118" stroke="#d4a843" stroke-width="1" stroke-dasharray="3,2" opacity=".7"/>
+          <text x="14" y="36" font-family="DM Mono,monospace" font-size="7.5" fill="#d4a843" text-anchor="middle" opacity=".8">BUMPER</text>
+          <!-- BACK OF CAB línea -->
+          <line x1="234" y1="22" x2="234" y2="118" stroke="#d4a843" stroke-width="1" stroke-dasharray="3,2" opacity=".7"/>
+          <text x="234" y="18" font-family="DM Mono,monospace" font-size="7.5" fill="#d4a843" text-anchor="middle" opacity=".8">BACK OF CAB</text>
+        </svg>
+      </div>
+      <div class="glos-subtitle">Rangos de BBC por tipo de camión</div>
+      <table class="glos-table"><thead><tr><th>BBC</th><th>Clasificación</th><th>Modelos típicos</th><th>Uso</th></tr></thead><tbody>
+        <tr><td class="num">106–112"</td><td>Corto</td><td>FLD112, M2 106, Century C112, 9200i</td><td>Regional, ciudad, motores medianos</td></tr>
+        <tr><td class="num">116–122"</td><td>Mediano</td><td>T660, T800, T680, 9400i, ProStar</td><td>Carretera general</td></tr>
+        <tr><td class="num">125–126"</td><td>Largo</td><td>Cascadia Gen1/Gen2, LT625</td><td>Flotilla, larga distancia</td></tr>
+        <tr><td class="num">130–132"</td><td>Extra largo (long-nose)</td><td>W900L, 9900ix, FLD120 Classic XL</td><td>Operador independiente</td></tr>
+      </tbody></table>
+      <div class="note-box"><strong>Diferencia clave:</strong> BBC y longitud de cofre son medidas distintas. Un camión con BBC 120" puede tener cofre de 46" (si la cabina es grande) o de 60" (si la cabina es estándar). Siempre verificar ambas medidas.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- LONGITUD DE COFRE -->
+    <div class="glos-entry glos-anchor" id="g-long">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">Long. Cofre</div>
+        <div class="glos-fullname">Longitud del cofre (Hood Length)</div>
+        <div class="glos-cat gcat-g">Medida para identificar la pieza</div>
+      </div>
+      <p class="glos-lead">La <strong>longitud del cofre</strong> (en inglés: <em>hood length</em>) es la medida <strong>únicamente del capó</strong> — desde el parachoques delantero hasta la base de la cabina. Esta es la medida directa del cofre como pieza.</p>
+      <p class="glos-lead">Es la medida más útil para identificar si el cofre que tienes en almacén corresponde al camión del cliente. Dos camiones con el mismo BBC pueden necesitar cofres de diferente longitud si sus cabinas tienen tamaños distintos.</p>
+      <div class="glos-subtitle">Longitudes de cofre por modelo</div>
+      <table class="glos-table"><thead><tr><th>Modelo</th><th>Long. cofre</th><th>BBC</th><th>Diferencia BBC–cofre</th></tr></thead><tbody>
+        <tr><td>M2 106</td><td class="num">39"</td><td>106"</td><td>67" (cabina grande)</td></tr>
+        <tr><td>M2 112</td><td class="num">43.5"</td><td>112"</td><td>68.5" (cabina grande)</td></tr>
+        <tr><td>Century C112 / 9100i / 9200i</td><td class="num">~46"</td><td>112"</td><td>~66" (cabina estándar)</td></tr>
+        <tr><td>FLD112 / T600 / T680</td><td class="num">52–52.5"</td><td>112–122"</td><td>60–70"</td></tr>
+        <tr><td>Century C120 / T660 / 9400i / 9900i</td><td class="num">~54"</td><td>116–120"</td><td>62–66"</td></tr>
+        <tr><td>Columbia 120 / ProStar</td><td class="num">57–56"</td><td>120–122"</td><td>63–66"</td></tr>
+        <tr><td>LT625</td><td class="num">~58"</td><td>125"</td><td>~67"</td></tr>
+        <tr><td>FLD120 / W900</td><td class="num">60–60.5"</td><td>120"</td><td>~60"</td></tr>
+        <tr><td>W900L / T880</td><td class="num">~60–72"</td><td>121–130"</td><td>~58–68"</td></tr>
+        <tr><td>9900ix / FLD Classic XL</td><td class="num">~64–70"</td><td>130–132"</td><td>~66–68"</td></tr>
+      </tbody></table>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- SET-BACK / SET-FORWARD -->
+    <div class="glos-entry glos-anchor" id="g-setback">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">Set-Back / Set-Forward</div>
+        <div class="glos-fullname">Posición del eje delantero</div>
+        <div class="glos-cat gcat-g">Configuración del chasis</div>
+      </div>
+      <p class="glos-lead">La <strong>posición del eje delantero</strong> respecto al cofre es un factor determinante en la forma visual del camión y en el número de pieza del cofre. Existen dos configuraciones principales:</p>
+      <div class="glos-2col">
+        <div class="glos-box">
+          <div class="glos-box-t cf2">Set-Back Axle (eje hacia atrás)</div>
+          <p>El eje delantero está desplazado <strong>debajo de la cabina</strong>, lejos del parachoques. El cofre visual­mente parece más largo porque hay más distancia entre el eje y el bumper. El peso se distribuye mejor para carretera larga.</p>
+          <p><strong>Ventaja:</strong> Mayor capacidad de carga en el eje frontal. Mejor distribución para tractor con trailer cargado.</p>
+          <div class="glos-chips-sm">
+            <span class="gchip gcf">FLD112 / FLD120</span>
+            <span class="gchip gcf">Cascadia</span>
+            <span class="gchip gck">T600 / T660</span>
+            <span class="gchip gci">9200i / 9400i</span>
+          </div>
+        </div>
+        <div class="glos-box">
+          <div class="glos-box-t ck2">Set-Forward Axle (eje hacia adelante)</div>
+          <p>El eje delantero está debajo <strong>del cofre</strong>, más cerca de la defensa. El radio de giro es mejor. El camión necesita un cofre diferente porque la apertura de la rueda está en otra posición.</p>
+          <p><strong>Ventaja:</strong> Mejor radio de giro, más maniobrable en espacios cerrados. Preferido en volcadoras y vocacional.</p>
+          <div class="glos-chips-sm">
+            <span class="gchip gck">T800 vocacional</span>
+            <span class="gchip gci">9100i day cab</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-box"><strong>Importante para ventas:</strong> Un cofre Set-Back y un cofre Set-Forward del mismo modelo <strong>no son intercambiables</strong>. La apertura de la rueda está en posición diferente. Siempre preguntar al cliente: ¿tiene set-back o set-forward?</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- SBA -->
+    <div class="glos-entry glos-anchor" id="g-sba">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">SBA</div>
+        <div class="glos-fullname">Set-Back Axle — variante específica Freightliner</div>
+        <div class="glos-cat gcat-f">Freightliner</div>
+      </div>
+      <p class="glos-lead">En Freightliner, el término <strong>SBA</strong> (Set-Back Axle) identifica una variante específica de configuración donde el eje delantero está aún más desplazado hacia atrás que en el modelo estándar. Esto genera diferencias físicas en el cofre.</p>
+      <div class="glos-subtitle">Diferencias visuales del cofre SBA vs estándar</div>
+      <table class="glos-table"><thead><tr><th>Característica</th><th>Estándar</th><th>SBA</th></tr></thead><tbody>
+        <tr><td>Apertura de rueda</td><td>Posición normal bajo el cofre</td><td>Más pequeña y desplazada hacia atrás</td></tr>
+        <tr><td>Forma del cofre</td><td>Simétrico con curva normal</td><td>Línea inferior ligeramente diferente</td></tr>
+        <tr><td>Compatibilidad</td><td>Solo con versión estándar</td><td>Solo con versión SBA</td></tr>
+      </tbody></table>
+      <div class="note-box"><strong>Para el vendedor:</strong> Si el cliente menciona "FLD SBA" o "tiene la llanta más atrás de lo normal", el cofre estándar del mismo modelo <strong>no le va a quedar</strong>. Hay que pedir específicamente el cofre SBA.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- SPLIT FENDER -->
+    <div class="glos-entry glos-anchor" id="g-splitfender">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla ck2">Split Fender</div>
+        <div class="glos-fullname">Guardafangos separado del cofre</div>
+        <div class="glos-cat gcat-k">Kenworth / vocacional</div>
+      </div>
+      <p class="glos-lead">En los camiones de cofre, los <strong>fenders</strong> (guardafangos o salpicaderas delanteras) pueden estar integrados al cofre como una sola pieza, o ser piezas <strong>completamente independientes</strong>. A esto último se le llama <em>split fender</em>.</p>
+      <div class="glos-2col">
+        <div class="glos-box">
+          <div class="glos-box-t cf2">Fenders integrados al cofre</div>
+          <p>El cofre y los guardafangos son una <strong>sola pieza moldeada</strong>. Es el sistema más común en camiones de carretera. Si el fender se daña por un accidente, muchas veces hay que cambiar todo el cofre o hacer reparación en fibra de vidrio.</p>
+          <div class="glos-chips-sm">
+            <span class="gchip gcf">FLD112/120</span>
+            <span class="gchip gcf">Cascadia</span>
+            <span class="gchip gcf">Columbia</span>
+            <span class="gchip gck">T600/T660</span>
+            <span class="gchip gck">T680/T880</span>
+            <span class="gchip gci">ProStar / LT</span>
+          </div>
+        </div>
+        <div class="glos-box">
+          <div class="glos-box-t ck2">Split fender (separado)</div>
+          <p>Los guardafangos son <strong>piezas independientes</strong> que se montan por separado del cofre. Si se daña solo el fender, se cambia únicamente el fender sin tocar el cofre. Es más común en camiones vocacionales que enfrentan más golpes.</p>
+          <div class="glos-chips-sm">
+            <span class="gchip gck">T800 vocacional</span>
+            <span class="gchip gck">W900 (algunos)</span>
+            <span class="gchip gci">9900ix</span>
+          </div>
+        </div>
+      </div>
+      <div class="note-box"><strong>Para el vendedor:</strong> Cuando el cliente pida cofre para T800, siempre preguntar: <strong>¿tiene fenders integrados o separados?</strong> Un T800 de carretera tiene fenders integrados; un T800 vocacional puede tener split fender. Las partes no son intercambiables.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- GEN1/GEN2/P4 -->
+    <div class="glos-entry glos-anchor" id="g-gen">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">Gen1 / Gen2 / P4</div>
+        <div class="glos-fullname">Generaciones del Freightliner Cascadia</div>
+        <div class="glos-cat gcat-f">Freightliner Cascadia</div>
+      </div>
+      <p class="glos-lead">El Cascadia es el camión más vendido de Freightliner, pero tuvo un rediseño mayor en 2018 que cambió significativamente la forma del cofre, la cabina y los componentes. Las partes <strong>no son compatibles entre generaciones</strong>.</p>
+      <table class="glos-table"><thead><tr><th>Generación</th><th>Años</th><th>BBC</th><th>Long. cofre</th><th>Diferencias físicas clave</th></tr></thead><tbody>
+        <tr><td>Gen1 (original)</td><td>2008–2017</td><td class="num">125"</td><td class="num">50.5"</td><td>Extensiones de cabina cortas, hinge bar visible en cofre, faros rectangulares integrados</td></tr>
+        <tr><td>Gen2 / P4</td><td>2018–hoy</td><td class="num">126"</td><td class="num">52.5"</td><td>Extensiones de cabina largas (+7.5"), cofre rediseñado más pronunciado, LEDs en parabrisas</td></tr>
+      </tbody></table>
+      <div class="glos-subtitle">¿Qué es el "P4"?</div>
+      <p class="glos-lead"><strong>P4</strong> es la nomenclatura interna de Freightliner para la <em>cuarta plataforma</em> del Cascadia. El Gen2 de 2018 es el mismo que el P4. Clientes y mecánicos usan ambos términos indistintamente para referirse al Cascadia de 2018 en adelante.</p>
+      <div class="note-box"><strong>Punto de venta:</strong> Si el cliente dice "Cascadia 2017" versus "Cascadia 2018", el cofre es diferente aunque se vean similares. El cambio de 2018 modificó la línea completa del cofre y las extensiones laterales. Un Gen1 no acepta el cofre del Gen2 sin modificaciones.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- LONG-NOSE -->
+    <div class="glos-entry glos-anchor" id="g-longnose">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla ci2">Long-Nose</div>
+        <div class="glos-fullname">Cofre extra largo — estilo operador independiente</div>
+        <div class="glos-cat gcat-g">Configuración estética / funcional</div>
+      </div>
+      <p class="glos-lead">El término <strong>long-nose</strong> (nariz larga) describe informalmente cualquier camión con cofre visiblemente más largo que el estándar de su plataforma. Estos camiones tienen BBC generalmente de 128" a 132" y cofres de más de 60 pulgadas.</p>
+      <p class="glos-lead">El long-nose es altamente preferido por <strong>owner-operators</strong> (operadores independientes) por varias razones prácticas: el motor es más accesible para mantenimiento, hay más espacio para el radiador y el cooling package, y el estilo visual es icónico en la cultura del camionero norteamericano.</p>
+      <div class="glos-subtitle">Modelos long-nose por marca</div>
+      <table class="glos-table"><thead><tr><th>Marca</th><th>Modelo</th><th>BBC</th><th>Long. cofre</th><th>Nota</th></tr></thead><tbody>
+        <tr><td>Freightliner</td><td>FLD120 Classic XL</td><td class="num">132"</td><td class="num">~70"</td><td>Filtros de aire dobles externos — el más icónico</td></tr>
+        <tr><td>Kenworth</td><td>W900L</td><td class="num">130"</td><td class="num">~72"</td><td>El long-nose más largo disponible actualmente</td></tr>
+        <tr><td>International</td><td>9900ix</td><td class="num">130"</td><td class="num">~64"</td><td>Discontinuado, sustituyó al 9900i</td></tr>
+      </tbody></table>
+      <div class="note-box"><strong>Para el vendedor:</strong> Los camiones long-nose requieren cofre, fenders, extensiones y en muchos casos bumper diferentes al modelo estándar. <strong>Nunca asumir</strong> que el cofre del W900 estándar le entra al W900L — 12 pulgadas de diferencia es significativo.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- DAY CAB / SLEEPER -->
+    <div class="glos-entry glos-anchor" id="g-daycab">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla ck2">Day Cab / Sleeper</div>
+        <div class="glos-fullname">Tipos de cabina del tractor</div>
+        <div class="glos-cat gcat-g">Configuración de cabina</div>
+      </div>
+      <p class="glos-lead">Los tractores de cofre se producen en dos configuraciones principales de cabina. Esta clasificación <strong>no afecta el cofre</strong>, pero es importante para entender la aplicación del camión y evitar confusiones en el diálogo con el cliente.</p>
+      <div class="glos-2col">
+        <div class="glos-box">
+          <div class="glos-box-t cf2">Day Cab (cabina sin dormir)</div>
+          <p>Cabina <strong>sin compartimento trasero de descanso</strong>. El tractor es más corto. Se usa en rutas regionales, distribución de centro a bodega, y cualquier operación donde el operador regresa a casa cada día.</p>
+          <p><strong>Reconocerlo:</strong> La cabina termina plana detrás de las ventanas sin extensión trasera.</p>
+        </div>
+        <div class="glos-box">
+          <div class="glos-box-t ck2">Sleeper (cabina con dormir)</div>
+          <p>Cabina con <strong>módulo trasero para dormir</strong> integrado o montado sobre rieles. Puede tener "midrise sleeper" (40–48") o "raised roof" (72" o más). Se usa en rutas transnacionales o inter-estatales.</p>
+          <p><strong>Reconocerlo:</strong> La cabina tiene extensión trasera elevada visible desde afuera.</p>
+        </div>
+      </div>
+      <div class="note-box">El cofre del day cab y sleeper del <strong>mismo modelo y año es idéntico</strong>. La diferencia está únicamente en la cabina (detrás del cofre). Sin embargo, algunos modelos solo existieron como day cab (ej: 9100i) o en configuraciones muy limitadas.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- MAXXFORCE -->
+    <div class="glos-entry glos-anchor" id="g-maxx">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla ci2">⚠ MaxxForce</div>
+        <div class="glos-fullname">Motor International MaxxForce 11 y 13 — advertencia</div>
+        <div class="glos-cat gcat-i">International ProStar</div>
+      </div>
+      <p class="glos-lead">Los motores <strong>MaxxForce 11</strong> y <strong>MaxxForce 13</strong> fueron desarrollados internamente por Navistar para el ProStar como alternativa a Cummins y Detroit. El plan era reducir la dependencia de proveedores externos. El resultado fue uno de los episodios de falla más documentados en la industria del transporte norteamericano.</p>
+      <div class="glos-subtitle">¿Qué falló?</div>
+      <p class="glos-lead">El sistema <strong>EGR (Exhaust Gas Recirculation)</strong> del MaxxForce fue diseñado para cumplir con las normas EPA 2010 de emisiones sin usar <strong>SCR</strong> (Selective Catalytic Reduction con urea/DEF). Esta decisión fue técnicamente muy difícil de ejecutar y resultó en:</p>
+      <div class="warn-box">
+        <strong>Fallas documentadas del MaxxForce 11 y 13:</strong><br><br>
+        • Sobrecalentamiento del sistema EGR cooler — falla más frecuente<br>
+        • Contaminación de aceite con refrigerante por grietas en el EGR cooler<br>
+        • Falla de la bomba de aceite de alta presión (HPOP)<br>
+        • Problemas con el sistema de freno motor (Jake Brake)<br>
+        • Acumulación excesiva de hollín en el sistema de admisión<br>
+        • Deformación de cabezas de cilindros por calor excesivo<br><br>
+        Navistar fue demandada colectivamente y llegó a acuerdos por miles de millones de dólares. En 2012 retiraron la apuesta de "sin SCR" y comenzaron a integrar Cummins ISX15 como motor alternativo.
+      </div>
+      <div class="glos-subtitle">Cómo identificar qué motor tiene un ProStar</div>
+      <table class="glos-table"><thead><tr><th>Motor</th><th>Años</th><th>Confiabilidad</th><th>Acción recomendada</th></tr></thead><tbody>
+        <tr><td>MaxxForce 11</td><td>2008–2014</td><td style="color:#e87060">Alta tasa de fallas</td><td>Preguntar historial, esperar problemas de EGR</td></tr>
+        <tr><td>MaxxForce 13</td><td>2008–2014</td><td style="color:#e87060">Alta tasa de fallas</td><td>Verificar si tiene EGR cooler reemplazado</td></tr>
+        <tr><td>Cummins ISX15</td><td>2012–2018</td><td style="color:#4caf79">Alta confiabilidad</td><td>Motor de reemplazo — mucho más confiable</td></tr>
+        <tr><td>International N13</td><td>2015–2018</td><td style="color:#c8a830">Confiabilidad media</td><td>Motor propio mejorado — mejor que MaxxForce</td></tr>
+      </tbody></table>
+      <div class="note-box"><strong>El cofre no cambia con el motor.</strong> Un ProStar con MaxxForce y uno con Cummins ISX15 usan el <strong>mismo cofre</strong>. Lo que cambia internamente son soportes, mangueras, turbo y el sistema de emisiones.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- COOLING PACKAGE -->
+    <div class="glos-entry glos-anchor" id="g-cooling">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">Cooling Package</div>
+        <div class="glos-fullname">Sistema de enfriamiento del motor</div>
+        <div class="glos-cat gcat-g">Sistema mecánico</div>
+      </div>
+      <p class="glos-lead">El <strong>cooling package</strong> es el conjunto de componentes de enfriamiento del motor: radiador principal, enfriador de aceite (oil cooler), enfriador de carga (charge air cooler o CAC), y el ventilador. En los camiones de cofre, este paquete define <strong>qué tan largo debe ser el cofre</strong>.</p>
+      <p class="glos-lead">Los motores de mayor desplazamiento generan más calor y requieren un cooling package más grande, lo que a su vez requiere un cofre más largo. Por eso el FLD120 (Detroit 60, 14L) tiene cofre más largo que el FLD112 (Cummins M11, 11L).</p>
+      <div class="note-box"><strong>Para el vendedor:</strong> Si el cliente cambió el motor de su camión a uno más grande, puede ser que el cofre original ya no tenga suficiente espacio para el cooling package del nuevo motor. Esto se ve en camiones que "corren caliente" — posible señal de cooling package insuficiente.</div>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- EGR / DPF / SCR -->
+    <div class="glos-entry glos-anchor" id="g-egr">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla ck2">EGR / DPF / SCR</div>
+        <div class="glos-fullname">Sistemas de control de emisiones</div>
+        <div class="glos-cat gcat-g">Normativa EPA</div>
+      </div>
+      <p class="glos-lead">Desde 2004, y especialmente desde 2007 y 2010, la EPA (Environmental Protection Agency) de Estados Unidos impuso normas estrictas de emisiones para motores diésel clase 8. Estas normas cambiaron la ingeniería de los motores y afectaron los cofres de los camiones.</p>
+      <div class="glos-subtitle">Los tres sistemas principales</div>
+      <table class="glos-table"><thead><tr><th>Sistema</th><th>Nombre completo</th><th>Qué hace</th><th>Desde</th></tr></thead><tbody>
+        <tr><td>EGR</td><td>Exhaust Gas Recirculation</td><td>Recircula gases del escape al motor para reducir NOx. Genera calor extra — requiere EGR cooler adicional</td><td>2004</td></tr>
+        <tr><td>DPF</td><td>Diesel Particulate Filter</td><td>Filtro en el escape que captura partículas de hollín. Se "regenera" quemando el hollín acumulado</td><td>2007</td></tr>
+        <tr><td>SCR / DEF</td><td>Selective Catalytic Reduction / Diesel Exhaust Fluid</td><td>Inyecta urea (DEF/AdBlue) en el escape para convertir NOx en nitrógeno inofensivo</td><td>2010</td></tr>
+      </tbody></table>
+      <p class="glos-lead" style="margin-top:1rem">Estos sistemas no cambian la forma del cofre directamente, pero añaden componentes que van debajo del cofre o en el chasis. El <strong>EGR cooler</strong> fue el culpable de las fallas del MaxxForce.</p>
+    </div>
+    <hr class="glos-divider">
+
+    <!-- AERODINÁMICA -->
+    <div class="glos-entry glos-anchor" id="g-aero">
+      <div class="glos-entry-hdr">
+        <div class="glos-sigla cf2">Aerodinámica</div>
+        <div class="glos-fullname">Diseño aerodinámico del cofre y cabina</div>
+        <div class="glos-cat gcat-g">Diseño / eficiencia</div>
+      </div>
+      <p class="glos-lead">La resistencia aerodinámica (drag) es el factor que más afecta el consumo de combustible en camiones que circulan a más de 55 mph. Los fabricantes diseñan los cofres con formas redondeadas, extensiones de cabina, deflectores y faldones para reducir la resistencia al aire.</p>
+      <div class="glos-subtitle">Evolución de la aerodinámica por generación</div>
+      <table class="glos-table"><thead><tr><th>Era</th><th>Modelos</th><th>Cd (arrastre)</th><th>Característica</th></tr></thead><tbody>
+        <tr><td>1980s</td><td>FLD112, W900, FLD Classic XL</td><td>Alto (~0.7+)</td><td>Cofres rectos, sin deflectores, diseño clásico</td></tr>
+        <tr><td>1996–2007</td><td>Century, Columbia, T600/T660</td><td>Medio (~0.55–0.65)</td><td>Cofres curvados, primeros deflectores laterales</td></tr>
+        <tr><td>2008–2017</td><td>Cascadia Gen1, ProStar, T680</td><td>Bajo (~0.45–0.55)</td><td>Extensiones de cabina integradas, cofre fusionado con cabina</td></tr>
+        <tr><td>2018–hoy</td><td>Cascadia Gen2, LT625</td><td>Muy bajo (~0.40)</td><td>Rediseño completo, fairing integrado, up a 7% mejor eficiencia</td></tr>
+      </tbody></table>
+      <p class="glos-lead" style="margin-top:1rem">El diseño aerodinámico también explica por qué los cofres modernos (Cascadia Gen2, LT625, T680) tienen formas más difíciles de reparar con fibra de vidrio — las curvas son más pronunciadas y complejas que los cofres planos de los FLD.</p>
+    </div>
+
+  </div><!-- /glosario -->
+
+</div><!-- /shell -->
+<footer class="ft">Pulido Trucks &amp; Parts · Guía interna de identificación de cofres v7 · Uso exclusivo del equipo de ventas</footer>
+
+<script src="catalog.js"></script>
+<script>
+const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO": "🪞", "ZEPELIN": "💛", "PARRILLA": "🟫", "LODERA": "🛞", "SPOILER": "🌬️", "CUBIERTA": "📦", "VOLANTE": "🎯", "ADORNO": "✨", "TANQUE": "⛽", "MANIJA": "🚪", "PALANCA": "🕹️", "VICERA": "🧢", "CHAPA": "🔑", "ESCAPE": "💨", "ACCESORIO": "⚙️", "SALPICADERO": "🛡️", "PLAFON": "💡"};
+// ══════════════════════════════════════════════════
+// FOTOS — ángulo 3/4 frontal via wsrv.nl proxy
+// ══════════════════════════════════════════════════
+function px(path){
+  // Decode any pre-encoded chars (%22 -> ", etc.) before encoding for wsrv.nl
+  try { path = decodeURIComponent(path); } catch(e) {}
+  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=700&output=jpg&q=84';
+}
+
+const DATA={
+FRT:{marca:'Freightliner',col:'frt',
+  modelos:[
+  {id:'FLD112',nombre:'FLD112',anios:'1987–2003',bbc:'112"',long:'52.5"',
+   tag:'Cofre corto, motores medianos, eje setback',
+   foto:px('/wikipedia/commons/thumb/1/18/Freightliner_FLD_112_Dump_truck.jpg/500px-Freightliner_FLD_112_Dump_truck.jpg'),
+   motores:['Cummins M11','CAT C10','CAT C12','Detroit 6V92','Detroit Series 40'],
+   specs:[['BBC','112"'],['Long. cofre','52.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
+   cofre:'Cofre de <strong>52.5 pulgadas</strong>, diseño aerodinámico. Cabina de aluminio que abre completamente hacia adelante. Diseñado para motores de desplazamiento mediano. Apertura de rueda más pequeña que el FLD120.',
+   nota:'Motor <strong>Cummins M11, CAT C10 o C12</strong> = FLD112. Cofre notablemente más corto que el FLD120. Eje delantero muy hacia atrás (setback). Si el eje parece estar bajo la cabina = FLD112.'},
+  {id:'FLD120',nombre:'FLD120',anios:'1989–2010',bbc:'120"',long:'60.5"',
+   tag:'Cofre largo curvado, motor grande',
+   foto:px('/wikipedia/commons/thumb/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg/500px-15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg'),
+   motores:['Detroit Series 60','Cummins N14','CAT 3406','CAT C15'],
+   specs:[['BBC','120"'],['Long. cofre','60.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
+   cofre:'Cofre largo de <strong>60.5 pulgadas</strong> con diseño curvado aerodinámico. Para los motores más grandes de la época: Detroit Series 60, N14 y CAT 3406. El cofre abre completamente hacia adelante.',
+   nota:'Motor <strong>Detroit Series 60, N14 o CAT 3406/C15</strong> = FLD120. Cofre más largo y curvado que el FLD112. Eje setback pero con cofre notablemente más largo.'},
+  {id:'FLD120XL',nombre:'FLD120 Classic XL',anios:'1991–2010',bbc:'132"',long:'~70"',
+   tag:'Long-nose clásico — filtros de aire externos laterales',
+   foto:px('/wikipedia/commons/thumb/5/54/Freightliner_FLD120_photo1.JPG/500px-Freightliner_FLD120_photo1.JPG'),
+   motores:['Detroit Series 60','Cummins N14','CAT 3406','CAT C15','CAT C16'],
+   specs:[['BBC','132"'],['Long. cofre','~70"'],['Filtros aire','Dobles externos laterales'],['Rejilla','Rectangular grande'],['BBC','El más largo de los FLD']],
+   cofre:'Versión "long-nose" del FLD120. Característica clave: <strong>filtros de aire dobles externos a los lados del cofre</strong> y rejilla frontal rectangular grande. BBC de 132", el más largo de la línea FLD.',
+   nota:'<strong>Filtros de aire dobles a los lados del cofre</strong> + rejilla rectangular grande = Classic XL. Cofre rectangular (no curvado) confirma Classic XL. Ningún otro Freightliner tiene esos filtros externos.'},
+  {id:'CENTURY_C112',nombre:'Century C112',anios:'1996–2010',bbc:'112"',long:'~46"',
+   tag:'Diseño Daimler — 4 faros cuadrados, cofre corto',
+   foto:px('/wikipedia/commons/thumb/f/f6/FREIGHTLINER_120_CENTURY_1999.JPG/500px-FREIGHTLINER_120_CENTURY_1999.JPG'),
+   motores:['Detroit Series 60','Cummins N14','CAT C15','Mercedes MBE4000','Cummins ISX'],
+   specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['Diferenciador','vs Columbia: faros cuadrados']],
+   cofre:'Primer modelo Freightliner diseñado bajo Daimler AG. Cofre aerodinámico de una pieza. Característica visual más notable: <strong>cuatro faros rectangulares separados</strong>. Versión BBC corto (112").',
+   nota:'<strong>4 faros rectangulares separados + BBC 112"</strong> = Century C112. El cofre es visiblemente más corto que el C120. Año 1996–2010. Diferencia clave vs Columbia: faros cuadrados vs ovalados.'},
+  {id:'CENTURY_C120',nombre:'Century C120',anios:'1996–2010',bbc:'120"',long:'~54"',
+   tag:'Diseño Daimler — 4 faros cuadrados, cofre largo',
+   foto:px('/wikipedia/commons/thumb/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg/500px-2009-07-05_Chatham_Steel_Freightliner.jpg'),
+   motores:['Detroit Series 60','Cummins N14','CAT C15','Mercedes MBE4000','Cummins ISX'],
+   specs:[['BBC','120"'],['Long. cofre','~54"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['BBC','120" — más largo que el C112']],
+   cofre:'Versión BBC largo del Century Class. Mismo diseño que el C112 pero con cofre de ~54" para motores más grandes. <strong>Cuatro faros rectangulares separados</strong> igual que el C112.',
+   nota:'<strong>4 faros cuadrados + BBC 120"</strong> = Century C120. Cofre más largo que el C112. El más usado por operadores independientes en carretera larga dentro de la línea Century.'},
+  {id:'COLUMBIA',nombre:'Columbia 120',anios:'2001–2011',bbc:'120"',long:'57"',
+   tag:'Flotilla — faros ovalados tipo gota',
+   foto:px('/wikipedia/commons/thumb/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg/500px-2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg'),
+   motores:['Detroit Series 60','Cummins ISX','Mercedes MBE4000','CAT C15','Detroit DD15'],
+   specs:[['BBC','120"'],['Long. cofre','57"'],['Eje delantero','Set-back'],['Faros','Ovalados tipo gota'],['Rejilla','Pequeña integrada']],
+   cofre:'Comparte estructura de cabina con el Century Class pero los <strong>faros son ovalados en forma de gota</strong>. Rejilla frontal más pequeña. Fue el camión de flotilla más económico de Freightliner.',
+   nota:'<strong>Faros ovalados/gota = Columbia; faros cuadrados = Century</strong>. Es la diferencia visual más rápida. Freightliner 2001–2011 con faros tipo gota = Columbia. Motor Detroit 60 o Cummins ISX son los más comunes.'},
+  {id:'CASCADIA_G1',nombre:'Cascadia Gen1',anios:'2008–2017',bbc:'125"',long:'50.5"',
+   tag:'Primera generación — extensiones de cabina cortas',
+   foto:px('/wikipedia/commons/thumb/c/c2/FL_CasacadiaAtLV_NV.jpg/500px-FL_CasacadiaAtLV_NV.jpg'),
+   motores:['Detroit DD13','Detroit DD15','Detroit DD16','Cummins ISX15'],
+   specs:[['BBC','125"'],['Long. cofre','50.5"'],['Extensiones cab.','Cortas'],['Hinge bar','Visible en el cofre'],['Generación','Gen1 (2008–2017)']],
+   cofre:'Primera generación del Cascadia con BBC de <strong>125 pulgadas</strong> y cofre de 50.5". Extensiones laterales de la cabina cortas. El hinge bar (barra de bisagra) es visible en el cofre.',
+   nota:'<strong>2008–2017 = Cascadia Gen1 (BBC 125")</strong>. Extensiones de cabina cortas = Gen1. Hinge bar visible = Gen1. Motores Detroit DD exclusivos. Motor Cummins ISX15 = más raro, confirmar año.'},
+  {id:'CASCADIA_G2',nombre:'Cascadia Gen2 / P4',anios:'2018–Presente',bbc:'126"',long:'52.5"',
+   tag:'Segunda generación — extensiones largas, rediseño completo',
+   foto:px('/wikipedia/commons/thumb/6/64/A_2020_Cascadia_126_Shown_in_Green.jpg/500px-A_2020_Cascadia_126_Shown_in_Green.jpg'),
+   motores:['Detroit DD13','Detroit DD15','Detroit DD16','Cummins X15'],
+   specs:[['BBC','126"'],['Long. cofre','52.5"'],['Extensiones cab.','Largas (+7.5")'],['Rediseño','Completo vs Gen1'],['Generación','Gen2 / P4 (2018+)']],
+   cofre:'Segunda generación con BBC de <strong>126 pulgadas</strong> y cofre de 52.5". Extensiones de cabina significativamente más largas que la Gen1. Rediseño completo con mejor aerodinámica.',
+   nota:'<strong>2018 en adelante = Gen2/P4 (BBC 126")</strong>. Extensiones de cabina largas = Gen2. El cofre se ve más pronunciado. Partes no compatibles con Gen1.'},
+  {id:'M2_106',nombre:'M2 106',anios:'2002–Presente',bbc:'106"',long:'39"',
+   tag:'Mediano tonelaje — cofre muy corto, trabajo urbano',
+   foto:px('/wikipedia/commons/thumb/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg/500px-Freightliner_Business_Class_M2_box_rigid.jpg'),
+   motores:['Detroit DD5','Cummins ISB 6.7','Cummins ISL 9','Mercedes MBE900','CAT C7'],
+   specs:[['BBC','106"'],['Long. cofre','39"'],['Clase','Clase 6–8 mediano'],['Cabina','Business Class compacta'],['Uso','Trabajo urbano / distribución']],
+   cofre:'Cofre más corto de toda la línea Freightliner: solo <strong>39 pulgadas</strong>. Camión de mediano tonelaje, no para carretera larga. Ideal para distribución, grúas, volteos medianos y recolección de basura.',
+   nota:'Cofre <strong>visualmente muy corto</strong> vs cualquier otro Freightliner = M2 106. Motores pequeños: Cummins ISB, CAT C7, Detroit DD5. Cabina cuadrada y compacta confirma M2.'},
+  {id:'M2_112',nombre:'M2 112',anios:'2004–Presente',bbc:'112"',long:'43.5"',
+   tag:'Mediano tonelaje ampliado — 4.5 pulgadas más que el M2 106',
+   foto:px('/wikipedia/commons/thumb/8/84/Freightliner_Business_Class_Crew_Cab.jpg/500px-Freightliner_Business_Class_Crew_Cab.jpg'),
+   motores:['Detroit DD8','Cummins ISL 9','CAT C9','CAT C13','Mercedes MBE4000'],
+   specs:[['BBC','112"'],['Long. cofre','43.5"'],['Diferencia vs M2 106','4.5" más de cofre'],['Clase','Clase 7–8 mediano'],['Motor típico','Cummins ISL 9 / CAT C13']],
+   cofre:'Versión BBC ampliado del M2 con cofre de <strong>43.5 pulgadas</strong>, 4.5 pulgadas más largo que el M2 106. Permite motores más grandes como el CAT C13. Misma cabina Business Class.',
+   nota:'Si el M2 parece ligeramente más largo en el cofre = M2 112 (BBC 112" vs 106"). Motor <strong>CAT C13 o Cummins ISL 9</strong> en un M2 confirma que es el 112. Diferencia visual entre M2 106 y 112 es sutil.'},
+  ],
+  quiz:[
+    {id:0,preg:'¿Aproximadamente en qué año es el Freightliner?',det:'El año es el filtro más directo y confiable.',
+     opc:[{l:'1987–1999 (FLD era)',n:1},{l:'2000–2010 (Century / Columbia era)',n:2},{l:'2011–2017 (solo Cascadia o M2)',r:'CASCADIA_G1'},{l:'2018 en adelante',r:'CASCADIA_G2'}]},
+    {id:1,preg:'¿Qué motor lleva el Freightliner de 1987–1999?',det:'En los FLD, el motor determina directamente qué tan largo es el cofre.',
+     opc:[{l:'Detroit Series 60, Cummins N14 o CAT 3406 (motores grandes)',n:11},{l:'Cummins M11, CAT C10 o C12 (motores medianos)',r:'FLD112'},{l:'No sé el motor / motor de trabajo mediano',n:10}]},
+    {id:2,preg:'¿El Freightliner es para trabajo en ciudad o carretera larga?',det:'Esta pregunta descarta el M2 de los modelos de carretera.',
+     opc:[{l:'Trabajo en ciudad, distribución, grúa o vocacional',n:20},{l:'Carretera larga, tractor con trailer',n:3}]},
+    {id:3,preg:'¿Cómo son los faros delanteros del Freightliner?',det:'La forma de los faros es el diferenciador visual más rápido entre Century, Columbia y Cascadia.',
+     opc:[{l:'4 faros rectangulares o cuadrados separados',n:30},{l:'Faros ovalados / en forma de gota',r:'COLUMBIA'},{l:'Un bloque de faro integrado por lado (moderno)',n:31},{l:'Cofre largo cuadrado con filtros de aire a los lados',r:'FLD120XL'}]},
+    {id:10,preg:'¿El cofre se ve corto o claramente largo?',det:'El FLD112 tiene cofre de 52.5" vs 60.5" del FLD120 — la diferencia es visible.',
+     opc:[{l:'Cofre corto (~52"), eje muy atrás, motor mediano',r:'FLD112'},{l:'Cofre claramente largo (~60.5"), motor grande',r:'FLD120'}]},
+    {id:11,preg:'¿El cofre tiene filtros de aire externos a ambos lados?',det:'Los filtros laterales son la seña definitiva del FLD Classic XL.',
+     opc:[{l:'Sí — cilindros de filtro externos a los lados del cofre',r:'FLD120XL'},{l:'No — cofre curvado liso sin filtros externos',r:'FLD120'}]},
+    {id:20,preg:'¿Qué tan corto se ve el cofre?',det:'M2 106 tiene 39" y el M2 112 tiene 43.5" — ambos se ven muy cortos vs camiones de carretera.',
+     opc:[{l:'Muy corto (~39"), motor pequeño, basura o distribución local',r:'M2_106'},{l:'Corto (~43.5"), motor mediano ISL9 o C13',r:'M2_112'}]},
+    {id:30,preg:'El Century tiene 4 faros cuadrados — ¿el BBC es 112" o 120"?',det:'El cofre del C112 es visiblemente más corto que el del C120.',
+     opc:[{l:'BBC 112" — cofre más corto (~46"), cabina compacta',r:'CENTURY_C112'},{l:'BBC 120" — cofre más largo (~54"), carretera larga',r:'CENTURY_C120'}]},
+    {id:31,preg:'El Cascadia moderno — ¿qué año es?',det:'Gen1 y Gen2 tienen cofres distintos con 1" de BBC de diferencia y extensiones de cabina diferentes.',
+     opc:[{l:'2008–2017 (Gen1 — extensiones de cabina cortas, BBC 125")',r:'CASCADIA_G1'},{l:'2018 en adelante (Gen2/P4 — extensiones largas, BBC 126")',r:'CASCADIA_G2'}]},
+  ]},
+KW:{marca:'Kenworth',col:'kw',
+  modelos:[
+  {id:'W900',nombre:'W900',anios:'1961–Presente',bbc:'120"',long:'~60"',
+   tag:'El clásico icónico — rejilla cromada, BBC 120"',
+   foto:px('/wikipedia/commons/thumb/2/2c/Kenworth_W900_semi_in_red.jpg/500px-Kenworth_W900_semi_in_red.jpg'),
+   motores:['Cummins N14','Cummins ISX / X15','CAT 3406','CAT C15','Detroit Series 60','PACCAR MX-13'],
+   specs:[['BBC','120"'],['Long. cofre','~60"'],['Eje delantero','Set-back centrado'],['Rejilla','Cromada rectangular grande'],['Fenders','Redondos separados']],
+   cofre:'Cofre <strong>largo, recto y cuadrado ~60"</strong> con rejilla frontal cromada rectangular grande. Eje delantero centrado bajo el cofre. Fenders redondos separados del cofre. El camión más icónico del operador independiente norteamericano.',
+   nota:'<strong>Rejilla cromada rectangular grande + cofre recto cuadrado</strong> = W900. Eje delantero bajo el cofre (no hacia atrás) confirma W900. PACCAR MX-13 en años recientes; CAT 3406 o N14 en versiones antiguas.'},
+  {id:'W900L',nombre:'W900L',anios:'1979–Presente',bbc:'130"',long:'~72"',
+   tag:'Long-nose extremo — cofre 12" más largo que el W900',
+   foto:px('/wikipedia/commons/thumb/1/17/2002_Kenworth_W900L_1.jpg/500px-2002_Kenworth_W900L_1.jpg'),
+   motores:['Cummins N14','Cummins ISX / X15','CAT 3406','CAT C15','PACCAR MX-13'],
+   specs:[['BBC','130"'],['Long. cofre','~72"'],['vs W900','+10" BBC / +12" cofre'],['Eje delantero','Set-back centrado'],['Rejilla','Cromada grande — igual al W900']],
+   cofre:'Versión "L" (Long) del W900 con cofre de ~72" y BBC de 130". El camión Kenworth de cofre más largo disponible. Visualmente igual al W900 pero el cofre es notablemente más extenso.',
+   nota:'Si el W900 se ve con cofre <strong>visiblemente más largo</strong> que un W900 normal = W900L. BBC 130" vs 120" del W900 estándar. La diferencia de 10" en BBC es apreciable a simple vista desde el frente.'},
+  {id:'T600',nombre:'T600',anios:'1984–2007',bbc:'112"',long:'~52"',
+   tag:'El "anteater" — nariz inclinada hacia abajo',
+   foto:px('/wikipedia/commons/thumb/e/ec/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg/600px-1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg'),
+   motores:['Cummins N14','Cummins ISX','CAT 3406','CAT C15','Detroit Series 60'],
+   specs:[['BBC','112"'],['Long. cofre','~52"'],['Eje delantero','Set-back (muy atrás)'],['Perfil','Inclinado hacia abajo'],['Apodo','Anteater / Nariz de hormiguero']],
+   cofre:'El primer camión diseñado con aerodinámica como prioridad en Kenworth. Cofre de ~52" con <strong>perfil inclinado hacia abajo en la punta</strong> — apodo "anteater". Eje delantero muy desplazado hacia atrás.',
+   nota:'<strong>Nariz del cofre apunta hacia abajo</strong> = T600 (1984–2007). El perfil inclinado es la señal más obvia. Eje delantero bajo la cabina, no bajo el cofre. El camión más aerodinámico de Kenworth de su época.'},
+  {id:'T660',nombre:'T660',anios:'2008–2017',bbc:'116"',long:'~54"',
+   tag:'Sucesor del T600 — perfil inclinado moderno',
+   foto:px('/wikipedia/commons/thumb/c/c9/Kenworth_T660_of_SRT.jpg/600px-Kenworth_T660_of_SRT.jpg'),
+   motores:['Cummins ISX','CAT C15','PACCAR MX-13','Detroit Series 60'],
+   specs:[['BBC','116"'],['Long. cofre','~54"'],['vs T600','+4" BBC / +2" cofre'],['Eje delantero','Set-back (muy atrás)'],['Años','Sucesor del T600']],
+   cofre:'Sucesor del T600 con cofre rediseñado de ~54" y BBC de 116". Mantuvo el perfil aerodinámico inclinado del T600 con un diseño más moderno. Cumple normas de emisiones 2010 con SCR.',
+   nota:'T660 = años 2008–2017 con cofre inclinado. Si tiene el mismo perfil "anteater" pero parece más moderno = T660. BBC 116" vs 112" del T600. Motor PACCAR MX-13 en versiones tardías.'},
+  {id:'T800',nombre:'T800',anios:'1987–Presente',bbc:'116–126"',long:'~56"',
+   tag:'Vocacional todoterreno — fenders separados en vocacional',
+   foto:px('/wikipedia/commons/thumb/c/c9/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg/600px-2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg'),
+   motores:['Cummins N14','Cummins ISX / X15','CAT C13','CAT C15','PACCAR MX-13','Detroit Series 60'],
+   specs:[['BBC','116–126"'],['Long. cofre','~56"'],['Eje delantero','Set-back o Set-forward'],['Fenders','Integrados o split'],['Uso','Vocacional / carretera']],
+   cofre:'Cofre horizontal y cuadrado de ~56", sin el perfil inclinado del T600/T660. Puede tener <strong>fenders separados del cofre (split fender)</strong> en versiones vocacionales para volcadoras, revolvedoras y construcción.',
+   nota:'Kenworth trabajo pesado con cofre cuadrado horizontal = T800. <strong>Fenders separados del cofre</strong> confirman T800 vocacional. Fenders integrados = T800 de carretera. Motor Cummins X15 o PACCAR MX-13 en recientes.'},
+  {id:'T680',nombre:'T680',anios:'2013–2022',bbc:'122"',long:'~52"',
+   tag:'Larga distancia moderno — parabrisas panorámico',
+   foto:px('/wikipedia/commons/thumb/9/96/2016_Kenworth_T680.jpg/500px-2016_Kenworth_T680.jpg'),
+   motores:['PACCAR MX-13','PACCAR MX-11','Cummins X15','Cummins X12'],
+   specs:[['BBC','122"'],['Long. cofre','~52"'],['Parabrisas','1 pieza panorámica'],['Cabina','8" más ancha que T800'],['Uso','Larga distancia / flotilla']],
+   cofre:'Cofre aerodinámico de ~52" con <strong>parabrisas de una sola pieza panorámico</strong>. Cabina 8 pulgadas más ancha que el T800. El modelo más eficiente de Kenworth en carretera.',
+   nota:'Kenworth moderno (2013+) con <strong>parabrisas panorámico de un vidrio</strong> = T680. Camión de carretera/flotilla. Motor PACCAR MX-13 o MX-11 confirma T680.'},
+  {id:'T680_NG',nombre:'T680 Next Gen',anios:'2023–Presente',bbc:'122"',long:'~52"',
+   tag:'Nueva generación — frente rediseñado, faros full LED, aerodinámica mejorada',
+   foto:px('/wikipedia/commons/thumb/9/96/2016_Kenworth_T680.jpg/500px-2016_Kenworth_T680.jpg'),
+   motores:['PACCAR MX-13 (510 HP)','PACCAR MX-11','Cummins X15'],
+   specs:[['BBC','122"'],['Long. cofre','~52"'],['Faros','Full LED de serie'],['Frente','Rediseñado 2023'],['Parabrisas','1 pieza panorámica'],['Diferencia clave','Cofre y defensas nuevas vs T680 clásico']],
+   id_cat:'T680_NG',
+   notas:'⚠️ NO compatible con piezas del T680 2013-2022. El cofre, defensa, faros y parabrisas son completamente diferentes.'},
+  {id:'T880',nombre:'T880',anios:'2015–Presente',bbc:'121–130"',long:'~60"',
+   tag:'Vocacional moderno — misma cabina que T680',
+   foto:px('/wikipedia/commons/thumb/1/17/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg/500px-2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg'),
+   motores:['PACCAR MX-13','Cummins X15','Cummins X12'],
+   specs:[['BBC','121–130"'],['Long. cofre','~60"'],['Parabrisas','1 pieza panorámica'],['Cabina','Igual que T680 (ancha)'],['Uso','Vocacional / alta capacidad']],
+   cofre:'Versión vocacional del T680 con cofre de ~60" y BBC de 121–130". Comparte la misma cabina ancha del T680 pero configurado para volcadoras, grúas y trabajo pesado.',
+   nota:'Si el Kenworth es vocacional con la cabina moderna y parabrisas panorámico = T880. Carretera/flotilla = T680; vocacional/construcción = T880. Cofre diferente al T680 aunque comparten cabina.'},
+  ],
+  quiz:[
+    {id:0,preg:'¿Tiene cofre largo y recto con rejilla cromada rectangular grande?',det:'Esta pregunta separa al W900/W900L del resto de Kenworth al instante.',
+     opc:[{l:'Sí — cofre recto clásico, rejilla cromada rectangular grande',n:1},{l:'No — la punta del cofre apunta hacia abajo (nariz inclinada)',n:2},{l:'No — camión moderno, cabina ancha, parabrisas panorámico',n:3},{l:'No — vocacional, volcadora, fenders separados',r:'T800'}]},
+    {id:1,preg:'¿El cofre parece extra largo, más que un W900 normal?',det:'La diferencia entre W900 y W900L es de 10 pulgadas en BBC — visible a simple vista.',
+     opc:[{l:'Cofre ~60" — largo pero estándar para el modelo',r:'W900'},{l:'Cofre ~72" — visiblemente más largo que un W900 normal',r:'W900L'}]},
+    {id:2,preg:'¿En qué año es el Kenworth con nariz inclinada?',det:'T600 y T660 son el mismo perfil inclinado "anteater" de diferentes generaciones.',
+     opc:[{l:'1984–2007 → T600',r:'T600'},{l:'2008–2017 → T660',r:'T660'},{l:'2018 en adelante (ya no se hace con ese perfil)',r:'T680'}]},
+    {id:3,preg:'¿Es para carretera larga / flotilla o para trabajo vocacional?',det:'T680 y T880 comparten la misma cabina ancha panorámica pero son aplicaciones distintas.',
+     opc:[{l:'Carretera larga, larga distancia, flotilla',r:'T680'},{l:'Vocacional — volcadora, mixer, grúa, construcción',r:'T880'}]},
+  ]},
+INT:{marca:'International',col:'int',
+  modelos:[
+  {id:'INT_9100',nombre:'9100i',anios:'1998–2003',bbc:'112"',long:'~46"',
+   tag:'Solo day cab — regional, eje setback extremo',
+   foto:px('/wikipedia/commons/thumb/7/72/International_Eagle_farm_truck_VT.jpg/600px-International_Eagle_farm_truck_VT.jpg'),
+   motores:['Cummins M11','International T444E','CAT C10','Detroit Series 60'],
+   specs:[['BBC','112"'],['Long. cofre','~46"'],['Cabina','Solo day cab (sin dormir)'],['Eje delantero','Set-back extremo'],['Diferencia vs 9200i','Sin opción sleeper']],
+   cofre:'Versión day cab exclusivamente con cofre de ~46" y BBC 112". El eje delantero está muy desplazado hacia atrás (setback), haciendo que el cofre aparente ser más largo de lo que mide en BBC.',
+   nota:'Si el International de la serie 9000 es <strong>solo day cab</strong> y tiene BBC 112" = 9100i. No existe versión sleeper del 9100i. Motores medianos como el M11 o T444E.'},
+  {id:'INT_9200',nombre:'9200i',anios:'1993–2007',bbc:'112"',long:'~46"',
+   tag:'Serie 9000 BBC 112" — sleeper disponible',
+   foto:px('/wikipedia/commons/thumb/1/14/International_9200i_Eagle_1998_%2837455306834%29.jpg/600px-International_9200i_Eagle_1998_%2837455306834%29.jpg'),
+   motores:['Cummins N14','CAT 3406','Detroit Series 60','Cummins ISX','International DT466'],
+   specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back extremo'],['Cabina','Day cab o sleeper'],['vs 9100i','Disponible con sleeper']],
+   cofre:'Cofre de ~46" con BBC 112". Eje delantero muy desplazado hacia atrás. Disponible con dormidera a diferencia del 9100i. Motores hasta el N14 y CAT 3406.',
+   nota:'International serie 9000 con <strong>eje delantero muy atrás + BBC 112"</strong> = 9200i. A diferencia del 9100i, el 9200i puede tener sleeper. Motor DT466 en versiones menores.'},
+  {id:'INT_9400',nombre:'9400i',anios:'1990–2017',bbc:'120"',long:'~54"',
+   tag:'Serie 9000 carretera larga — BBC 120"',
+   foto:px('/wikipedia/commons/thumb/c/c7/2015_International_Semi_Tractor_%2818197014603%29.jpg/500px-2015_International_Semi_Tractor_%2818197014603%29.jpg'),
+   motores:['Cummins N14','CAT 3406','Detroit Series 60','Cummins ISX','CAT C15'],
+   specs:[['BBC','120"'],['Long. cofre','~54"'],['Eje delantero','Set-back'],['Uso','Carretera larga distancia'],['vs 9200i','+8" BBC, cofre más largo']],
+   cofre:'El principal camión de carretera larga de International con BBC 120" y cofre de ~54". Diseño aerodinámico. Disponible en múltiples configuraciones de sleeper.',
+   nota:'International 9000 aerodinámico con BBC 120" = 9400i. A diferencia del 9900i, el 9400i tiene diseño más limpio sin rejilla cromada prominente. Motor CAT 3406 o N14 son los más comunes.'},
+  {id:'INT_9900',nombre:'9900i',anios:'1999–2017',bbc:'120"',long:'~54"',
+   tag:'Long-nose owner-operator — rejilla cromada cuadrada grande',
+   foto:px('/wikipedia/commons/thumb/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg/600px-2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg'),
+   motores:['Cummins N14','CAT 3406','Detroit Series 60','Cummins ISX','CAT C15'],
+   specs:[['BBC','120"'],['Long. cofre','~54"'],['Rejilla','Cromada cuadrada grande prominente'],['Faros','Cuadrados en marco cromado'],['Estilo','Owner-operator']],
+   cofre:'Versión "long-nose" estilo operador independiente con <strong>rejilla cromada cuadrada grande</strong> y BBC 120". Mismo BBC que el 9400i pero estética completamente diferente.',
+   nota:'International 9000 con <strong>rejilla cromada cuadrada grande</strong> y faros en marcos cromados = 9900i. Mismo BBC que el 9400i (120") pero aspecto totalmente distinto. Más cromado = más caro.'},
+  {id:'INT_9900IX',nombre:'9900ix',anios:'2003–2017',bbc:'130"',long:'~64"',
+   tag:'Long-nose extremo — BBC 130", el más largo de la serie',
+   foto:px('/wikipedia/commons/thumb/8/8a/Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg/500px-Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg'),
+   motores:['Cummins ISX','CAT C15','CAT C16','Detroit Series 60'],
+   specs:[['BBC','130"'],['Long. cofre','~64"'],['vs 9900i','+10" BBC / +10" cofre'],['Rejilla','Cromada cuadrada grande'],['Nombre completo','9900ix Eagle']],
+   cofre:'La versión más larga de la serie 9000 con BBC de 130" y cofre de ~64". Es 10 pulgadas más largo que el 9900i. Rejilla cromada cuadrada aún más prominente.',
+   nota:'Si el 9900i se ve <strong>visiblemente más largo en el cofre</strong> = 9900ix (BBC 130" vs 120"). La diferencia de 10" es notable a simple vista. Motor CAT C15 o C16 confirma 9900ix.'},
+  {id:'PROSTAR',nombre:'ProStar / ProStar+',anios:'2008–2018',bbc:'122"',long:'~56"',
+   tag:'International moderno — parabrisas curvo panorámico',
+   foto:px('/wikipedia/commons/thumb/e/e9/International_ProStar.JPG/600px-International_ProStar.JPG'),
+   motores:['MaxxForce 11','MaxxForce 13','Cummins ISX15','International N13'],
+   specs:[['BBC','122"'],['Long. cofre','~56"'],['Parabrisas','1 sola pieza curva'],['Cabina','NGV (Next Generation)'],['⚠ Motor','MaxxForce = historial de fallas']],
+   cofre:'Cofre aerodinámico de ~56" con <strong>parabrisas de una sola pieza curvo</strong>. Los motores <strong>MaxxForce 11 y 13 tuvieron fallas graves documentadas</strong>.',
+   nota:'International 2008–2018 con parabrisas curvo panorámico = ProStar. CRÍTICO: <strong>¿qué motor tiene? MaxxForce = alto riesgo de fallas. Cummins ISX15 o N13 = confiable.</strong>'},
+  {id:'LT',nombre:'LT625',anios:'2018–Presente',bbc:'125"',long:'~58"',
+   tag:'El más moderno — motor A26 exclusivo, DRL LED delgado',
+   foto:px('/wikipedia/commons/thumb/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg/600px-2019_International_LT_625_trailer_truck%2C_front_left.jpg'),
+   motores:['Cummins X15','International A26','International N13'],
+   specs:[['BBC','125"'],['Long. cofre','~58"'],['Motor exclusivo','International A26'],['DRL','LED delgado distintivo'],['vs ProStar','+7% eficiencia combustible']],
+   cofre:'Reemplazó al ProStar con cofre de ~58" y BBC 125". El motor <strong>International A26</strong> es <strong>exclusivo de este modelo</strong> — ningún otro camión usa el A26.',
+   nota:'International de <strong>2018 en adelante</strong> = LT625. Motor <strong>A26 = definitivamente LT625</strong>. DRL LED muy delgado en la parte superior del cofre es la señal visual más moderna de International.'},
+  ],
+  quiz:[
+    {id:0,preg:'¿En qué año es el International?',det:'El año es el filtro más directo. Cada generación tiene un diseño radicalmente diferente.',
+     opc:[{l:'1990–2007 → Serie 9000',n:1},{l:'2008–2017 → ProStar',r:'PROSTAR'},{l:'2018 en adelante → LT625',r:'LT'}]},
+    {id:1,preg:'¿Cómo se ve el cofre del International serie 9000?',det:'BBC y estilo de la rejilla son los dos diferenciadores clave dentro de la serie 9000.',
+     opc:[{l:'Cofre corto (~46"), eje muy atrás — solo day cab',r:'INT_9100'},{l:'Cofre corto (~46"), eje muy atrás — con opción sleeper',r:'INT_9200'},{l:'Cofre mediano aerodinámico limpio, BBC 120"',r:'INT_9400'},{l:'Cofre "long-nose" BBC 120" con rejilla cromada cuadrada',r:'INT_9900'},{l:'Cofre "long-nose" extra largo BBC 130"',r:'INT_9900IX'}]},
+  ]},
+};
+
+// ═══════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════
+const COL_BG={frt:'#100e04',kw:'#04080f',int:'#0f0604'};
+function px2(src,col,nombre){
+  const w=document.createElement('div'); w.style.cssText='width:100%;height:100%;';
+  if(src){const img=document.createElement('img');img.referrerPolicy='no-referrer';img.alt=nombre;img.src=src;img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;';img.onerror=()=>{w.innerHTML=makePH(col,nombre);};w.appendChild(img);}
+  else{w.innerHTML=makePH(col,nombre);}
+  return w;
+}
+const PHC={frt:'#d4a843',kw:'#4a9fd4',int:'#c44830'};
+function makePH(col,n){return `<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:${COL_BG[col]}"><svg width="42" height="28" viewBox="0 0 42 28" fill="none"><rect x="1" y="6" width="26" height="16" rx="3" stroke="${PHC[col]}" stroke-width="1.5"/><rect x="1" y="6" width="9" height="16" stroke="${PHC[col]}" stroke-width="1.5"/><circle cx="8" cy="24" r="4" stroke="${PHC[col]}" stroke-width="1.5"/><circle cx="26" cy="24" r="4" stroke="${PHC[col]}" stroke-width="1.5"/><circle cx="33" cy="24" r="4" stroke="${PHC[col]}" stroke-width="1.5"/></svg><span style="font-family:'Bebas Neue',sans-serif;font-size:14px;color:${PHC[col]};letter-spacing:.1em">${n}</span></div>`;}
+
+let modo='cat',marca='FRT',qmarca='FRT',qstep=0;
+
+function setModo(m,btn){
+  document.getElementById('panel-cat').style.display=m==='cat'?'':'none';
+  document.getElementById('panel-quiz').classList.toggle('vis',m==='quiz');
+  document.getElementById('panel-glos').classList.toggle('vis',m==='glos');
+  document.querySelectorAll('.modo-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  modo=m;
+}
+function scrollTo(id){
+  setModo('glos',document.querySelectorAll('.modo-btn')[2]);
+  setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+function setMarca(m,btn){
+  marca=m;
+  document.querySelectorAll('#panel-cat .marca-btn').forEach(b=>b.classList.remove('af','ak','ai'));
+  btn.classList.add({FRT:'af',KW:'ak',INT:'ai'}[m]);
+  ['FRT','KW','INT'].forEach(x=>document.getElementById('intro-'+x).classList.toggle('vis',x===m));
+  renderGrid();
+}
+function renderGrid(){
+  const d=DATA[marca];
+  document.getElementById('det-panel').classList.remove('vis');
+  const grid=document.createElement('div'); grid.className='modelos-grid';
+  d.modelos.forEach(mod=>{
+    const c=document.createElement('div'); c.className='mod-card c'+d.col[0];
+    const ph=document.createElement('div'); ph.className='mod-photo';
+    ph.appendChild(px2(mod.foto,d.col,mod.nombre));
+    const ov=document.createElement('div'); ov.className='mod-photo-ovl';
+    const badges=document.createElement('div'); badges.className='mod-badges';
+    badges.innerHTML=`<span class="badge">BBC ${mod.bbc}</span><span class="badge badge-long">⟷ ${mod.long}</span>`;
+    ph.appendChild(ov); ph.appendChild(badges); c.appendChild(ph);
+    const inf=document.createElement('div'); inf.className='mod-info';
+    inf.innerHTML=`<div class="mod-nombre">${mod.nombre}</div><div class="mod-anios">${mod.anios}</div><div class="mod-tag">${mod.tag}</div>`;
+    c.appendChild(inf);
+    c.onclick=()=>selMod(mod,c,grid,d);
+    grid.appendChild(c);
+  });
+  const g=document.getElementById('mod-grid'); g.innerHTML=''; g.appendChild(grid);
+}
+function selMod(mod,card,grid,d){
+  grid.querySelectorAll('.mod-card').forEach(c=>c.classList.remove('sel','cf','ck','ci'));
+  card.classList.add('sel','c'+d.col[0]);
+  const det=document.getElementById('det-panel');
+  const chips=mod.motores.map(m=>`<span class="chip ch${d.col[0]}">${m}</span>`).join('');
+  const specs=mod.specs.map(([k,v])=>`<div class="srow"><span class="sk">${k}</span><span class="sv${k==='Long. cofre'?' hi':''}">${v}</span></div>`).join('');
+  const bg=d.col==='frt'?'var(--frt-bg2)':d.col==='kw'?'var(--kw-bg)':'var(--int-bg)';
+  const hdr=document.createElement('div'); hdr.className='det-hdr'; hdr.style.background=bg; hdr.style.borderBottom='1px solid var(--bor)';
+  const dp=document.createElement('div'); dp.className='det-photo'; dp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  const di=document.createElement('div'); di.className='det-info';
+  di.innerHTML=`<span class="det-badge b${d.col[0]}">${d.marca}</span><div class="det-nombre c${d.col[0]}2">${mod.nombre}</div><div class="det-sub">${mod.anios} · BBC ${mod.bbc}</div><div class="det-quick"><div class="dq"><div class="dq-val c${d.col[0]}2">${mod.bbc}</div><div class="dq-lab">BBC</div></div><div class="dq"><div class="dq-val c${d.col[0]}2">${mod.long}</div><div class="dq-lab">Long. cofre</div></div></div>`;
+  hdr.appendChild(dp); hdr.appendChild(di); det.innerHTML=''; det.appendChild(hdr);
+  det.insertAdjacentHTML('beforeend',`<div class="det-body"><div><div class="sec-t">Especificaciones del cofre</div><div class="specs">${specs}</div><div style="margin-top:1.2rem"><div class="sec-t">Motores compatibles</div><div class="chips">${chips}</div></div></div><div><div class="sec-t">Descripción del cofre</div><div class="iblock cofre">${mod.cofre}</div><div class="sec-t" style="margin-top:1rem">Cómo identificarlo</div><div class="iblock nota"><span class="nota-ic">⚠</span>${mod.nota}</div></div></div>`);
+  det.classList.add('vis');
+  // Append catalog section
+  const catHTML = renderCatalogSection(mod.id, d.col);
+  det.insertAdjacentHTML('beforeend', catHTML);
+  renderCatGrid();
+  det.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function setQMarca(m,btn){
+  qmarca=m; qstep=0;
+  document.querySelectorAll('#panel-quiz .marca-btn').forEach(b=>b.classList.remove('af','ak','ai'));
+  btn.classList.add({FRT:'af',KW:'ak',INT:'ai'}[m]);
+  document.getElementById('res-c').classList.remove('vis'); document.getElementById('res-c').innerHTML='';
+  renderQuiz();
+}
+function renderQuiz(){
+  const d=DATA[qmarca];
+  const step=d.quiz.find(q=>q.id===qstep); if(!step)return;
+  const cur=d.quiz.indexOf(step)+1,total=d.quiz.length;
+  const pct=Math.round((cur/(total+1))*100);
+  const pc=d.col==='frt'?'var(--frt)':d.col==='kw'?'var(--kw)':'var(--int)';
+  const letras=['A','B','C','D','E','F'];
+  const opcs=step.opc.map((op,i)=>`<button class="qopcion" onclick="elegir(${i})"><span class="oletra">${letras[i]}</span>${op.l}</button>`).join('');
+  document.getElementById('quiz-c').innerHTML=`<div class="qpanel"><div class="qprog"><div class="qprog-bar" style="width:${pct}%;background:${pc}"></div></div><div class="qhdr"><span class="qhdr-t">Identificador — ${d.marca}</span><span class="qhdr-step">Pregunta ${cur} de ${total}</span></div><div class="qbody"><div class="qvend"><div class="vavatar">🧑‍💼</div><div class="vburbuja"><div class="vlabel">${d.marca} · Pregunta al cliente:</div><div class="vpreg">${step.preg}</div>${step.det?`<div class="vdet">${step.det}</div>`:''}</div></div><div class="qopciones">${opcs}</div></div></div>`;
+}
+function elegir(idx){
+  const d=DATA[qmarca];
+  const step=d.quiz.find(q=>q.id===qstep); const op=step.opc[idx];
+  document.getElementById('res-c').classList.remove('vis');
+  if(op.r){mostrarRes(op.r);document.getElementById('quiz-c').innerHTML='';}
+  else if(op.n!==undefined){qstep=op.n;renderQuiz();}
+}
+function mostrarRes(id){
+  const d=DATA[qmarca]; const mod=d.modelos.find(m=>m.id===id); if(!mod)return;
+  const rc=document.getElementById('res-c');
+  const chips=mod.motores.map(m=>`<span class="chip ch${d.col[0]}">${m}</span>`).join('');
+  const specs=mod.specs.map(([k,v])=>`<div class="srow"><span class="sk">${k}</span><span class="sv${k==='Long. cofre'?' hi':''}">${v}</span></div>`).join('');
+  const bg=d.col==='frt'?'var(--frt-bg2)':d.col==='kw'?'var(--kw-bg)':'var(--int-bg)';
+  const rDiv=document.createElement('div'); rDiv.className='rsuc';
+  const hdr=document.createElement('div'); hdr.className='rhdr'; hdr.style.background=bg; hdr.style.borderBottom='1px solid var(--bor)';
+  const rp=document.createElement('div'); rp.className='r-photo'; rp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  const ri=document.createElement('div'); ri.style.cssText='display:flex;align-items:flex-start;gap:12px;flex:1;';
+  ri.innerHTML=`<div class="rcheck rc${d.col[0]}">✓</div><div><div class="rlabel">Cofre identificado — ${d.marca}</div><div class="rtitle c${d.col[0]}2">${mod.nombre}</div><div class="rsub">${mod.anios} · BBC ${mod.bbc} · Long. cofre ${mod.long}</div></div>`;
+  hdr.appendChild(rp); hdr.appendChild(ri); rDiv.appendChild(hdr);
+  rDiv.insertAdjacentHTML('beforeend',`<div class="rbody"><div><div class="sec-t">Especificaciones</div><div class="specs" style="margin-bottom:1rem">${specs}</div><div class="sec-t">Motores compatibles</div><div class="chips">${chips}</div></div><div><div class="sec-t">Descripción del cofre</div><div class="iblock cofre">${mod.cofre}</div><div class="sec-t" style="margin-top:1rem">Notas del vendedor</div><div class="iblock nota"><span class="nota-ic">⚠</span>${mod.nota}</div></div></div>`);
+  rc.innerHTML=''; rc.appendChild(rDiv);
+  rc.insertAdjacentHTML('beforeend',`<button class="btn-r" onclick="reiniciar()">← Nueva consulta</button>`);
+  rc.classList.add('vis'); rc.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function reiniciar(){qstep=0;document.getElementById('res-c').classList.remove('vis');document.getElementById('res-c').innerHTML='';renderQuiz();}
+
+// Pre-load status
+let loaded=0;
+const allMods=[...DATA.FRT.modelos,...DATA.KW.modelos,...DATA.INT.modelos];
+allMods.forEach(mod=>{
+  const img=new Image(); img.onload=img.onerror=()=>{loaded++;const s=document.getElementById('load-status');if(!s)return;if(loaded<allMods.length){s.textContent=`Cargando fotos ${loaded}/${allMods.length}…`;}else{s.textContent=`✓ ${loaded} fotos listas`;s.style.color='var(--green)';setTimeout(()=>{s.style.opacity='0';setTimeout(()=>s.remove(),600);},2500);}};img.src=mod.foto;
+});
+renderGrid(); renderQuiz();
+
+// ══ CATALOG ENGINE ══════════════════════════════════════
+const CATALOG = window.CATALOG_DATA || [];
+// Group catalog by guide model
+const CATALOG_BY_MODEL = {};
+for(const p of CATALOG){
+  if(!CATALOG_BY_MODEL[p.m]) CATALOG_BY_MODEL[p.m]=[];
+  CATALOG_BY_MODEL[p.m].push(p);
+}
+
+// State per open detail panel
+let catState = {modelId:null, filter:'ALL', search:'', page:0};
+const PAGE_SIZE = 36;
+
+function renderCatalogSection(modelId, col) {
+  catState = {modelId, filter:'ALL', search:'', page:0};
+  const prods = CATALOG_BY_MODEL[modelId] || [];
+  
+  if(prods.length === 0) return '<div class="cat-section"><div class="cat-body"><div class="cat-empty">No hay piezas del catálogo para este modelo.</div></div></div>';
+  
+  // Get categories present
+  const cats = ['ALL', ...new Set(prods.map(p=>p.k))].filter(Boolean);
+  const catCounts = {};
+  for(const p of prods){ catCounts[p.k]=(catCounts[p.k]||0)+1; }
+  
+  const filtersHTML = cats.map(c=>{
+    const cnt = c==='ALL' ? prods.length : (catCounts[c]||0);
+    const icon = c==='ALL' ? '🔍' : (CAT_ICONS[c]||'⚙️');
+    return `<button class="cat-filter-btn${c==='ALL'?' active':''}" onclick="setCatFilter('${c}')">${icon} ${c} <span class="fcount">${cnt}</span></button>`;
+  }).join('');
+  
+  return `<div class="cat-section">
+    <div class="cat-hdr">
+      <div class="cat-title"><span class="cat-title-icon">🔩</span>Piezas del catálogo <span class="cat-count" id="cat-count">${prods.length} piezas</span></div>
+      <div class="cat-controls">
+        <input class="cat-search" type="text" placeholder="Buscar código o descripción…" oninput="catSearch(this.value)" id="cat-search-input">
+      </div>
+    </div>
+    <div class="cat-filters" id="cat-filters">${filtersHTML}</div>
+    <div class="cat-body">
+      <div class="cat-grid" id="cat-grid"></div>
+      <div class="cat-empty" id="cat-empty" style="display:none">Sin resultados para este filtro.</div>
+    </div>
+    <div class="cat-pagination" id="cat-pagination"></div>
+  </div>`;
+}
+
+function getCatProds() {
+  const all = CATALOG_BY_MODEL[catState.modelId] || [];
+  const q = catState.search.toLowerCase().trim();
+  return all.filter(p => {
+    if(catState.filter !== 'ALL' && p.k !== catState.filter) return false;
+    if(q && !p.c.includes(q) && !p.d.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function renderCatGrid() {
+  const prods = getCatProds();
+  const total = prods.length;
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+  if(catState.page >= totalPages) catState.page = 0;
+  const start = catState.page * PAGE_SIZE;
+  const slice = prods.slice(start, start + PAGE_SIZE);
+  
+  const grid = document.getElementById('cat-grid');
+  const empty = document.getElementById('cat-empty');
+  const pgn = document.getElementById('cat-pagination');
+  const cnt = document.getElementById('cat-count');
+  if(!grid) return;
+  
+  if(cnt) cnt.textContent = `${total} pieza${total!==1?'s':''}`;
+  
+  if(slice.length === 0) {
+    grid.innerHTML = '';
+    if(empty) empty.style.display = '';
+    if(pgn) pgn.innerHTML = '';
+    return;
+  }
+  if(empty) empty.style.display = 'none';
+  
+  grid.innerHTML = slice.map(p => {
+    const icon = CAT_ICONS[p.k] || '⚙️';
+    const badgeClass = p.b==='FLN'?'cbf':p.b==='KW'?'cbk':'cbi';
+    const imgHTML = p.i
+      ? `<img src="${p.i}" alt="${p.c}" loading="lazy" onerror="this.parentNode.innerHTML=fallbackPH('${icon}')">`
+      : `<div class="cat-img-ph"><span class="cat-img-icon">${icon}</span></div>`;
+    return `<div class="cat-card">
+      <div class="cat-img">${imgHTML}</div>
+      <div class="cat-info">
+        <div class="cat-code">#${p.c}</div>
+        <div class="cat-desc">${p.d}</div>
+        <span class="cat-badge ${badgeClass}">${p.b}</span>
+      </div>
+    </div>`;
+  }).join('');
+  
+  // Pagination
+  if(totalPages > 1) {
+    pgn.innerHTML = `
+      <button class="cat-pg-btn" onclick="catPage(${catState.page-1})" ${catState.page===0?'disabled':''}>← Anterior</button>
+      <span class="cat-pg-info">Página ${catState.page+1} de ${totalPages}</span>
+      <button class="cat-pg-btn" onclick="catPage(${catState.page+1})" ${catState.page===totalPages-1?'disabled':''}>Siguiente →</button>`;
+  } else {
+    pgn.innerHTML = '';
+  }
+}
+
+function fallbackPH(icon){ return `<div class="cat-img-ph"><span class="cat-img-icon">${icon}</span></div>`; }
+
+function setCatFilter(cat) {
+  catState.filter = cat;
+  catState.page = 0;
+  document.querySelectorAll('.cat-filter-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.includes(cat==='ALL'?'🔍':cat) && (cat==='ALL'||b.textContent.trim().startsWith(CAT_ICONS[cat]||cat)));
+    if(cat==='ALL') b.classList.toggle('active', b.textContent.includes('🔍'));
+  });
+  // Simpler: re-match by data
+  document.querySelectorAll('.cat-filter-btn').forEach(b=>{
+    const txt = b.getAttribute('onclick');
+    b.classList.toggle('active', txt && txt.includes(`'${cat}'`));
+  });
+  renderCatGrid();
+}
+
+function catSearch(val) {
+  catState.search = val;
+  catState.page = 0;
+  renderCatGrid();
+}
+
+function catPage(p) {
+  catState.page = p;
+  renderCatGrid();
+  document.getElementById('cat-grid')?.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+</script>
+</body>
+</html>
