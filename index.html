@@ -89,7 +89,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── INFO CARD ── */
 .mod-info{padding:11px 13px 13px;}
-.mod-nombre{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.05em;margin-bottom:1px;}
+.mod-nombre{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.05em;margin-bottom:2px;}
 .mod-anios{font-size:10.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:5px;}
 .mod-tag{font-size:11.5px;color:var(--muted);line-height:1.45;}
 
@@ -100,7 +100,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
 .det-photo{width:100%;height:260px;overflow:hidden;position:relative;background:#0a0a0a;}
 .det-photo img{width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform .4s;}
-.det-photo:hover img{transform:scale(1.04);}
+.det-photo:hover img{filter:brightness(1.06);}
 .det-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,26,.85) 0%,rgba(8,14,26,.1) 50%,transparent 100%);pointer-events:none;}
 .det-info-row{display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem 1.75rem;}
 .det-info{flex:1;min-width:0;}
@@ -108,12 +108,12 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .bf{background:var(--frt-bor);color:var(--frt-li);}
 .bk{background:var(--kw-bor);color:var(--kw-li);}
 .bi{background:var(--int-bor);color:var(--int-li);}
-.det-nombre{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:.04em;line-height:1;margin-bottom:4px;}
+.det-nombre{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:.04em;line-height:1;margin-bottom:4px;}
 .cf2{color:var(--frt);}.ck2{color:var(--kw);}.ci2{color:var(--int);}
-.det-sub{font-size:11.5px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;}
+.det-sub{font-size:14px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:12px;}
 .det-quick{display:flex;gap:7px;flex-wrap:wrap;}
 .dq{background:var(--sur2);border:1px solid var(--bor2);border-radius:var(--rad);padding:7px 12px;text-align:center;min-width:72px;}
-.dq-val{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;line-height:1;}
+.dq-val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:.04em;line-height:1;}
 .dq-lab{font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
 @media(max-width:600px){.det-photo{height:200px;}.det-info-row{flex-direction:column;}}
 .det-body{padding:1.5rem 1.75rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
@@ -309,16 +309,15 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 }
 /* Main image */
 #lightbox-img{
-  max-width:88vw;max-height:78vh;
+  max-width:94vw;max-height:88vh;
   border-radius:10px;
   box-shadow:0 8px 60px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.07);
-  transform:scale(.86) translateY(24px);
   opacity:0;
-  transition:transform .36s cubic-bezier(.22,1,.36,1), opacity .28s ease;
+  transition:opacity .28s ease;
   display:block;object-fit:contain;cursor:default;
   user-select:none;
 }
-#lightbox.open #lightbox-img{transform:scale(1) translateY(0);opacity:1;}
+#lightbox.open #lightbox-img{opacity:1;}
 /* Thumbnails strip */
 #lb-thumbs{
   display:flex;gap:8px;margin-top:14px;padding:4px 8px;
@@ -1259,6 +1258,37 @@ function hideSplash() {
 }
 
 function initApp() {
+  // Populate catalog now that catalog.js has loaded
+  const data = window.CATALOG_DATA || [];
+  CATALOG.length = 0;
+  data.forEach(p => CATALOG.push(p));
+  Object.keys(CATALOG_BY_MODEL).forEach(k => delete CATALOG_BY_MODEL[k]);
+  for(const p of CATALOG){
+    if(!CATALOG_BY_MODEL[p.m]) CATALOG_BY_MODEL[p.m]=[];
+    CATALOG_BY_MODEL[p.m].push(p);
+  }
+  // Alias map: catalog IDs → guide model IDs so products appear in correct panels
+  const _aliases = {
+    'CASCADIA':'CASCADIA_G1','CASCADIA_G2':'CASCADIA_G2','CASCADIA_G1':'CASCADIA_G1',
+    'CASCADIA126':'CASCADIA_G2','CASCADIA_126':'CASCADIA_G2','CASCADIA_P4':'CASCADIA_G2',
+    'CENTURY':'CENTURY_C112','CENTURY_C112':'CENTURY_C112','CENTURY_C120':'CENTURY_C120',
+    'CENTURY112':'CENTURY_C112','CENTURY120':'CENTURY_C120',
+    'FLD112':'FLD112','FLD120':'FLD120','FLD120XL':'FLD120XL','FLD_CLASSIC':'FLD120XL',
+    'M2':'M2_106','M2_106':'M2_106','M2_112':'M2_112',
+    'T680_NG':'T680_NG','T680NG':'T680_NG',
+    'INT9100':'INT_9100','INT9200':'INT_9200','INT9400':'INT_9400',
+    '9100':'INT_9100','9100I':'INT_9100','9200':'INT_9200','9200I':'INT_9200',
+    '9400':'INT_9400','9400I':'INT_9400',
+    'PROSTAR':'PROSTAR','LT':'LT','LT625':'LT','LT_625':'LT',
+  };
+  Object.entries(CATALOG_BY_MODEL).forEach(([catId, prods]) => {
+    const mapped = _aliases[catId] || _aliases[catId.toUpperCase()];
+    if(mapped && mapped !== catId && prods.length) {
+      if(!CATALOG_BY_MODEL[mapped]) CATALOG_BY_MODEL[mapped] = [];
+      const existing = new Set(CATALOG_BY_MODEL[mapped].map(p=>p.n+p.m));
+      prods.forEach(p => { if(!existing.has(p.n+p.m)) CATALOG_BY_MODEL[mapped].push(p); });
+    }
+  });
   setSplash(20, 'Construyendo vista de modelos…');
   renderGrid();
   setSplash(50, 'Preparando identificador…');
@@ -1297,13 +1327,9 @@ if(typeof CATALOG_DATA !== 'undefined') {
 }
 
 // ══ CATALOG ENGINE ══════════════════════════════════════
-const CATALOG = window.CATALOG_DATA || [];
-// Group catalog by guide model
+// CATALOG and CATALOG_BY_MODEL are populated in initApp() after defer load
+let CATALOG = [];
 const CATALOG_BY_MODEL = {};
-for(const p of CATALOG){
-  if(!CATALOG_BY_MODEL[p.m]) CATALOG_BY_MODEL[p.m]=[];
-  CATALOG_BY_MODEL[p.m].push(p);
-}
 
 // State per open detail panel
 let catState = {modelId:null, filter:'ALL', search:'', page:0};
@@ -1311,7 +1337,7 @@ const PAGE_SIZE = 36;
 
 function renderCatalogSection(modelId, col) {
   catState = {modelId, filter:'ALL', search:'', page:0};
-  const prods = CATALOG_BY_MODEL[modelId] || [];
+  const prods = CATALOG_BY_GUIDE_MODEL[modelId] || CATALOG_BY_MODEL[modelId] || [];
   
   if(prods.length === 0) return '<div class="cat-section"><div class="cat-body"><div class="cat-empty">No hay piezas del catálogo para este modelo.</div></div></div>';
   
