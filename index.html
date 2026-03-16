@@ -292,66 +292,108 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 @media(max-width:600px){.det-info-row{flex-direction:column;}}
 
 
-/* ── LIGHTBOX ─────────────────────────────── */
+/* ── GALLERY LIGHTBOX ─────────────────────── */
 .det-photo{cursor:zoom-in;}
 #lightbox{
   position:fixed;inset:0;z-index:9998;
-  background:rgba(0,0,0,0);
-  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,8,0);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
   visibility:hidden;
-  transition:background .3s ease;
+  transition:background .32s ease,backdrop-filter .32s;
   backdrop-filter:blur(0px);
 }
 #lightbox.open{
-  background:rgba(0,0,10,.92);
+  background:rgba(0,0,8,.94);
   visibility:visible;
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(10px);
 }
+/* Main image */
 #lightbox-img{
-  max-width:92vw;max-height:88vh;
-  border-radius:12px;
-  box-shadow:0 0 80px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08);
-  transform:scale(.82) translateY(30px);
+  max-width:88vw;max-height:78vh;
+  border-radius:10px;
+  box-shadow:0 8px 60px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.07);
+  transform:scale(.86) translateY(24px);
   opacity:0;
-  transition:transform .38s cubic-bezier(.22,1,.36,1), opacity .3s ease;
-  cursor:zoom-out;
-  display:block;
-  object-fit:contain;
+  transition:transform .36s cubic-bezier(.22,1,.36,1), opacity .28s ease;
+  display:block;object-fit:contain;cursor:default;
+  user-select:none;
 }
-#lightbox.open #lightbox-img{
-  transform:scale(1) translateY(0);
-  opacity:1;
+#lightbox.open #lightbox-img{transform:scale(1) translateY(0);opacity:1;}
+/* Thumbnails strip */
+#lb-thumbs{
+  display:flex;gap:8px;margin-top:14px;padding:4px 8px;
+  overflow-x:auto;max-width:92vw;
+  scrollbar-width:none;
+  opacity:0;transition:opacity .3s ease .18s;
 }
+#lightbox.open #lb-thumbs{opacity:1;}
+#lb-thumbs::-webkit-scrollbar{display:none;}
+.lb-thumb{
+  width:72px;height:48px;border-radius:6px;overflow:hidden;
+  border:2px solid rgba(255,255,255,.15);cursor:pointer;
+  flex-shrink:0;transition:border-color .15s,transform .15s;
+  background:#0d1626;
+}
+.lb-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.lb-thumb:hover{border-color:rgba(255,255,255,.5);transform:scale(1.06);}
+.lb-thumb.active{border-color:#42a5f5;transform:scale(1.08);}
+/* Caption + counter */
+#lb-caption-row{
+  display:flex;align-items:center;gap:16px;margin-top:10px;
+  opacity:0;transition:opacity .3s ease .2s;
+}
+#lightbox.open #lb-caption-row{opacity:1;}
 #lightbox-caption{
-  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
-  background:rgba(8,14,26,.85);border:1px solid rgba(255,255,255,.1);
-  border-radius:30px;padding:8px 20px;
-  font-size:13px;font-weight:500;color:rgba(255,255,255,.75);
-  letter-spacing:.04em;white-space:nowrap;
-  opacity:0;transition:opacity .3s ease .15s;
-  pointer-events:none;
+  background:rgba(8,14,26,.8);border:1px solid rgba(255,255,255,.1);
+  border-radius:24px;padding:6px 16px;
+  font-size:12.5px;font-weight:500;color:rgba(255,255,255,.8);
+  letter-spacing:.03em;white-space:nowrap;
 }
-#lightbox.open #lightbox-caption{opacity:1;}
-#lightbox-close{
-  position:absolute;top:20px;right:24px;
+#lb-counter{
+  font-size:11px;font-family:'DM Mono',monospace;
+  color:rgba(255,255,255,.35);white-space:nowrap;
+}
+/* Nav arrows */
+#lb-prev,#lb-nav-prev,#lb-nav-next,#lb-next{display:none;}
+.lb-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
   color:rgba(255,255,255,.7);border-radius:50%;
-  width:38px;height:38px;font-size:18px;
+  width:42px;height:42px;font-size:20px;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .18s;
+  cursor:pointer;transition:all .15s;
+  opacity:0;transition:opacity .3s ease .1s;
+  user-select:none;
+}
+#lightbox.open .lb-arrow{opacity:1;}
+.lb-arrow:hover{background:rgba(255,255,255,.2);color:#fff;}
+#lb-arrow-l{left:20px;}
+#lb-arrow-r{right:20px;}
+/* Close button */
+#lightbox-close{
+  position:absolute;top:18px;right:20px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);border-radius:50%;
+  width:36px;height:36px;font-size:17px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .15s;
   opacity:0;transition:opacity .3s ease .1s;
 }
 #lightbox.open #lightbox-close{opacity:1;}
-#lightbox-close:hover{background:rgba(255,255,255,.18);color:#fff;}
+#lightbox-close:hover{background:rgba(255,255,255,.2);color:#fff;}
 #lightbox-zoom-hint{
-  position:absolute;top:20px;left:50%;transform:translateX(-50%);
-  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(255,255,255,.3);
-  opacity:0;transition:opacity .3s ease .2s;
-  pointer-events:none;
+  position:absolute;top:18px;left:50%;transform:translateX(-50%);
+  font-size:9.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);white-space:nowrap;
+  opacity:0;transition:opacity .3s ease .22s;pointer-events:none;
 }
 #lightbox.open #lightbox-zoom-hint{opacity:1;}
 
+
+#lightbox.open #lb-main {
+  transform: scale(1) !important;
+  opacity: 1 !important;
+}
 </style>
 </head>
 <body>
@@ -1137,7 +1179,7 @@ function selMod(mod,card,grid,d){
   // Click to open lightbox
   dp.onclick=()=>{
     const img=dp.querySelector('img');
-    if(img && img.src) openLightbox(img.src, mod.nombre+' · '+mod.anios);
+    if(img && img.src) openLightbox(img.src, mod.nombre+' · '+mod.anios, mod.id);
   };
   // Info row below photo
   const infoRow=document.createElement('div'); infoRow.className='det-info-row'; infoRow.style.background=bg;
@@ -1390,34 +1432,90 @@ function catPage(p) {
   document.getElementById('cat-grid')?.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
-// ── LIGHTBOX ─────────────────────────────────────────────
-function openLightbox(src, caption) {
-  const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  const cap = document.getElementById('lightbox-caption');
-  // Request even higher res via wsrv
-  const hiRes = src.includes('wsrv.nl') ? src.replace('&w=1200','&w=2400') : src;
-  img.src = hiRes;
-  cap.textContent = caption || '';
-  lb.classList.add('open');
-  document.body.style.overflow = 'hidden';
+// ── GALLERY DATA ─────────────────────────────────────────
+const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg","https://upload.wikimedia.org/wikipedia/commons/c/c9/American_Freightliner_-_Circus_Vegas_Visits_Navan_Co._Meath_-_During_May_2011_%287326277822%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/e/e8/FEDEX_%2812371907024%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg","https://upload.wikimedia.org/wikipedia/commons/7/7d/FEMA_-_13994_-_Photograph_by_Andrea_Booher_taken_on_07-13-2005_in_Florida.jpg"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/5/54/Freightliner_FLD120_photo1.JPG","https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg"],"CENTURY_C112":["https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f6/FREIGHTLINER_120_CENTURY_1999.JPG","https://upload.wikimedia.org/wikipedia/commons/d/d9/Freightliner_cst_112_12l._Blokha.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg"],"CENTURY_C120":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/2006_Freightliner_Century_%26_2005_Freightliner_Columbia_%2823973038409%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a5/Freightliner_Cascadia_-_Flickr_-_drewj1946.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/6/64/A_2020_Cascadia_126_Shown_in_Green.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a5/Freightliner_Cascadia_-_Flickr_-_drewj1946.jpg","https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG","https://upload.wikimedia.org/wikipedia/commons/b/bf/Kenworth_W900B_with_a_Peterbilt_in_the_background.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5a/Bakersfield%2C_%28CA%29_Truck_Kenworth_at_Flying_J_Travel_Plaza_%2844637521834%29.jpg"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a0/2021_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg","https://upload.wikimedia.org/wikipedia/commons/4/4e/Tweed_Transport_Kenworth_W900L_Right-Side.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/c/c4/Kenworth_T800_dump_truck_Mesabi_Trail.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b3/2019_Kenworth_T800_dump_truck%2C_front_left.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/8/8d/2016_Kenworth_T680_in_White%2C_Front_Right%2C_10-06-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/2021_Kenworth_T680_in_Grey%2C_Front_Left%2C_10-05-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/7/72/The_National_Christmas_Tree_Event_at_Cap_Rock_%2851772622422%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b3/2019_Kenworth_T800_dump_truck%2C_front_left.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/c/ce/International_Eagle_farm_truck_VT.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg","https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/International_Eagle_farm_truck_VT.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a4/2020_International_LT_625_trailer_truck%2C_front_8.4.21.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b4/2020_International_LT_625_trailer_truck%2C_front_left%2C_8.4.21.jpg"]};
+
+// ── LIGHTBOX + CAROUSEL ──────────────────────────────────
+let _lbUrls=[], _lbIdx=0;
+
+function _wsrv(url){
+  if(!url) return '';
+  return 'https://wsrv.nl/?url='+encodeURIComponent(url.replace('https://',''))+'&w=1200&output=jpg&q=85';
 }
-function closeLightbox(e) {
-  if(e && e.target === document.getElementById('lightbox-img')) return;
-  const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  lb.classList.remove('open');
-  document.body.style.overflow = '';
-  setTimeout(()=>{ img.src = ''; }, 380);
+
+function openLightbox(mainSrc, caption, modelId){
+  const extras = (modelId && GALLERY[modelId]) ? GALLERY[modelId] : [];
+  const seen = new Set([mainSrc]);
+  _lbUrls = [mainSrc];
+  for(const u of extras){ if(!seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
+  _lbIdx = 0;
+  document.getElementById('lightbox-caption').textContent = caption||'';
+  _renderCarousel();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
 }
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+function _renderCarousel(){
+  const main = document.getElementById('lb-main');
+  const thumbs = document.getElementById('lb-thumbs');
+  const counter = document.getElementById('lb-counter');
+  // Main photo
+  const url = _lbUrls[_lbIdx];
+  main.src = _wsrv(url);
+  main.onerror = ()=>{ main.src=url; };
+  // Counter
+  counter.textContent = _lbUrls.length>1 ? (_lbIdx+1)+' / '+_lbUrls.length : '';
+  // Thumbnails
+  thumbs.innerHTML='';
+  if(_lbUrls.length>1){
+    _lbUrls.forEach((u,i)=>{
+      const t=document.createElement('img');
+      t.className='lb-thumb'+(i===_lbIdx?' active':'');
+      t.src=_wsrv(u); t.onerror=()=>{t.src=u;};
+      t.onclick=(e)=>{e.stopPropagation();_lbIdx=i;_renderCarousel();};
+      thumbs.appendChild(t);
+    });
+  }
+  // Arrows
+  const arrowVis = _lbUrls.length>1?'visible':'hidden';
+  document.querySelector('.lb-prev').style.visibility=arrowVis;
+  document.querySelector('.lb-next').style.visibility=arrowVis;
+}
+
+function lbNav(dir){
+  _lbIdx=(_lbIdx+dir+_lbUrls.length)%_lbUrls.length;
+  _renderCarousel();
+}
+
+function closeLightbox(e){
+  if(e && (e.target.id==='lb-main'||e.target.classList.contains('lb-thumb'))) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(()=>{
+    document.getElementById('lb-main').src='';
+    const t=document.getElementById('lb-thumbs'); if(t) t.innerHTML='';
+  },380);
+}
+
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='Escape') closeLightbox();
+  if(e.key==='ArrowRight') lbNav(1);
+  if(e.key==='ArrowLeft') lbNav(-1);
+});
 
 </script>
 
 <div id="lightbox" onclick="closeLightbox(event)">
-  <div id="lightbox-zoom-hint">Clic para cerrar</div>
+  <div id="lightbox-zoom-hint">ESC · ← → navegar · clic fuera para cerrar</div>
   <button id="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" src="" alt="">
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:92vw;">
+    <button class="lb-prev lb-nav" onclick="lbNav(-1);event.stopPropagation()">‹</button>
+    <button class="lb-next lb-nav" onclick="lbNav(1);event.stopPropagation()">›</button>
+    <img id="lb-main" src="" alt="" style="max-width:90vw;max-height:72vh;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .28s ease;transform:scale(.85);opacity:0;">
+    <div id="lb-thumbs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:90vw;"></div>
+    <div id="lb-counter" style="font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;"></div>
+  </div>
   <div id="lightbox-caption"></div>
 </div>
 
