@@ -1408,8 +1408,7 @@ function closeLightbox(e) {
   const img = document.getElementById('lightbox-img');
   lb.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(()=>{ img.src = ''; ,
-   pos:'center 38%'}, 380);
+  setTimeout(()=>{ img.src = ''; }, 380);
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
 
