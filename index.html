@@ -792,9 +792,7 @@ const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO"
 // ══════════════════════════════════════════════════
 function px(path){
   try { path = decodeURIComponent(path); } catch(e) {}
-  // Request larger images (1200px) for the new hero photo layout
-  const hires = path.replace(/\/(\d+)px-/, '/1200px-');
-  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+hires)+'&w=1200&output=jpg&q=88';
+  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=900&output=jpg&q=88';
 }
 
 const DATA={
@@ -807,7 +805,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','112"'],['Long. cofre','52.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
    cofre:'Cofre de <strong>52.5 pulgadas</strong>, diseño aerodinámico. Cabina de aluminio que abre completamente hacia adelante. Diseñado para motores de desplazamiento mediano. Apertura de rueda más pequeña que el FLD120.',
    nota:'Motor <strong>Cummins M11, CAT C10 o C12</strong> = FLD112. Cofre notablemente más corto que el FLD120. Eje delantero muy hacia atrás (setback). Si el eje parece estar bajo la cabina = FLD112.',
-   ident:[['📏','<strong>Cofre corto 52.5"</strong> — notablemente más corto que el FLD120'],['🔩','<strong>Eje setback extremo</strong> — llanta delantera casi bajo la cabina'],['💡','<strong>2 faros rectangulares</strong> por lado integrados en cofre plano'],['🔧','Motores <strong>M11, C10, C12</strong> (NO Detroit Series 60 — ese es FLD120)'],['📐','<strong>Apertura rueda pequeña</strong> vs FLD120 (rueda visible muy atrás)']]},
+   ident:[['📏','<strong>Cofre corto 52.5"</strong> — notablemente más corto que el FLD120'],['🔩','<strong>Eje setback extremo</strong> — llanta delantera casi bajo la cabina'],['💡','<strong>2 faros rectangulares</strong> por lado integrados en cofre plano'],['🔧','Motores <strong>M11, C10, C12</strong> (NO Detroit Series 60 — ese es FLD120)'],['📐','<strong>Apertura rueda pequeña</strong> vs FLD120 (rueda visible muy atrás)']],
+   pos:'center 50%'},
   {id:'FLD120',nombre:'FLD120',anios:'1989–2010',bbc:'120"',long:'60.5"',
    tag:'Cofre largo curvado, motor grande',
    foto:px('/wikipedia/commons/thumb/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg/500px-15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg'),
@@ -815,7 +814,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','120"'],['Long. cofre','60.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
    cofre:'Cofre largo de <strong>60.5 pulgadas</strong> con diseño curvado aerodinámico. Para los motores más grandes de la época: Detroit Series 60, N14 y CAT 3406. El cofre abre completamente hacia adelante.',
    nota:'Motor <strong>Detroit Series 60, N14 o CAT 3406/C15</strong> = FLD120. Cofre más largo y curvado que el FLD112. Eje setback pero con cofre notablemente más largo.',
-   ident:[['📏','<strong>Cofre largo 60.5"</strong> — 8 pulgadas más largo que FLD112 visible a simple vista'],['🔩','<strong>Eje setback</strong> — pero llanta más al frente que en FLD112'],['💡','<strong>2 faros rectangulares</strong> por lado, misma cabina que FLD112'],['🔧','Motores grandes: <strong>Detroit Series 60, Cummins N14</strong>'],['⚠️','Confirmar si es <strong>set-back o set-forward</strong> — cambian el cofre']]},
+   ident:[['📏','<strong>Cofre largo 60.5"</strong> — 8 pulgadas más largo que FLD112 visible a simple vista'],['🔩','<strong>Eje setback</strong> — pero llanta más al frente que en FLD112'],['💡','<strong>2 faros rectangulares</strong> por lado, misma cabina que FLD112'],['🔧','Motores grandes: <strong>Detroit Series 60, Cummins N14</strong>'],['⚠️','Confirmar si es <strong>set-back o set-forward</strong> — cambian el cofre']],
+   pos:'center 40%'},
   {id:'FLD120XL',nombre:'FLD120 Classic XL',anios:'1991–2010',bbc:'132"',long:'~70"',
    tag:'Long-nose clásico — filtros de aire externos laterales',
    foto:px('/wikipedia/commons/thumb/5/54/Freightliner_FLD120_photo1.JPG/500px-Freightliner_FLD120_photo1.JPG'),
@@ -823,7 +823,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','132"'],['Long. cofre','~70"'],['Filtros aire','Dobles externos laterales'],['Rejilla','Rectangular grande'],['BBC','El más largo de los FLD']],
    cofre:'Versión "long-nose" del FLD120. Característica clave: <strong>filtros de aire dobles externos a los lados del cofre</strong> y rejilla frontal rectangular grande. BBC de 132", el más largo de la línea FLD.',
    nota:'<strong>Filtros de aire dobles a los lados del cofre</strong> + rejilla rectangular grande = Classic XL. Cofre rectangular (no curvado) confirma Classic XL. Ningún otro Freightliner tiene esos filtros externos.',
-   ident:[['📏','<strong>Cofre ~70" el más largo FLD</strong> — BBC 132" inconfundible'],['🌬️','<strong>Filtros de aire EXTERNOS</strong> a los lados del cofre — característica única'],['👑','Rejilla clásica cromada grande, look "classic" inconfundible'],['🔩','<strong>Eje set-FORWARD</strong> — llanta casi al nivel del bumper'],['🎯','Si ves los filtros de aire cromados en los flancos = es un Classic XL']]},
+   ident:[['📏','<strong>Cofre ~70" el más largo FLD</strong> — BBC 132" inconfundible'],['🌬️','<strong>Filtros de aire EXTERNOS</strong> a los lados del cofre — característica única'],['👑','Rejilla clásica cromada grande, look "classic" inconfundible'],['🔩','<strong>Eje set-FORWARD</strong> — llanta casi al nivel del bumper'],['🎯','Si ves los filtros de aire cromados en los flancos = es un Classic XL']],
+   pos:'center 45%'},
   {id:'CENTURY_C112',nombre:'Century C112',anios:'1996–2010',bbc:'112"',long:'~46"',
    tag:'Diseño Daimler — 4 faros cuadrados, cofre corto',
    foto:px('/wikipedia/commons/thumb/f/f6/FREIGHTLINER_120_CENTURY_1999.JPG/500px-FREIGHTLINER_120_CENTURY_1999.JPG'),
@@ -831,7 +832,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['Diferenciador','vs Columbia: faros cuadrados']],
    cofre:'Primer modelo Freightliner diseñado bajo Daimler AG. Cofre aerodinámico de una pieza. Característica visual más notable: <strong>cuatro faros rectangulares separados</strong>. Versión BBC corto (112").',
    nota:'<strong>4 faros rectangulares separados + BBC 112"</strong> = Century C112. El cofre es visiblemente más corto que el C120. Año 1996–2010. Diferencia clave vs Columbia: faros cuadrados vs ovalados.',
-   ident:[['💡','<strong>4 faros rectangulares en 2 grupos</strong> separados por parrilla — distintivo Century'],['📏','<strong>Cofre corto ~46"</strong> — el más corto de los FLN con BBC 112"'],['🔄','Cabina <strong>más redonda y aerodinámica</strong> que FLD (mismo año)'],['🔩','Eje setback — llanta bajo la cabina'],['⚠️','Verificar año: <strong>1996-2004 = C112</strong>, cofre diferente al C120']]},
+   ident:[['💡','<strong>4 faros rectangulares en 2 grupos</strong> separados por parrilla — distintivo Century'],['📏','<strong>Cofre corto ~46"</strong> — el más corto de los FLN con BBC 112"'],['🔄','Cabina <strong>más redonda y aerodinámica</strong> que FLD (mismo año)'],['🔩','Eje setback — llanta bajo la cabina'],['⚠️','Verificar año: <strong>1996-2004 = C112</strong>, cofre diferente al C120']],
+   pos:'center 40%'},
   {id:'CENTURY_C120',nombre:'Century C120',anios:'1996–2010',bbc:'120"',long:'~54"',
    tag:'Diseño Daimler — 4 faros cuadrados, cofre largo',
    foto:px('/wikipedia/commons/thumb/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg/500px-2009-07-05_Chatham_Steel_Freightliner.jpg'),
@@ -839,7 +841,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','120"'],['Long. cofre','~54"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['BBC','120" — más largo que el C112']],
    cofre:'Versión BBC largo del Century Class. Mismo diseño que el C112 pero con cofre de ~54" para motores más grandes. <strong>Cuatro faros rectangulares separados</strong> igual que el C112.',
    nota:'<strong>4 faros cuadrados + BBC 120"</strong> = Century C120. Cofre más largo que el C112. El más usado por operadores independientes en carretera larga dentro de la línea Century.',
-   ident:[['💡','<strong>4 faros en 2 grupos</strong> (igual C112 pero cofre más largo)'],['📏','<strong>Cofre ~54"</strong> — 8" más largo que C112, BBC 120"'],['🔄','Cabina aerodinámica redondeada, distinta a la FLD cuadrada'],['🔩','Eje set-back estándar en carretera'],['🎯','Si el cofre es largo y tiene 4 faros en 2 grupos = Century C120']]},
+   ident:[['💡','<strong>4 faros en 2 grupos</strong> (igual C112 pero cofre más largo)'],['📏','<strong>Cofre ~54"</strong> — 8" más largo que C112, BBC 120"'],['🔄','Cabina aerodinámica redondeada, distinta a la FLD cuadrada'],['🔩','Eje set-back estándar en carretera'],['🎯','Si el cofre es largo y tiene 4 faros en 2 grupos = Century C120']],
+   pos:'center 45%'},
   {id:'COLUMBIA',nombre:'Columbia 120',anios:'2001–2011',bbc:'120"',long:'57"',
    tag:'Flotilla — faros ovalados tipo gota',
    foto:px('/wikipedia/commons/thumb/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg/500px-2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg'),
@@ -847,7 +850,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','120"'],['Long. cofre','57"'],['Eje delantero','Set-back'],['Faros','Ovalados tipo gota'],['Rejilla','Pequeña integrada']],
    cofre:'Comparte estructura de cabina con el Century Class pero los <strong>faros son ovalados en forma de gota</strong>. Rejilla frontal más pequeña. Fue el camión de flotilla más económico de Freightliner.',
    nota:'<strong>Faros ovalados/gota = Columbia; faros cuadrados = Century</strong>. Es la diferencia visual más rápida. Freightliner 2001–2011 con faros tipo gota = Columbia. Motor Detroit 60 o Cummins ISX son los más comunes.',
-   ident:[['💡','<strong>Faros ovalados tipo "gota"</strong> — completamente diferentes al Century/FLD'],['📏','Cofre ~57", BBC 120" — similar largo al C120 pero diseño diferente'],['🔄','Frente más <strong>redondeado y suave</strong> que Century'],['🎯','Los faros ovales son la clave — no los tiene ningún otro FLN de esa era'],['📅','Solo <strong>2001-2011</strong> — si es anterior = Century, si es posterior = Cascadia']]},
+   ident:[['💡','<strong>Faros ovalados tipo "gota"</strong> — completamente diferentes al Century/FLD'],['📏','Cofre ~57", BBC 120" — similar largo al C120 pero diseño diferente'],['🔄','Frente más <strong>redondeado y suave</strong> que Century'],['🎯','Los faros ovales son la clave — no los tiene ningún otro FLN de esa era'],['📅','Solo <strong>2001-2011</strong> — si es anterior = Century, si es posterior = Cascadia']],
+   pos:'center 40%'},
   {id:'CASCADIA_G1',nombre:'Cascadia Gen1',anios:'2008–2017',bbc:'125"',long:'50.5"',
    tag:'Primera generación — extensiones de cabina cortas',
    foto:px('/wikipedia/commons/thumb/c/c2/FL_CasacadiaAtLV_NV.jpg/500px-FL_CasacadiaAtLV_NV.jpg'),
@@ -855,7 +859,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','125"'],['Long. cofre','50.5"'],['Extensiones cab.','Cortas'],['Hinge bar','Visible en el cofre'],['Generación','Gen1 (2008–2017)']],
    cofre:'Primera generación del Cascadia con BBC de <strong>125 pulgadas</strong> y cofre de 50.5". Extensiones laterales de la cabina cortas. El hinge bar (barra de bisagra) es visible en el cofre.',
    nota:'<strong>2008–2017 = Cascadia Gen1 (BBC 125")</strong>. Extensiones de cabina cortas = Gen1. Hinge bar visible = Gen1. Motores Detroit DD exclusivos. Motor Cummins ISX15 = más raro, confirmar año.',
-   ident:[['💡','<strong>Faro integrado en bloque con el cofre</strong> — característica única'],['📅','<strong>2008-2017</strong> — extensiones laterales cortas, parabrisas menos curvado'],['🔲','Parabrisas de <strong>2 piezas</strong> (partida al centro) — diferencia vs Gen2'],['📏','BBC 125", cofre ~50.5" — más aerodinámico que todos los anteriores'],['⚠️','Confirmar año: piezas Gen1 y Gen2 <strong>NO son intercambiables</strong>']]},
+   ident:[['💡','<strong>Faro integrado en bloque con el cofre</strong> — característica única'],['📅','<strong>2008-2017</strong> — extensiones laterales cortas, parabrisas menos curvado'],['🔲','Parabrisas de <strong>2 piezas</strong> (partida al centro) — diferencia vs Gen2'],['📏','BBC 125", cofre ~50.5" — más aerodinámico que todos los anteriores'],['⚠️','Confirmar año: piezas Gen1 y Gen2 <strong>NO son intercambiables</strong>']],
+   pos:'center 38%'},
   {id:'CASCADIA_G2',nombre:'Cascadia Gen2 / P4',anios:'2018–Presente',bbc:'126"',long:'52.5"',
    tag:'Segunda generación — extensiones largas, rediseño completo',
    foto:px('/wikipedia/commons/thumb/6/64/A_2020_Cascadia_126_Shown_in_Green.jpg/500px-A_2020_Cascadia_126_Shown_in_Green.jpg'),
@@ -863,7 +868,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','126"'],['Long. cofre','52.5"'],['Extensiones cab.','Largas (+7.5")'],['Rediseño','Completo vs Gen1'],['Generación','Gen2 / P4 (2018+)']],
    cofre:'Segunda generación con BBC de <strong>126 pulgadas</strong> y cofre de 52.5". Extensiones de cabina significativamente más largas que la Gen1. Rediseño completo con mejor aerodinámica.',
    nota:'<strong>2018 en adelante = Gen2/P4 (BBC 126")</strong>. Extensiones de cabina largas = Gen2. El cofre se ve más pronunciado. Partes no compatibles con Gen1.',
-   ident:[['💡','<strong>Faro rediseñado 2018+</strong> — forma diferente al Gen1, más moderno'],['📅','<strong>2018-presente (P4)</strong> — extensiones laterales más largas'],['🔲','Parabrisas <strong>1 pieza panorámico</strong> — diferencia clave vs Gen1 (2 piezas)'],['📏','BBC 126", cofre ~52.5" — ligeramente más largo que Gen1'],['⚠️','Preguntar año SIEMPRE — pieza Gen1 no monta en Gen2 y viceversa']]},
+   ident:[['💡','<strong>Faro rediseñado 2018+</strong> — forma diferente al Gen1, más moderno'],['📅','<strong>2018-presente (P4)</strong> — extensiones laterales más largas'],['🔲','Parabrisas <strong>1 pieza panorámico</strong> — diferencia clave vs Gen1 (2 piezas)'],['📏','BBC 126", cofre ~52.5" — ligeramente más largo que Gen1'],['⚠️','Preguntar año SIEMPRE — pieza Gen1 no monta en Gen2 y viceversa']],
+   pos:'center 35%'},
   {id:'M2_106',nombre:'M2 106',anios:'2002–Presente',bbc:'106"',long:'39"',
    tag:'Mediano tonelaje — cofre muy corto, trabajo urbano',
    foto:px('/wikipedia/commons/thumb/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg/500px-Freightliner_Business_Class_M2_box_rigid.jpg'),
@@ -871,7 +877,8 @@ FRT:{marca:'Freightliner',col:'frt',
    specs:[['BBC','106"'],['Long. cofre','39"'],['Clase','Clase 6–8 mediano'],['Cabina','Business Class compacta'],['Uso','Trabajo urbano / distribución']],
    cofre:'Cofre más corto de toda la línea Freightliner: solo <strong>39 pulgadas</strong>. Camión de mediano tonelaje, no para carretera larga. Ideal para distribución, grúas, volteos medianos y recolección de basura.',
    nota:'Cofre <strong>visualmente muy corto</strong> vs cualquier otro Freightliner = M2 106. Motores pequeños: Cummins ISB, CAT C7, Detroit DD5. Cabina cuadrada y compacta confirma M2.',
-   ident:[['📏','<strong>Cofre muy corto 39"</strong> — el más corto de todos los Freightliner'],['🏙️','Cabina cuadrada <strong>urbana/vocacional</strong> — radio de giro muy corto'],['💡','Faros redondos integrados en cofre pequeño'],['🔧','Motor <strong>MBE906, Cummins ISB, CAT C7</strong> — bajo desplazamiento'],['🎯','Si el cofre es muy corto y cabina cuadrada = M2 106 (entrega urbana)']]},
+   ident:[['📏','<strong>Cofre muy corto 39"</strong> — el más corto de todos los Freightliner'],['🏙️','Cabina cuadrada <strong>urbana/vocacional</strong> — radio de giro muy corto'],['💡','Faros redondos integrados en cofre pequeño'],['🔧','Motor <strong>MBE906, Cummins ISB, CAT C7</strong> — bajo desplazamiento'],['🎯','Si el cofre es muy corto y cabina cuadrada = M2 106 (entrega urbana)']],
+   pos:'center 45%'},
   {id:'M2_112',nombre:'M2 112',anios:'2004–Presente',bbc:'112"',long:'43.5"',
    tag:'Mediano tonelaje ampliado — 4.5 pulgadas más que el M2 106',
    foto:px('/wikipedia/commons/thumb/8/84/Freightliner_Business_Class_Crew_Cab.jpg/500px-Freightliner_Business_Class_Crew_Cab.jpg'),
@@ -900,7 +907,8 @@ FRT:{marca:'Freightliner',col:'frt',
     {id:31,preg:'El Cascadia moderno — ¿qué año es?',det:'Gen1 y Gen2 tienen cofres distintos con 1" de BBC de diferencia y extensiones de cabina diferentes.',
      opc:[{l:'2008–2017 (Gen1 — extensiones de cabina cortas, BBC 125")',r:'CASCADIA_G1'},{l:'2018 en adelante (Gen2/P4 — extensiones largas, BBC 126")',r:'CASCADIA_G2'}]},
   ],
-   ident:[['📏','<strong>Cofre 43.5"</strong> — 4.5" más largo que M2 106, visible en nariz'],['🔧','Motor más grande: <strong>Detroit DD13, Cummins ISL, CAT C9</strong>'],['💡','Misma cabina cuadrada M2 pero nariz ligeramente más larga'],['🎯','Medir cofre: <strong>39" = M2 106</strong>, <strong>43.5" = M2 112</strong> — única diferencia'],['⚠️','El número de pieza cambia entre 106 y 112 — confirmar antes de pedir']]},
+   ident:[['📏','<strong>Cofre 43.5"</strong> — 4.5" más largo que M2 106, visible en nariz'],['🔧','Motor más grande: <strong>Detroit DD13, Cummins ISL, CAT C9</strong>'],['💡','Misma cabina cuadrada M2 pero nariz ligeramente más larga'],['🎯','Medir cofre: <strong>39" = M2 106</strong>, <strong>43.5" = M2 112</strong> — única diferencia'],['⚠️','El número de pieza cambia entre 106 y 112 — confirmar antes de pedir']],
+   pos:'center 40%'},
 KW:{marca:'Kenworth',col:'kw',
   modelos:[
   {id:'W900',nombre:'W900',anios:'1961–Presente',bbc:'120"',long:'~60"',
@@ -910,7 +918,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','120"'],['Long. cofre','~60"'],['Eje delantero','Set-back centrado'],['Rejilla','Cromada rectangular grande'],['Fenders','Redondos separados']],
    cofre:'Cofre <strong>largo, recto y cuadrado ~60"</strong> con rejilla frontal cromada rectangular grande. Eje delantero centrado bajo el cofre. Fenders redondos separados del cofre. El camión más icónico del operador independiente norteamericano.',
    nota:'<strong>Rejilla cromada rectangular grande + cofre recto cuadrado</strong> = W900. Eje delantero bajo el cofre (no hacia atrás) confirma W900. PACCAR MX-13 en años recientes; CAT 3406 o N14 en versiones antiguas.',
-   ident:[['🔲','<strong>Cofre cuadrado recto</strong> — ángulos de 90°, sin inclinación aerodinámica'],['🏆','<strong>Rejilla cromada grande y plana</strong> — ancha, rectangular, icónica'],['📏','BBC 120" (W900B estándar) — cofre ~60"'],['🔲','<strong>4 faros rectangulares</strong> en cofre plano — 2 por lado'],['🎯','Si el cofre es cuadrado recto y rejilla plana cromada = W900 (no L)']]},
+   ident:[['🔲','<strong>Cofre cuadrado recto</strong> — ángulos de 90°, sin inclinación aerodinámica'],['🏆','<strong>Rejilla cromada grande y plana</strong> — ancha, rectangular, icónica'],['📏','BBC 120" (W900B estándar) — cofre ~60"'],['🔲','<strong>4 faros rectangulares</strong> en cofre plano — 2 por lado'],['🎯','Si el cofre es cuadrado recto y rejilla plana cromada = W900 (no L)']],
+   pos:'center 42%'},
   {id:'W900L',nombre:'W900L',anios:'1979–Presente',bbc:'130"',long:'~72"',
    tag:'Long-nose extremo — cofre 12" más largo que el W900',
    foto:px('/wikipedia/commons/thumb/1/17/2002_Kenworth_W900L_1.jpg/500px-2002_Kenworth_W900L_1.jpg'),
@@ -918,7 +927,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','130"'],['Long. cofre','~72"'],['vs W900','+10" BBC / +12" cofre'],['Eje delantero','Set-back centrado'],['Rejilla','Cromada grande — igual al W900']],
    cofre:'Versión "L" (Long) del W900 con cofre de ~72" y BBC de 130". El camión Kenworth de cofre más largo disponible. Visualmente igual al W900 pero el cofre es notablemente más extenso.',
    nota:'Si el W900 se ve con cofre <strong>visiblemente más largo</strong> que un W900 normal = W900L. BBC 130" vs 120" del W900 estándar. La diferencia de 10" en BBC es apreciable a simple vista desde el frente.',
-   ident:[['📏','<strong>BBC 130" — cofre 10" más largo que W900B</strong> inconfundible'],['🔻','<strong>Rejilla más angosta y delgada</strong> que W900B — narices más afiladas'],['📐','<strong>Mayor espacio</strong> entre fender y step box vs W900B'],['🔲','Cofre cuadrado pero más largo — la L = Long Hood'],['🎯','Comparar largo del cofre con W900: si es notablemente más largo = W900L']]},
+   ident:[['📏','<strong>BBC 130" — cofre 10" más largo que W900B</strong> inconfundible'],['🔻','<strong>Rejilla más angosta y delgada</strong> que W900B — narices más afiladas'],['📐','<strong>Mayor espacio</strong> entre fender y step box vs W900B'],['🔲','Cofre cuadrado pero más largo — la L = Long Hood'],['🎯','Comparar largo del cofre con W900: si es notablemente más largo = W900L']],
+   pos:'center 40%'},
   {id:'T600',nombre:'T600',anios:'1984–2007',bbc:'112"',long:'~52"',
    tag:'El "anteater" — nariz inclinada hacia abajo',
    foto:px('/wikipedia/commons/thumb/e/ec/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg/600px-1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg'),
@@ -926,7 +936,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','112"'],['Long. cofre','~52"'],['Eje delantero','Set-back (muy atrás)'],['Perfil','Inclinado hacia abajo'],['Apodo','Anteater / Nariz de hormiguero']],
    cofre:'El primer camión diseñado con aerodinámica como prioridad en Kenworth. Cofre de ~52" con <strong>perfil inclinado hacia abajo en la punta</strong> — apodo "anteater". Eje delantero muy desplazado hacia atrás.',
    nota:'<strong>Nariz del cofre apunta hacia abajo</strong> = T600 (1984–2007). El perfil inclinado es la señal más obvia. Eje delantero bajo la cabina, no bajo el cofre. El camión más aerodinámico de Kenworth de su época.',
-   ident:[['🦭','<strong>Nariz inclinada hacia ABAJO</strong> — apodo "anteater" (oso hormiguero)'],['📏','BBC 112", cofre ~52" — primer KW aerodinámico 1984'],['🔩','<strong>Eje setback extremo</strong> — llanta muy atrás bajo la cabina'],['💡','Faros integrados en el cofre inclinado'],['🎯','La nariz apuntando hacia abajo es inconfundible — único KW con ese perfil']]},
+   ident:[['🦭','<strong>Nariz inclinada hacia ABAJO</strong> — apodo "anteater" (oso hormiguero)'],['📏','BBC 112", cofre ~52" — primer KW aerodinámico 1984'],['🔩','<strong>Eje setback extremo</strong> — llanta muy atrás bajo la cabina'],['💡','Faros integrados en el cofre inclinado'],['🎯','La nariz apuntando hacia abajo es inconfundible — único KW con ese perfil']],
+   pos:'center 38%'},
   {id:'T660',nombre:'T660',anios:'2008–2017',bbc:'116"',long:'~54"',
    tag:'Sucesor del T600 — perfil inclinado moderno',
    foto:px('/wikipedia/commons/thumb/c/c9/Kenworth_T660_of_SRT.jpg/600px-Kenworth_T660_of_SRT.jpg'),
@@ -934,7 +945,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','116"'],['Long. cofre','~54"'],['vs T600','+4" BBC / +2" cofre'],['Eje delantero','Set-back (muy atrás)'],['Años','Sucesor del T600']],
    cofre:'Sucesor del T600 con cofre rediseñado de ~54" y BBC de 116". Mantuvo el perfil aerodinámico inclinado del T600 con un diseño más moderno. Cumple normas de emisiones 2010 con SCR.',
    nota:'T660 = años 2008–2017 con cofre inclinado. Si tiene el mismo perfil "anteater" pero parece más moderno = T660. BBC 116" vs 112" del T600. Motor PACCAR MX-13 en versiones tardías.',
-   ident:[['🔺','Sucesor del T600 — <strong>perfil inclinado moderno</strong> más estilizado'],['📏','BBC 116", cofre ~54" — ligeramente más largo que T600'],['💡','Faros más modernos que T600, integrados en el perfil inclinado'],['🔩','Eje setback, cabina más ancha que T600'],['📅','<strong>2008-2017</strong> — si es anterior = T600, si es posterior = T680']]},
+   ident:[['🔺','Sucesor del T600 — <strong>perfil inclinado moderno</strong> más estilizado'],['📏','BBC 116", cofre ~54" — ligeramente más largo que T600'],['💡','Faros más modernos que T600, integrados en el perfil inclinado'],['🔩','Eje setback, cabina más ancha que T600'],['📅','<strong>2008-2017</strong> — si es anterior = T600, si es posterior = T680']],
+   pos:'center 38%'},
   {id:'T800',nombre:'T800',anios:'1987–Presente',bbc:'116–126"',long:'~56"',
    tag:'Vocacional todoterreno — fenders separados en vocacional',
    foto:px('/wikipedia/commons/thumb/c/c9/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg/600px-2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg'),
@@ -942,7 +954,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','116–126"'],['Long. cofre','~56"'],['Eje delantero','Set-back o Set-forward'],['Fenders','Integrados o split'],['Uso','Vocacional / carretera']],
    cofre:'Cofre horizontal y cuadrado de ~56", sin el perfil inclinado del T600/T660. Puede tener <strong>fenders separados del cofre (split fender)</strong> en versiones vocacionales para volcadoras, revolvedoras y construcción.',
    nota:'Kenworth trabajo pesado con cofre cuadrado horizontal = T800. <strong>Fenders separados del cofre</strong> confirman T800 vocacional. Fenders integrados = T800 de carretera. Motor Cummins X15 o PACCAR MX-13 en recientes.',
-   ident:[['🔲','<strong>Cofre cuadrado y alto</strong> — fenders separados visibles (split fender)'],['🏗️','<strong>Vocacional/todo terreno</strong> — cofre alto para motores grandes'],['📏','BBC 116-126", cofre ~56" — varía según configuración'],['💡','Faros rectangulares en cofre cuadrado alto'],['⚠️','Preguntar: <strong>¿fenders integrados o separados?</strong> — cambia el cofre']]},
+   ident:[['🔲','<strong>Cofre cuadrado y alto</strong> — fenders separados visibles (split fender)'],['🏗️','<strong>Vocacional/todo terreno</strong> — cofre alto para motores grandes'],['📏','BBC 116-126", cofre ~56" — varía según configuración'],['💡','Faros rectangulares en cofre cuadrado alto'],['⚠️','Preguntar: <strong>¿fenders integrados o separados?</strong> — cambia el cofre']],
+   pos:'center 40%'},
   {id:'T680',nombre:'T680',anios:'2013–2022',bbc:'122"',long:'~52"',
    tag:'Larga distancia moderno — parabrisas panorámico',
    foto:px('/wikipedia/commons/thumb/9/96/2016_Kenworth_T680.jpg/500px-2016_Kenworth_T680.jpg'),
@@ -950,7 +963,8 @@ KW:{marca:'Kenworth',col:'kw',
    specs:[['BBC','122"'],['Long. cofre','~52"'],['Parabrisas','1 pieza panorámica'],['Cabina','8" más ancha que T800'],['Uso','Larga distancia / flotilla']],
    cofre:'Cofre aerodinámico de ~52" con <strong>parabrisas de una sola pieza panorámico</strong>. Cabina 8 pulgadas más ancha que el T800. El modelo más eficiente de Kenworth en carretera.',
    nota:'Kenworth moderno (2013+) con <strong>parabrisas panorámico de un vidrio</strong> = T680. Camión de carretera/flotilla. Motor PACCAR MX-13 o MX-11 confirma T680.',
-   ident:[['🔲','<strong>Parabrisas panorámico de UNA SOLA PIEZA</strong> — diferencia clave'],['📏','BBC 122", cofre ~52" — cabina 8" más ancha que T800'],['💡','Faros integrados en cofre aerodinámico, diseño 2013-2022'],['🪞','Espejos convencionales de cristal (NO digitales como Next Gen)'],['🎯','Parabrisas de 1 pieza sin división central = T680 clásico (2013-2022)']]},
+   ident:[['🔲','<strong>Parabrisas panorámico de UNA SOLA PIEZA</strong> — diferencia clave'],['📏','BBC 122", cofre ~52" — cabina 8" más ancha que T800'],['💡','Faros integrados en cofre aerodinámico, diseño 2013-2022'],['🪞','Espejos convencionales de cristal (NO digitales como Next Gen)'],['🎯','Parabrisas de 1 pieza sin división central = T680 clásico (2013-2022)']],
+   pos:'center 35%'},
   {id:'T680_NG',nombre:'T680 Next Gen',anios:'2023–Presente',bbc:'122"',long:'~52"',
    tag:'Nueva generación 2023 — frente rediseñado, cofre angosto, faros full LED, espejos digitales',
    foto:px('/wikipedia/commons/thumb/7/72/The_National_Christmas_Tree_Event_at_Cap_Rock_(51772622422).jpg/500px-The_National_Christmas_Tree_Event_at_Cap_Rock_(51772622422).jpg'),
@@ -959,7 +973,8 @@ KW:{marca:'Kenworth',col:'kw',
    cofre:'Cofre de <strong>diseño completamente nuevo 2023</strong> — más angosto y aerodinámico que el T680 clásico. Frente rediseñado con deflectores de aire integrados, tomas de aire rediseñadas y guardafangos de nuevo perfil. Parabrisas panorámico de una pieza igual al T680 clásico pero cofre distinto.',
    nota:'⚠️ <strong>Las piezas del T680 2013-2022 NO son compatibles.</strong> El cofre, defensas, faros, parabrisas y molduras son piezas exclusivas del Next Gen. El T680 Next Gen se reconoce por su <strong>frente más angosto y delgado</strong>, espejos digitales (sin luna de espejo visible), y el logotipo "T680" en el cofre con tipografía nueva. Fabricado en Mexicali, B.C.',
    id_cat:'T680_NG',
-   ident:[['🔻','<strong>Frente más angosto y delgado</strong> — cofre rediseñado vs T680 clásico'],['🪞','<strong>Espejos DIGITALES</strong> sin luna visible — tecnología DVM exclusiva'],['💡','Faros full LED integrados — diseño diferente al T680 2013-2022'],['📺','Pantalla digital 15" en tablero — la más grande en camión norteamericano'],['⚠️','Piezas <strong>NO compatibles con T680 2013-2022</strong> — diferente cofre, defensas y faros']]},
+   ident:[['🔻','<strong>Frente más angosto y delgado</strong> — cofre rediseñado vs T680 clásico'],['🪞','<strong>Espejos DIGITALES</strong> sin luna visible — tecnología DVM exclusiva'],['💡','Faros full LED integrados — diseño diferente al T680 2013-2022'],['📺','Pantalla digital 15" en tablero — la más grande en camión norteamericano'],['⚠️','Piezas <strong>NO compatibles con T680 2013-2022</strong> — diferente cofre, defensas y faros']],
+   pos:'center 38%'},
   {id:'T880',nombre:'T880',anios:'2015–Presente',bbc:'121–130"',long:'~60"',
    tag:'Vocacional moderno — misma cabina que T680',
    foto:px('/wikipedia/commons/thumb/1/17/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg/500px-2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg'),
@@ -978,7 +993,8 @@ KW:{marca:'Kenworth',col:'kw',
     {id:3,preg:'¿Es para carretera larga / flotilla o para trabajo vocacional?',det:'T680 y T880 comparten la misma cabina ancha panorámica pero son aplicaciones distintas.',
      opc:[{l:'Carretera larga, larga distancia, flotilla',r:'T680'},{l:'Vocacional — volcadora, mixer, grúa, construcción',r:'T880'}]},
   ],
-   ident:[['🔲','<strong>Misma cabina que T680</strong> pero configurado para vocacional/pesado'],['🏗️','Cofre más alto y cuadrado que T680 — permite motores más grandes'],['📏','BBC 121-130", cofre ~60" — más largo que T680'],['🔩','<strong>Fenders separados</strong> (split fender) en versión vocacional'],['🎯','Si tiene cabina tipo T680 pero cofre más alto y cuadrado = T880']]},
+   ident:[['🔲','<strong>Misma cabina que T680</strong> pero configurado para vocacional/pesado'],['🏗️','Cofre más alto y cuadrado que T680 — permite motores más grandes'],['📏','BBC 121-130", cofre ~60" — más largo que T680'],['🔩','<strong>Fenders separados</strong> (split fender) en versión vocacional'],['🎯','Si tiene cabina tipo T680 pero cofre más alto y cuadrado = T880']],
+   pos:'center 35%'},
 INT:{marca:'International',col:'int',
   modelos:[
   {id:'INT_9100',nombre:'9100i',anios:'1998–2003',bbc:'112"',long:'~46"',
@@ -988,7 +1004,8 @@ INT:{marca:'International',col:'int',
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Cabina','Solo day cab (sin dormir)'],['Eje delantero','Set-back extremo'],['Diferencia vs 9200i','Sin opción sleeper']],
    cofre:'Versión day cab exclusivamente con cofre de ~46" y BBC 112". El eje delantero está muy desplazado hacia atrás (setback), haciendo que el cofre aparente ser más largo de lo que mide en BBC.',
    nota:'Si el International de la serie 9000 es <strong>solo day cab</strong> y tiene BBC 112" = 9100i. No existe versión sleeper del 9100i. Motores medianos como el M11 o T444E.',
-   ident:[['📏','<strong>BBC 112", cofre corto ~46"</strong> — el 9100i solo day cab'],['🔩','<strong>Eje setback extremo</strong> — llanta casi bajo la cabina'],['🏙️','Solo <strong>day cab</strong> — nunca se hizo con sleeper'],['💡','Faros rectangulares en cofre recto — diseño 1998-2003'],['🎯','Cofre muy corto + solo day cab + año 1998-2003 = 9100i']]},
+   ident:[['📏','<strong>BBC 112", cofre corto ~46"</strong> — el 9100i solo day cab'],['🔩','<strong>Eje setback extremo</strong> — llanta casi bajo la cabina'],['🏙️','Solo <strong>day cab</strong> — nunca se hizo con sleeper'],['💡','Faros rectangulares en cofre recto — diseño 1998-2003'],['🎯','Cofre muy corto + solo day cab + año 1998-2003 = 9100i']],
+   pos:'center 45%'},
   {id:'INT_9200',nombre:'9200i',anios:'1993–2007',bbc:'112"',long:'~46"',
    tag:'Serie 9000 BBC 112" — sleeper disponible',
    foto:px('/wikipedia/commons/thumb/1/14/International_9200i_Eagle_1998_%2837455306834%29.jpg/600px-International_9200i_Eagle_1998_%2837455306834%29.jpg'),
@@ -996,7 +1013,8 @@ INT:{marca:'International',col:'int',
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back extremo'],['Cabina','Day cab o sleeper'],['vs 9100i','Disponible con sleeper']],
    cofre:'Cofre de ~46" con BBC 112". Eje delantero muy desplazado hacia atrás. Disponible con dormidera a diferencia del 9100i. Motores hasta el N14 y CAT 3406.',
    nota:'International serie 9000 con <strong>eje delantero muy atrás + BBC 112"</strong> = 9200i. A diferencia del 9100i, el 9200i puede tener sleeper. Motor DT466 en versiones menores.',
-   ident:[['📏','BBC 112", cofre ~46" — similar al 9100i pero con opción sleeper'],['🔩','<strong>Eje setback extremo</strong> — llanta bajo la cabina'],['📅','<strong>1993-2007</strong> — el 9200 original del mercado'],['💡','Faros rectangulares, cabina cuadrada clásica'],['🎯','Cofre corto + eje muy atrás + puede tener sleeper = 9200i']]},
+   ident:[['📏','BBC 112", cofre ~46" — similar al 9100i pero con opción sleeper'],['🔩','<strong>Eje setback extremo</strong> — llanta bajo la cabina'],['📅','<strong>1993-2007</strong> — el 9200 original del mercado'],['💡','Faros rectangulares, cabina cuadrada clásica'],['🎯','Cofre corto + eje muy atrás + puede tener sleeper = 9200i']],
+   pos:'center 42%'},
   {id:'INT_9400',nombre:'9400i',anios:'1990–2017',bbc:'120"',long:'~54"',
    tag:'Serie 9000 carretera larga — BBC 120"',
    foto:px('/wikipedia/commons/thumb/c/c7/2015_International_Semi_Tractor_%2818197014603%29.jpg/500px-2015_International_Semi_Tractor_%2818197014603%29.jpg'),
@@ -1004,21 +1022,24 @@ INT:{marca:'International',col:'int',
    specs:[['BBC','120"'],['Long. cofre','~54"'],['Eje delantero','Set-back'],['Uso','Carretera larga distancia'],['vs 9200i','+8" BBC, cofre más largo']],
    cofre:'El principal camión de carretera larga de International con BBC 120" y cofre de ~54". Diseño aerodinámico. Disponible en múltiples configuraciones de sleeper.',
    nota:'International 9000 aerodinámico con BBC 120" = 9400i. A diferencia del 9900i, el 9400i tiene diseño más limpio sin rejilla cromada prominente. Motor CAT 3406 o N14 son los más comunes.',
-   ident:[['💡','Diseño más <strong>aerodinámico que 9200i</strong> — cofre ~54", BBC 120"'],['📏','BBC 120" — notablemente más largo que 9100i/9200i'],['🔩','Eje set-back estándar para carretera larga'],['📅','<strong>1990-2017</strong> — modelo de larga distancia Internacional'],['🎯','Cofre más largo y aerodinámico vs 9200 = es el 9400i. Año confirma']]},
+   ident:[['💡','Diseño más <strong>aerodinámico que 9200i</strong> — cofre ~54", BBC 120"'],['📏','BBC 120" — notablemente más largo que 9100i/9200i'],['🔩','Eje set-back estándar para carretera larga'],['📅','<strong>1990-2017</strong> — modelo de larga distancia Internacional'],['🎯','Cofre más largo y aerodinámico vs 9200 = es el 9400i. Año confirma']],
+   pos:'center 40%'},
   {id:'INT_9900',nombre:'9900i',anios:'1999–2017',bbc:'120"',long:'~54"',
    tag:'Long-nose owner-operator — rejilla cromada cuadrada grande',
    foto:px('/wikipedia/commons/thumb/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg/600px-2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg'),
    motores:['Cummins N14','CAT 3406','Detroit Series 60','Cummins ISX','CAT C15'],
    specs:[['BBC','120"'],['Long. cofre','~54"'],['Rejilla','Cromada cuadrada grande prominente'],['Faros','Cuadrados en marco cromado'],['Estilo','Owner-operator']],
    cofre:'Versión "long-nose" estilo operador independiente con <strong>rejilla cromada cuadrada grande</strong> y BBC 120". Mismo BBC que el 9400i pero estética completamente diferente.',
-   nota:'International 9000 con <strong>rejilla cromada cuadrada grande</strong> y faros en marcos cromados = 9900i. Mismo BBC que el 9400i (120") pero aspecto totalmente distinto. Más cromado = más caro.'},
+   nota:'International 9000 con <strong>rejilla cromada cuadrada grande</strong> y faros en marcos cromados = 9900i. Mismo BBC que el 9400i (120") pero aspecto totalmente distinto. Más cromado = más caro.',
+   pos:'center 40%'},
   {id:'INT_9900IX',nombre:'9900ix',anios:'2003–2017',bbc:'130"',long:'~64"',
    tag:'Long-nose extremo — BBC 130", el más largo de la serie',
    foto:px('/wikipedia/commons/thumb/8/8a/Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg/500px-Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg'),
    motores:['Cummins ISX','CAT C15','CAT C16','Detroit Series 60'],
    specs:[['BBC','130"'],['Long. cofre','~64"'],['vs 9900i','+10" BBC / +10" cofre'],['Rejilla','Cromada cuadrada grande'],['Nombre completo','9900ix Eagle']],
    cofre:'La versión más larga de la serie 9000 con BBC de 130" y cofre de ~64". Es 10 pulgadas más largo que el 9900i. Rejilla cromada cuadrada aún más prominente.',
-   nota:'Si el 9900i se ve <strong>visiblemente más largo en el cofre</strong> = 9900ix (BBC 130" vs 120"). La diferencia de 10" es notable a simple vista. Motor CAT C15 o C16 confirma 9900ix.'},
+   nota:'Si el 9900i se ve <strong>visiblemente más largo en el cofre</strong> = 9900ix (BBC 130" vs 120"). La diferencia de 10" es notable a simple vista. Motor CAT C15 o C16 confirma 9900ix.',
+   pos:'center 40%'},
   {id:'PROSTAR',nombre:'ProStar / ProStar+',anios:'2008–2018',bbc:'122"',long:'~56"',
    tag:'International moderno — parabrisas curvo panorámico',
    foto:px('/wikipedia/commons/thumb/e/e9/International_ProStar.JPG/600px-International_ProStar.JPG'),
@@ -1026,7 +1047,8 @@ INT:{marca:'International',col:'int',
    specs:[['BBC','122"'],['Long. cofre','~56"'],['Parabrisas','1 sola pieza curva'],['Cabina','NGV (Next Generation)'],['⚠ Motor','MaxxForce = historial de fallas']],
    cofre:'Cofre aerodinámico de ~56" con <strong>parabrisas de una sola pieza curvo</strong>. Los motores <strong>MaxxForce 11 y 13 tuvieron fallas graves documentadas</strong>.',
    nota:'International 2008–2018 con parabrisas curvo panorámico = ProStar. CRÍTICO: <strong>¿qué motor tiene? MaxxForce = alto riesgo de fallas. Cummins ISX15 o N13 = confiable.</strong>',
-   ident:[['🔲','<strong>Parabrisas curvo panorámico</strong> sin división central'],['📏','BBC 122", cofre ~56" — diseño aerodinámico 2008-2018'],['💡','Faros integrados en cofre aerodinámico — 2 faros por lado'],['⚠️','<strong>Motor MaxxForce problemático</strong> en años 2008-2012 — preguntar año'],['🎯','Parabrisas panorámico curvo + cofre largo aerodinámico = ProStar']]},
+   ident:[['🔲','<strong>Parabrisas curvo panorámico</strong> sin división central'],['📏','BBC 122", cofre ~56" — diseño aerodinámico 2008-2018'],['💡','Faros integrados en cofre aerodinámico — 2 faros por lado'],['⚠️','<strong>Motor MaxxForce problemático</strong> en años 2008-2012 — preguntar año'],['🎯','Parabrisas panorámico curvo + cofre largo aerodinámico = ProStar']],
+   pos:'center 38%'},
   {id:'LT',nombre:'LT625',anios:'2018–Presente',bbc:'125"',long:'~58"',
    tag:'El más moderno — motor A26 exclusivo, DRL LED delgado',
    foto:px('/wikipedia/commons/thumb/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg/600px-2019_International_LT_625_trailer_truck%2C_front_left.jpg'),
@@ -1047,9 +1069,12 @@ INT:{marca:'International',col:'int',
 // RENDER ENGINE
 // ═══════════════════════════════════════════════════
 const COL_BG={frt:'#100e04',kw:'#04080f',int:'#0f0604'};
-function px2(src,col,nombre){
+function px2(src,col,nombre,pos){
   const w=document.createElement('div'); w.style.cssText='width:100%;height:100%;';
-  if(src){const img=document.createElement('img');img.referrerPolicy='no-referrer';img.alt=nombre;img.src=src;img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;';img.onerror=()=>{w.innerHTML=makePH(col,nombre);};w.appendChild(img);}
+  if(src){const img=document.createElement('img');img.referrerPolicy='no-referrer';img.alt=nombre;img.src=src;
+  const p=pos||'center 35%';
+  img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:'+p+';display:block;transition:transform .4s;';
+  img.onerror=()=>{w.innerHTML=makePH(col,nombre);};w.appendChild(img);}
   else{w.innerHTML=makePH(col,nombre);}
   return w;
 }
@@ -1084,7 +1109,7 @@ function renderGrid(){
   d.modelos.forEach(mod=>{
     const c=document.createElement('div'); c.className='mod-card c'+d.col[0];
     const ph=document.createElement('div'); ph.className='mod-photo';
-    ph.appendChild(px2(mod.foto,d.col,mod.nombre));
+    ph.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
     const ov=document.createElement('div'); ov.className='mod-photo-ovl';
     const badges=document.createElement('div'); badges.className='mod-badges';
     badges.innerHTML=`<span class="badge">BBC ${mod.bbc}</span><span class="badge badge-long">⟷ ${mod.long}</span>`;
@@ -1107,7 +1132,7 @@ function selMod(mod,card,grid,d){
   const hdr=document.createElement('div'); hdr.className='det-hdr';
   // Full-width hero photo
   const dp=document.createElement('div'); dp.className='det-photo';
-  dp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  dp.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
   const povl=document.createElement('div'); povl.className='det-photo-ovl'; dp.appendChild(povl);
   // Click to open lightbox
   dp.onclick=()=>{
@@ -1168,7 +1193,7 @@ function mostrarRes(id){
   const bg=d.col==='frt'?'var(--frt-bg2)':d.col==='kw'?'var(--kw-bg)':'var(--int-bg)';
   const rDiv=document.createElement('div'); rDiv.className='rsuc';
   const hdr=document.createElement('div'); hdr.className='rhdr'; hdr.style.background=bg; hdr.style.borderBottom='1px solid var(--bor)';
-  const rp=document.createElement('div'); rp.className='r-photo'; rp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  const rp=document.createElement('div'); rp.className='r-photo'; rp.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
   const ri=document.createElement('div'); ri.style.cssText='display:flex;align-items:flex-start;gap:12px;flex:1;';
   ri.innerHTML=`<div class="rcheck rc${d.col[0]}">✓</div><div><div class="rlabel">Cofre identificado — ${d.marca}</div><div class="rtitle c${d.col[0]}2">${mod.nombre}</div><div class="rsub">${mod.anios} · BBC ${mod.bbc} · Long. cofre ${mod.long}</div></div>`;
   hdr.appendChild(rp); hdr.appendChild(ri); rDiv.appendChild(hdr);
@@ -1383,7 +1408,8 @@ function closeLightbox(e) {
   const img = document.getElementById('lightbox-img');
   lb.classList.remove('open');
   document.body.style.overflow = '';
-  setTimeout(()=>{ img.src = ''; }, 380);
+  setTimeout(()=>{ img.src = ''; ,
+   pos:'center 38%'}, 380);
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
 
