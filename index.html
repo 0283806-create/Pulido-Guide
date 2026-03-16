@@ -97,9 +97,12 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .det{display:none;border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;margin-bottom:2rem;animation:fadeUp .22s ease;}
 .det.vis{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.det-hdr{padding:1.5rem 1.75rem;border-bottom:1px solid var(--bor);display:flex;gap:1.5rem;align-items:flex-start;}
-.det-photo{width:290px;height:175px;border-radius:var(--rad-lg);overflow:hidden;flex-shrink:0;background:#0a0a0a;}
-.det-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;}
+.det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
+.det-photo{width:100%;height:260px;overflow:hidden;position:relative;background:#0a0a0a;}
+.det-photo img{width:100%;height:100%;object-fit:cover;object-position:center 38%;display:block;transition:transform .4s;}
+.det-photo:hover img{transform:scale(1.04);}
+.det-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,14,26,.85) 0%,rgba(8,14,26,.1) 50%,transparent 100%);pointer-events:none;}
+.det-info-row{display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem 1.75rem;}
 .det-info{flex:1;min-width:0;}
 .det-badge{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:9px;}
 .bf{background:var(--frt-bor);color:var(--frt-li);}
@@ -112,7 +115,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .dq{background:var(--sur2);border:1px solid var(--bor2);border-radius:var(--rad);padding:7px 12px;text-align:center;min-width:72px;}
 .dq-val{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.04em;line-height:1;}
 .dq-lab{font-size:8.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-@media(max-width:600px){.det-hdr{flex-direction:column;}.det-photo{width:100%;height:200px;}}
+@media(max-width:600px){.det-photo{height:200px;}.det-info-row{flex-direction:column;}}
 .det-body{padding:1.5rem 1.75rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
 @media(max-width:640px){.det-body{grid-template-columns:1fr;}}
 .sec-t{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--bor);}
@@ -278,13 +281,76 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 
 /* ── PANEL IDENTIFICACIÓN VISUAL (tercer col header) ── */
-.det-side{width:220px;flex-shrink:0;background:var(--sur2);border-radius:var(--rad-lg);padding:12px 14px;border:1px solid var(--bor2);}
-.det-side-t{font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--bor);}
-.ident-list{display:flex;flex-direction:column;gap:5px;}
-.ident-item{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--muted);line-height:1.45;}
-.ident-icon{font-size:13px;flex-shrink:0;margin-top:1px;}
+.det-side{width:280px;flex-shrink:0;background:var(--sur2);border-radius:var(--rad-lg);padding:14px 16px;border:1px solid var(--bor2);align-self:stretch;}
+.det-side-t{font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--bor);display:flex;align-items:center;gap:6px;}
+.ident-list{display:flex;flex-direction:column;gap:8px;}
+.ident-item{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--muted);line-height:1.5;padding-bottom:8px;border-bottom:1px solid var(--bor);}
+.ident-item:last-child{border-bottom:none;padding-bottom:0;}
+.ident-icon{font-size:15px;flex-shrink:0;margin-top:1px;}
 .ident-item strong{color:var(--txt);font-weight:500;}
 @media(max-width:700px){.det-side{width:100%;}}
+@media(max-width:600px){.det-info-row{flex-direction:column;}}
+
+
+/* ── LIGHTBOX ─────────────────────────────── */
+.det-photo{cursor:zoom-in;}
+#lightbox{
+  position:fixed;inset:0;z-index:9998;
+  background:rgba(0,0,0,0);
+  display:flex;align-items:center;justify-content:center;
+  visibility:hidden;
+  transition:background .3s ease;
+  backdrop-filter:blur(0px);
+}
+#lightbox.open{
+  background:rgba(0,0,10,.92);
+  visibility:visible;
+  backdrop-filter:blur(8px);
+}
+#lightbox-img{
+  max-width:92vw;max-height:88vh;
+  border-radius:12px;
+  box-shadow:0 0 80px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08);
+  transform:scale(.82) translateY(30px);
+  opacity:0;
+  transition:transform .38s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+  cursor:zoom-out;
+  display:block;
+  object-fit:contain;
+}
+#lightbox.open #lightbox-img{
+  transform:scale(1) translateY(0);
+  opacity:1;
+}
+#lightbox-caption{
+  position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  background:rgba(8,14,26,.85);border:1px solid rgba(255,255,255,.1);
+  border-radius:30px;padding:8px 20px;
+  font-size:13px;font-weight:500;color:rgba(255,255,255,.75);
+  letter-spacing:.04em;white-space:nowrap;
+  opacity:0;transition:opacity .3s ease .15s;
+  pointer-events:none;
+}
+#lightbox.open #lightbox-caption{opacity:1;}
+#lightbox-close{
+  position:absolute;top:20px;right:24px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);border-radius:50%;
+  width:38px;height:38px;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all .18s;
+  opacity:0;transition:opacity .3s ease .1s;
+}
+#lightbox.open #lightbox-close{opacity:1;}
+#lightbox-close:hover{background:rgba(255,255,255,.18);color:#fff;}
+#lightbox-zoom-hint{
+  position:absolute;top:20px;left:50%;transform:translateX(-50%);
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+  opacity:0;transition:opacity .3s ease .2s;
+  pointer-events:none;
+}
+#lightbox.open #lightbox-zoom-hint{opacity:1;}
 
 </style>
 </head>
@@ -725,9 +791,10 @@ const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO"
 // FOTOS — ángulo 3/4 frontal via wsrv.nl proxy
 // ══════════════════════════════════════════════════
 function px(path){
-  // Decode any pre-encoded chars (%22 -> ", etc.) before encoding for wsrv.nl
   try { path = decodeURIComponent(path); } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=700&output=jpg&q=84';
+  // Request larger images (1200px) for the new hero photo layout
+  const hires = path.replace(/\/(\d+)px-/, '/1200px-');
+  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+hires)+'&w=1200&output=jpg&q=88';
 }
 
 const DATA={
@@ -1037,17 +1104,29 @@ function selMod(mod,card,grid,d){
   const chips=mod.motores.map(m=>`<span class="chip ch${d.col[0]}">${m}</span>`).join('');
   const specs=mod.specs.map(([k,v])=>`<div class="srow"><span class="sk">${k}</span><span class="sv${k==='Long. cofre'?' hi':''}">${v}</span></div>`).join('');
   const bg=d.col==='frt'?'var(--frt-bg2)':d.col==='kw'?'var(--kw-bg)':'var(--int-bg)';
-  const hdr=document.createElement('div'); hdr.className='det-hdr'; hdr.style.background=bg; hdr.style.borderBottom='1px solid var(--bor)';
-  const dp=document.createElement('div'); dp.className='det-photo'; dp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  const hdr=document.createElement('div'); hdr.className='det-hdr';
+  // Full-width hero photo
+  const dp=document.createElement('div'); dp.className='det-photo';
+  dp.appendChild(px2(mod.foto,d.col,mod.nombre));
+  const povl=document.createElement('div'); povl.className='det-photo-ovl'; dp.appendChild(povl);
+  // Click to open lightbox
+  dp.onclick=()=>{
+    const img=dp.querySelector('img');
+    if(img && img.src) openLightbox(img.src, mod.nombre+' · '+mod.anios);
+  };
+  // Info row below photo
+  const infoRow=document.createElement('div'); infoRow.className='det-info-row'; infoRow.style.background=bg;
   const di=document.createElement('div'); di.className='det-info';
   di.innerHTML=`<span class="det-badge b${d.col[0]}">${d.marca}</span><div class="det-nombre c${d.col[0]}2">${mod.nombre}</div><div class="det-sub">${mod.anios} · BBC ${mod.bbc}</div><div class="det-quick"><div class="dq"><div class="dq-val c${d.col[0]}2">${mod.bbc}</div><div class="dq-lab">BBC</div></div><div class="dq"><div class="dq-val c${d.col[0]}2">${mod.long}</div><div class="dq-lab">Long. cofre</div></div></div>`;
-  // Build ident side panel
+  // Ident side panel
   const ds=document.createElement('div'); ds.className='det-side';
   if(mod.ident && mod.ident.length){
     ds.innerHTML='<div class="det-side-t">👁 Cómo identificarlo visualmente</div><div class="ident-list">'+
     mod.ident.map(([ic,txt])=>`<div class="ident-item"><span class="ident-icon">${ic}</span><span>${txt}</span></div>`).join('')+'</div>';
   }
-  hdr.appendChild(dp); hdr.appendChild(di); if(mod.ident) hdr.appendChild(ds);
+  infoRow.appendChild(di);
+  if(mod.ident) infoRow.appendChild(ds);
+  hdr.appendChild(dp); hdr.appendChild(infoRow);
   det.innerHTML=''; det.appendChild(hdr);
   det.insertAdjacentHTML('beforeend',`<div class="det-body"><div><div class="sec-t">Especificaciones del cofre</div><div class="specs">${specs}</div><div style="margin-top:1.2rem"><div class="sec-t">Motores compatibles</div><div class="chips">${chips}</div></div></div><div><div class="sec-t">Descripción del cofre</div><div class="iblock cofre">${mod.cofre}</div><div class="sec-t" style="margin-top:1rem">Cómo identificarlo</div><div class="iblock nota"><span class="nota-ic">⚠</span>${mod.nota}</div></div></div>`);
   det.classList.add('vis');
@@ -1286,6 +1365,36 @@ function catPage(p) {
   document.getElementById('cat-grid')?.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+// ── LIGHTBOX ─────────────────────────────────────────────
+function openLightbox(src, caption) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  const cap = document.getElementById('lightbox-caption');
+  // Request even higher res via wsrv
+  const hiRes = src.includes('wsrv.nl') ? src.replace('&w=1200','&w=2400') : src;
+  img.src = hiRes;
+  cap.textContent = caption || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if(e && e.target === document.getElementById('lightbox-img')) return;
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(()=>{ img.src = ''; }, 380);
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
 </script>
+
+<div id="lightbox" onclick="closeLightbox(event)">
+  <div id="lightbox-zoom-hint">Clic para cerrar</div>
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-caption"></div>
+</div>
+
 </body>
 </html>
