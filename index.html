@@ -8,13 +8,13 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap');
 :root{
-  --bg:#0d0d0d;--sur:#161616;--sur2:#1e1e1e;--sur3:#242424;
-  --bor:#252525;--bor2:#333;--bor3:#404040;
-  --txt:#e4e0da;--muted:#7a7670;--dim:#3e3d3a;
-  --frt:#d4a843;--frt-bg:#16120400;--frt-bg2:#1a1608;--frt-bor:#3a2c0a;--frt-li:#f0d080;
-  --kw:#4a9fd4;--kw-bg:#080f18;--kw-bor:#153040;--kw-li:#80c8f0;
-  --int:#c44830;--int-bg:#180c08;--int-bor:#3a1810;--int-li:#e87060;
-  --green:#4caf79;--warn:#c8a830;
+  --bg:#080e1a;--sur:#0d1626;--sur2:#111d30;--sur3:#162238;
+  --bor:#1a2d47;--bor2:#1f3759;--bor3:#2a4a72;
+  --txt:#e8edf5;--muted:#7a90b0;--dim:#2a3d58;
+  --frt:#9e9e9e;--frt-bg:#11131500;--frt-bg2:#141618;--frt-bor:#2e3234;--frt-li:#cfcfcf;
+  --kw:#e53935;--kw-bg:#1a0808;--kw-bor:#4a1010;--kw-li:#ff7070;
+  --int:#fdd835;--int-bg:#1a1600;--int-bor:#4a3c00;--int-li:#fff176;
+  --green:#4caf79;--warn:#fb8c00;
   --rad:8px;--rad-lg:12px;--rad-xl:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -22,7 +22,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── HEADER ── */
 .hdr{position:sticky;top:0;z-index:300;background:rgba(13,13,13,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--bor);padding:0 1.75rem;height:52px;display:flex;align-items:center;justify-content:space-between;}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.12em;}.logo span{color:var(--frt);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.12em;}.logo span{color:#42a5f5;}
 .hdr-tag{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
 
 /* ── SHELL ── */
@@ -32,14 +32,14 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .hero{margin-bottom:2.5rem;}
 .hero-eye{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;}
 .hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,7vw,70px);line-height:.92;letter-spacing:.03em;margin-bottom:1rem;}
-.hero-h1 em{font-style:normal;color:var(--frt);}
+.hero-h1 em{font-style:normal;color:#42a5f5;}
 .hero-p{max-width:500px;font-size:14px;color:var(--muted);line-height:1.75;}
 
 /* ── MODO BAR ── */
 .modo-bar{display:flex;gap:5px;margin-bottom:2.5rem;background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:4px;}
 .modo-btn{flex:1;padding:9px 12px;border-radius:var(--rad);border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;}
 .modo-btn:hover{color:var(--txt);background:var(--sur2);}
-.modo-btn.active{background:var(--sur3);color:var(--txt);box-shadow:0 1px 3px rgba(0,0,0,.4);}
+.modo-btn.active{background:var(--sur3);color:#42a5f5;box-shadow:0 1px 3px rgba(0,0,0,.4);}
 
 /* ── MARCA BUTTONS ── */
 .marca-row{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
@@ -833,7 +833,7 @@ KW:{marca:'Kenworth',col:'kw',
    nota:'Kenworth moderno (2013+) con <strong>parabrisas panorámico de un vidrio</strong> = T680. Camión de carretera/flotilla. Motor PACCAR MX-13 o MX-11 confirma T680.'},
   {id:'T680_NG',nombre:'T680 Next Gen',anios:'2023–Presente',bbc:'122"',long:'~52"',
    tag:'Nueva generación — frente rediseñado, faros full LED, aerodinámica mejorada',
-   foto:px('/wikipedia/commons/thumb/9/96/2016_Kenworth_T680.jpg/500px-2016_Kenworth_T680.jpg'),
+   foto:px('/wikipedia/commons/thumb/5/5e/2022_Kenworth_T680_in_White,_Front_Right,_10-05-2022.jpg/500px-2022_Kenworth_T680_in_White,_Front_Right,_10-05-2022.jpg'),
    motores:['PACCAR MX-13 (510 HP)','PACCAR MX-11','Cummins X15'],
    specs:[['BBC','122"'],['Long. cofre','~52"'],['Faros','Full LED de serie'],['Frente','Rediseñado 2023'],['Parabrisas','1 pieza panorámica'],['Diferencia clave','Cofre y defensas nuevas vs T680 clásico']],
    id_cat:'T680_NG',
