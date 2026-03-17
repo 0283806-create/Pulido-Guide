@@ -97,6 +97,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .det{display:none;border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;margin-bottom:2rem;animation:fadeUp .22s ease;}
 .det.vis{display:block;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
 .det-photo{width:100%;height:300px;overflow:hidden;position:relative;background:#080e1a;cursor:zoom-in;}
 .det-photo img{width:100%;height:100%;object-fit:contain;object-position:center center;display:block;background:#080e1a;}
@@ -261,8 +262,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;}
 .cat-card{background:var(--sur2);border:1px solid var(--bor);border-radius:var(--rad-lg);overflow:hidden;transition:border-color .15s,transform .15s;cursor:default;}
 .cat-card:hover{border-color:var(--bor3);transform:translateY(-1px);}
-.cat-img{height:100px;overflow:hidden;position:relative;background:var(--sur3);display:flex;align-items:center;justify-content:center;}
-.cat-img img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;}
+.cat-img{height:140px;background:#fff;display:flex;align-items:center;justify-content:center;padding:6px;overflow:hidden;position:relative;cursor:zoom-in;}
+.cat-img img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;display:block;image-rendering:-webkit-optimize-contrast;image-rendering:crisp-edges;filter:contrast(1.05) brightness(1.02);}
 .cat-img-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:100%;}
 .cat-img-icon{font-size:24px;opacity:.5;}
 .cat-info{padding:8px 10px;}
@@ -1338,7 +1339,7 @@ const PAGE_SIZE = 36;
 
 function renderCatalogSection(modelId, col) {
   catState = {modelId, filter:'ALL', search:'', page:0};
-  const prods = CATALOG_BY_MODEL[modelId] || CATALOG_BY_MODEL[modelId.toUpperCase()] || [];
+  const prods = getCatProds();
   
   if(prods.length === 0) return '<div class="cat-section"><div class="cat-body"><div class="cat-empty">No hay piezas del catálogo para este modelo.</div></div></div>';
   
@@ -1369,12 +1370,59 @@ function renderCatalogSection(modelId, col) {
   </div>`;
 }
 
+// ─── GRUPOS DE MODELOS (piezas compatibles entre sí dentro del grupo) ────────
+const MODEL_GROUPS = {
+  FLD112:      { family:'FLD',      keywords:['FLD112','FLD 112','FLD-112','FLC112','FLC-112'], exclude:['FLD120','FLD 120','CLASSIC','XL','COLUMBIA','CENTURY','CASCADIA','M2','PROSTAR','LT','9100','9200','9400'] },
+  FLD120:      { family:'FLD',      keywords:['FLD120','FLD 120','FLD-120'],                   exclude:['FLD112','FLD 112','CLASSIC','XL','COLUMBIA','CENTURY','CASCADIA','M2','PROSTAR','LT','9100','9200','9400'] },
+  FLD120XL:    { family:'FLD',      keywords:['FLD120XL','FLD CLASSIC','FLD-CLASSIC','CLASSIC XL','132'],exclude:['FLD112','FLD 112','COLUMBIA','CENTURY','CASCADIA','M2','PROSTAR','LT','9100','9200','9400'] },
+  CENTURY_C112:{ family:'CENTURY',  keywords:['CENTURY','CENTURY C112','C-112','CST112','CST-112','CENTURY 112'], exclude:['FLD','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880'] },
+  CENTURY_C120:{ family:'CENTURY',  keywords:['CENTURY','CENTURY C120','C-120','CST120','CENTURY 120'], exclude:['FLD','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880'] },
+  COLUMBIA:    { family:'COLUMBIA', keywords:['COLUMBIA','COLUMBIA 120'],                      exclude:['FLD','CENTURY','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880'] },
+  CASCADIA_G1: { family:'CASCADIA', keywords:['CASCADIA','CASCADIA G1','CASCADIA 113','CASCADIA 125'], exclude:['FLD','CENTURY','COLUMBIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880','EVOLUTION','P4','2018','2019','2020','2021','2022'] },
+  CASCADIA_G2: { family:'CASCADIA', keywords:['CASCADIA','CASCADIA G2','CASCADIA EVO','EVOLUTION','P4','CASCADIA 126'], exclude:['FLD','CENTURY','COLUMBIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880'] },
+  M2_106:      { family:'M2',       keywords:['M2','M2 106','M2-106','BUSINESS CLASS'],        exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880','M2 112','M2-112'] },
+  M2_112:      { family:'M2',       keywords:['M2','M2 112','M2-112','BUSINESS CLASS'],        exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800','T880','M2 106','M2-106'] },
+  W900:        { family:'W900',     keywords:['W900','W-900','W 900'],                         exclude:['W900L','W-900L','FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','T600','T660','T680','T800','T880'] },
+  W900L:       { family:'W900L',    keywords:['W900L','W-900L','W 900L'],                      exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','T600','T660','T680','T800','T880'] },
+  T600:        { family:'T600',     keywords:['T600','T-600','T 600'],                         exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T660','T680','T800','T880'] },
+  T660:        { family:'T660',     keywords:['T660','T-660','T 660'],                         exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T680','T800','T880'] },
+  T800:        { family:'T800',     keywords:['T800','T-800','T 800'],                         exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T880'] },
+  T680:        { family:'T680',     keywords:['T680','T-680','T 680'],                         exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T800','T880','T680 NG','T680NG','NEXT GEN','2023','2024'] },
+  T680_NG:     { family:'T680',     keywords:['T680','T-680','T 680','T680NG','NEXT GEN','T680 NG'], exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T800','T880'] },
+  T880:        { family:'T880',     keywords:['T880','T-880','T 880'],                         exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','PROSTAR','LT','9100','9200','9400','W900','T600','T660','T680','T800'] },
+  INT_9100:    { family:'INT_9100', keywords:['9100','9100I','EAGLE 9100','9100 EAGLE'],        exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','W900','T600','T660','T680','T800','T880','9200','9400','PROSTAR','LT'] },
+  INT_9200:    { family:'INT_9200', keywords:['9200','9200I','EAGLE 9200','9200 EAGLE'],        exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','W900','T600','T660','T680','T800','T880','9100','9400','PROSTAR','LT'] },
+  INT_9400:    { family:'INT_9400', keywords:['9400','9400I','EAGLE 9400','9400 EAGLE'],        exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','W900','T600','T660','T680','T800','T880','9100','9200','PROSTAR','LT'] },
+  PROSTAR:     { family:'PROSTAR',  keywords:['PROSTAR','PRO STAR','PRO-STAR'],                 exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','W900','T600','T660','T680','T800','T880','9100','9200','9400','LT'] },
+  LT:          { family:'LT',       keywords:['LT 625','LT625','LT-625','LONESTA','LONSTAR'],   exclude:['FLD','CENTURY','COLUMBIA','CASCADIA','M2','W900','T600','T660','T680','T800','T880','9100','9200','9400','PROSTAR'] },
+};
+
+/** Determina si una pieza es realmente compatible con el modelo (por descripción). */
+function isCompatible(product, modelId) {
+  const group = MODEL_GROUPS[modelId];
+  if (!group) return true;
+  const desc = (product.d || '').toUpperCase().trim();
+  if (!desc) return true;
+  for (const excl of group.exclude) {
+    if (desc.includes(excl.toUpperCase())) return false;
+  }
+  for (const kw of group.keywords) {
+    if (desc.includes(kw.toUpperCase())) return true;
+  }
+  const allModelKeywords = Object.entries(MODEL_GROUPS)
+    .filter(([id]) => id !== modelId)
+    .flatMap(([, g]) => g.keywords);
+  if (allModelKeywords.some(kw => desc.includes(kw.toUpperCase()))) return false;
+  return true;
+}
+
 function getCatProds() {
   const all = (CATALOG_BY_MODEL[catState.modelId] || CATALOG_BY_MODEL[(catState.modelId||'').toUpperCase()] || []);
   const q = catState.search.toLowerCase().trim();
   return all.filter(p => {
-    if(catState.filter !== 'ALL' && p.k !== catState.filter) return false;
-    if(q && !(p.c||'').toLowerCase().includes(q) && !(p.d||p.c||'').toLowerCase().includes(q)) return false;
+    if (!isCompatible(p, catState.modelId)) return false;
+    if (catState.filter !== 'ALL' && p.k !== catState.filter) return false;
+    if (q && !(p.c||'').toLowerCase().includes(q) && !(p.d||p.c||'').toLowerCase().includes(q)) return false;
     return true;
   });
 }
@@ -1409,8 +1457,13 @@ function renderCatGrid() {
     const imgHTML = p.i
       ? `<img src="${p.i}" alt="${p.c}" loading="lazy" onerror="this.parentNode.innerHTML=fallbackPH('${icon}')">`
       : `<div class="cat-img-ph"><span class="cat-img-icon">${icon}</span></div>`;
+    const descEsc = (p.d||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const srcEsc = (p.i||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const imgWrap = p.i
+      ? `<div class="cat-img" onclick="openCatImgZoom('${srcEsc}','${descEsc}')">${imgHTML}</div>`
+      : `<div class="cat-img">${imgHTML}</div>`;
     return `<div class="cat-card">
-      <div class="cat-img">${imgHTML}</div>
+      ${imgWrap}
       <div class="cat-info">
         <div class="cat-code">#${p.c}</div>
         <div class="cat-desc">${p.d||p.c||''}</div>
@@ -1431,6 +1484,19 @@ function renderCatGrid() {
 }
 
 function fallbackPH(icon){ return `<div class="cat-img-ph"><span class="cat-img-icon">${icon}</span></div>`; }
+
+function openCatImgZoom(src, title) {
+  if (!src) return;
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,8,0.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:zoom-out;backdrop-filter:blur(8px);animation:fadeIn .2s ease;';
+  const safeTitle = (title || '').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  overlay.innerHTML = `<div style="font-size:12px;color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase;">${safeTitle}</div><img id="cat-zoom-img" style="max-width:80vw;max-height:75vh;object-fit:contain;border-radius:10px;background:#fff;padding:16px;box-shadow:0 0 60px rgba(0,0,0,.8);image-rendering:-webkit-optimize-contrast;" alt=""><div style="font-size:11px;color:rgba(255,255,255,.25);">Clic para cerrar · ESC</div>`;
+  const img = overlay.querySelector('#cat-zoom-img');
+  if (img) img.src = src;
+  overlay.onclick = () => overlay.remove();
+  document.addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ overlay.remove(); document.removeEventListener('keydown',esc); }});
+  document.body.appendChild(overlay);
+}
 
 function setCatFilter(cat) {
   catState.filter = cat;
