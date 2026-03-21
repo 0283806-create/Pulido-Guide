@@ -1120,26 +1120,31 @@ INT:{marca:'INTER',col:'int',
 // RENDER ENGINE
 // ═══════════════════════════════════════════════════
 const COL_BG={frt:'#100e04',kw:'#04080f',int:'#0f0604'};
-function applyLogoCover(canvas, ctx, naturalW, naturalH) {
-  const coverZones = [
-    { x: 0.35, y: 0.42, w: 0.30, h: 0.22 },
-    { x: 0.03, y: 0.28, w: 0.20, h: 0.18 },
+function applyLogoCover(canvas, ctx, w, h) {
+  const zoneW = Math.round(w * 0.08);
+  const zoneH = Math.round(h * 0.10);
+  const zones = [
+    { x: Math.round(w * 0.08), y: Math.round(h * 0.55) },
+    { x: Math.round(w * 0.04), y: Math.round(h * 0.30) },
   ];
-  coverZones.forEach(zone => {
-    const zx = zone.x * naturalW, zy = zone.y * naturalH;
-    const zw = zone.w * naturalW, zh = zone.h * naturalH;
-    const sample = ctx.getImageData(zx, zy, Math.min(zw, 4), Math.min(zh, 4));
-    let r=0, g=0, b=0;
-    for (let i = 0; i < sample.data.length; i += 4) { r += sample.data[i]; g += sample.data[i+1]; b += sample.data[i+2]; }
-    const px = sample.data.length / 4;
-    r = Math.round(r/px); g = Math.round(g/px); b = Math.round(b/px);
-    const grad = ctx.createRadialGradient(zx+zw/2, zy+zh/2, 0, zx+zw/2, zy+zh/2, Math.max(zw,zh)/1.5);
-    grad.addColorStop(0, `rgb(${r},${g},${b})`);
-    grad.addColorStop(1, `rgba(${r},${g},${b},0.85)`);
-    ctx.fillStyle = grad;
+  zones.forEach(({ x, y }) => {
+    let snap;
+    try { snap = ctx.getImageData(x, y, zoneW, zoneH); } catch(e) { return; }
+    const tmp = document.createElement('canvas');
+    tmp.width = zoneW; tmp.height = zoneH;
+    const tctx = tmp.getContext('2d');
+    tctx.putImageData(snap, 0, 0);
+    ctx.save();
+    ctx.filter = 'blur(7px)';
+    for (let i = 0; i < 3; i++) { ctx.drawImage(tmp, x, y, zoneW, zoneH); }
+    ctx.filter = 'none';
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = 'rgba(180,180,180,0.2)';
     ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(zx, zy, zw, zh, 8); else ctx.rect(zx, zy, zw, zh);
+    if (ctx.roundRect) ctx.roundRect(x, y, zoneW, zoneH, 3); else ctx.rect(x, y, zoneW, zoneH);
     ctx.fill();
+    ctx.globalAlpha = 1.0;
+    ctx.restore();
   });
 }
 function maskTruckImage(imgEl) {
