@@ -1120,55 +1120,151 @@ INT:{marca:'INTER',col:'int',
 // RENDER ENGINE
 // ═══════════════════════════════════════════════════
 const COL_BG={frt:'#100e04',kw:'#04080f',int:'#0f0604'};
+/**
+ * Detecta zonas candidatas a logo analizando la imagen:
+ * - Logos suelen ser zonas con alto contraste localizado
+ * - Colores metálicos / cromados (alto brillo uniforme)
+ * - Patrones con bordes muy definidos en área pequeña
+ * - Generalmente en: parrilla frontal, lateral del cofre, capó
+ */
+function detectLogoZones(ctx, w, h) {
+  let imageData;
+  try {
+    imageData = ctx.getImageData(0, 0, w, h);
+  } catch(e) {
+    return [];
+  }
+  const data = imageData.data;
+  const cellSize = Math.max(8, Math.round(Math.min(w, h) * 0.04));
+  const cols = Math.floor(w / cellSize);
+  const rows = Math.floor(h / cellSize);
+  const scores = [];
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const x0 = col * cellSize;
+      const y0 = row * cellSize;
+      let sumBrightness = 0;
+      let sumR = 0, sumG = 0, sumB = 0;
+      let pixCount = 0;
+      let minBr = 255, maxBr = 0;
+      const brightnesses = [];
+      for (let py = y0; py < Math.min(y0 + cellSize, h); py++) {
+        for (let px = x0; px < Math.min(x0 + cellSize, w); px++) {
+          const i = (py * w + px) * 4;
+          const r = data[i], g = data[i+1], b = data[i+2];
+          const br = (r * 299 + g * 587 + b * 114) / 1000;
+          sumBrightness += br;
+          sumR += r; sumG += g; sumB += b;
+          brightnesses.push(br);
+          if (br < minBr) minBr = br;
+          if (br > maxBr) maxBr = br;
+          pixCount++;
+        }
+      }
+      if (pixCount === 0) continue;
+      const avgBr = sumBrightness / pixCount;
+      const avgR = sumR / pixCount;
+      const avgG = sumG / pixCount;
+      const avgB = sumB / pixCount;
+      const variance = brightnesses.reduce((acc, br) => acc + Math.pow(br - avgBr, 2), 0) / pixCount;
+      const stdDev = Math.sqrt(variance);
+      const brightnessRange = maxBr - minBr;
+      const colorBalance = 1 - (Math.abs(avgR-avgG) + Math.abs(avgG-avgB) + Math.abs(avgR-avgB)) / (3 * 255);
+      const isMetallic = avgBr > 140 && colorBalance > 0.85;
+      let score = 0;
+      score += Math.min(stdDev / 80, 1) * 40;
+      score += Math.min(brightnessRange / 200, 1) * 30;
+      if (isMetallic) score += 20;
+      if (avgBr > 160) score += 10;
+      const relY = (y0 + cellSize/2) / h;
+      const relX = (x0 + cellSize/2) / w;
+      if (relY > 0.45 && relY < 0.85 && relX > 0.05 && relX < 0.50) {
+        score *= 1.3;
+      }
+      scores.push({ x: x0, y: y0, w: cellSize, h: cellSize, score, avgBr, stdDev });
+    }
+  }
+  scores.sort((a, b) => b.score - a.score);
+  const threshold = 55;
+  const candidates = scores.filter(c => c.score > threshold).slice(0, 6);
+  if (candidates.length === 0) return [];
+  const merged = [];
+  const used = new Set();
+  candidates.forEach((c, i) => {
+    if (used.has(i)) return;
+    let zone = { x: c.x, y: c.y, x2: c.x + c.w, y2: c.y + c.h };
+    used.add(i);
+    candidates.forEach((c2, j) => {
+      if (used.has(j)) return;
+      const close = Math.abs(c2.x - c.x) <= cellSize * 2 && Math.abs(c2.y - c.y) <= cellSize * 2;
+      if (close) {
+        zone.x  = Math.min(zone.x,  c2.x);
+        zone.y  = Math.min(zone.y,  c2.y);
+        zone.x2 = Math.max(zone.x2, c2.x + c2.w);
+        zone.y2 = Math.max(zone.y2, c2.y + c2.h);
+        used.add(j);
+      }
+    });
+    const maxZoneW = Math.round(w * 0.12);
+    const maxZoneH = Math.round(h * 0.15);
+    const zw = Math.min(zone.x2 - zone.x, maxZoneW);
+    const zh = Math.min(zone.y2 - zone.y, maxZoneH);
+    merged.push({ x: zone.x, y: zone.y, w: zw, h: zh });
+  });
+  return merged;
+}
 function applyLogoCover(canvas, ctx, w, h) {
-  const zoneW = Math.round(w * 0.08);
-  const zoneH = Math.round(h * 0.10);
-  const zones = [
-    { x: Math.round(w * 0.08), y: Math.round(h * 0.55) },
-    { x: Math.round(w * 0.04), y: Math.round(h * 0.30) },
-  ];
-  zones.forEach(({ x, y }) => {
+  const zones = detectLogoZones(ctx, w, h);
+  if (zones.length === 0) return;
+  zones.forEach(({ x, y, w: zw, h: zh }) => {
     let snap;
-    try { snap = ctx.getImageData(x, y, zoneW, zoneH); } catch(e) { return; }
+    try { snap = ctx.getImageData(x, y, zw, zh); } catch(e) { return; }
     const tmp = document.createElement('canvas');
-    tmp.width = zoneW; tmp.height = zoneH;
+    tmp.width = zw;
+    tmp.height = zh;
     const tctx = tmp.getContext('2d');
     tctx.putImageData(snap, 0, 0);
     ctx.save();
-    ctx.filter = 'blur(7px)';
-    for (let i = 0; i < 3; i++) { ctx.drawImage(tmp, x, y, zoneW, zoneH); }
+    ctx.filter = 'blur(8px)';
+    for (let pass = 0; pass < 4; pass++) {
+      ctx.drawImage(tmp, x, y, zw, zh);
+    }
     ctx.filter = 'none';
-    ctx.globalAlpha = 0.12;
-    ctx.fillStyle = 'rgba(180,180,180,0.2)';
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(x, y, zoneW, zoneH, 3); else ctx.rect(x, y, zoneW, zoneH);
-    ctx.fill();
-    ctx.globalAlpha = 1.0;
     ctx.restore();
   });
 }
 function maskTruckImage(imgEl) {
-  if (!imgEl || !imgEl.naturalWidth || imgEl.dataset.masked) return;
-  if (imgEl.naturalWidth < 400) return;
+  if (!imgEl || imgEl.naturalWidth < 400) return;
+  if (imgEl.dataset.masked === '1') return;
+  const w = imgEl.naturalWidth;
+  const h = imgEl.naturalHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width  = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
   try {
-    const c = document.createElement('canvas');
-    c.width = imgEl.naturalWidth; c.height = imgEl.naturalHeight;
-    const ctx = c.getContext('2d');
-    ctx.drawImage(imgEl, 0, 0);
-    applyLogoCover(c, ctx, imgEl.naturalWidth, imgEl.naturalHeight);
-    c.toBlob(blob => {
-      if (blob) { imgEl.src = URL.createObjectURL(blob); imgEl.dataset.masked = '1'; }
-    }, 'image/jpeg', 0.88);
-  } catch(e) { /* CORS block — skip silently */ }
+    ctx.drawImage(imgEl, 0, 0, w, h);
+    applyLogoCover(canvas, ctx, w, h);
+    imgEl.src = canvas.toDataURL('image/jpeg', 0.88);
+    imgEl.dataset.masked = '1';
+  } catch(e) {}
 }
 function px2(src,col,nombre,pos){
-  const w=document.createElement('div'); w.style.cssText='width:100%;height:100%;';
-  if(src){const img=document.createElement('img');img.referrerPolicy='no-referrer';img.crossOrigin='anonymous';img.alt=nombre;img.src=src;
-  const p=pos||'center 35%';
-  img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:'+p+';display:block;transition:transform .4s;';
-  img.onload=()=>maskTruckImage(img);
-  img.onerror=()=>{w.innerHTML=makePH(col,nombre);};w.appendChild(img);}
-  else{w.innerHTML=makePH(col,nombre);}
+  const w=document.createElement('div');
+  w.style.cssText='width:100%;height:100%;';
+  if(src){
+    const img=document.createElement('img');
+    img.referrerPolicy='no-referrer';
+    img.crossOrigin='anonymous';
+    img.alt=nombre;
+    img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .4s;`;
+    img.onerror=()=>{w.innerHTML=makePH(col,nombre);};
+    img.onload=()=>{maskTruckImage(img);};
+    img.src=src;
+    w.appendChild(img);
+  } else {
+    w.innerHTML=makePH(col,nombre);
+  }
   return w;
 }
 const PHC={frt:'#d4a843',kw:'#4a9fd4',int:'#c44830'};
