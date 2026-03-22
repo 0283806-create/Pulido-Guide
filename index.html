@@ -1106,6 +1106,7 @@ FRT:{marca:'FLN',col:'frt',
     {id:31,preg:'El Cascadia moderno — ¿qué año es?',det:'Gen1 y Gen2 tienen cofres distintos con 1" de BBC de diferencia y extensiones de cabina diferentes.',
      opc:[{l:'2008–2017 (Gen1 — extensiones de cabina cortas, BBC 125")',r:'CASCADIA_G1'},{l:'2018 en adelante (Gen2/P4 — extensiones largas, BBC 126")',r:'CASCADIA_G2'}]},
   ],
+},
 KW:{marca:'KW',col:'kw',
   modelos:[
   {id:'W900',nombre:'W900',anios:'1961–Presente',bbc:'120"',long:'~60"',
@@ -1178,7 +1179,9 @@ KW:{marca:'KW',col:'kw',
    motores:['PACCAR MX-13','Cummins X15','Cummins X12'],
    specs:[['BBC','121–130"'],['Long. cofre','~60"'],['Parabrisas','1 pieza panorámica'],['Cabina','Igual que T680 (ancha)'],['Uso','Vocacional / alta capacidad']],
    cofre:'Versión vocacional del T680 con cofre de ~60" y BBC de 121–130". Comparte la misma cabina ancha del T680 pero configurado para volcadoras, grúas y trabajo pesado.',
-   nota:'Si el KW es vocacional con la cabina moderna y parabrisas panorámico = T880. Carretera/flotilla = T680; vocacional/construcción = T880. Cofre diferente al T680 aunque comparten cabina.'},
+   nota:'Si el KW es vocacional con la cabina moderna y parabrisas panorámico = T880. Carretera/flotilla = T680; vocacional/construcción = T880. Cofre diferente al T680 aunque comparten cabina.',
+   ident:[['🔲','<strong>Misma cabina que T680</strong> pero configurado para vocacional/pesado'],['🏗️','Cofre más alto y cuadrado que T680 — permite motores más grandes'],['📏','BBC 121-130", cofre ~60" — más largo que T680'],['🔩','<strong>Fenders separados</strong> (split fender) en versión vocacional'],['🎯','Si tiene cabina tipo T680 pero cofre más alto y cuadrado = T880']],
+   pos:'center 35%'},
   ],
   quiz:[
     {id:0,preg:'¿Tiene cofre largo y recto con rejilla cromada rectangular grande?',det:'Esta pregunta separa al W900/W900L del resto de KW al instante.',
@@ -1190,8 +1193,7 @@ KW:{marca:'KW',col:'kw',
     {id:3,preg:'¿Es para carretera larga / flotilla o para trabajo vocacional?',det:'T680 y T880 comparten la misma cabina ancha panorámica pero son aplicaciones distintas.',
      opc:[{l:'Carretera larga, larga distancia, flotilla',r:'T680'},{l:'Vocacional — volcadora, mixer, grúa, construcción',r:'T880'}]},
   ],
-   ident:[['🔲','<strong>Misma cabina que T680</strong> pero configurado para vocacional/pesado'],['🏗️','Cofre más alto y cuadrado que T680 — permite motores más grandes'],['📏','BBC 121-130", cofre ~60" — más largo que T680'],['🔩','<strong>Fenders separados</strong> (split fender) en versión vocacional'],['🎯','Si tiene cabina tipo T680 pero cofre más alto y cuadrado = T880']],
-   pos:'center 35%'},
+},
 INT:{marca:'INTER',col:'int',
   modelos:[
   {id:'INT_9100',nombre:'9100i',anios:'1998–2003',bbc:'112"',long:'~46"',
@@ -1259,7 +1261,8 @@ INT:{marca:'INTER',col:'int',
      opc:[{l:'1990–2007 → Serie 9000',n:1},{l:'2008–2017 → ProStar',r:'PROSTAR'},{l:'2018 en adelante → LT625',r:'LT'}]},
     {id:1,preg:'¿Cómo se ve el cofre del INTER serie 9000?',det:'BBC y estilo de la rejilla son los dos diferenciadores clave dentro de la serie 9000.',
      opc:[{l:'Cofre corto (~46"), eje muy atrás — solo day cab',r:'INT_9100'},{l:'Cofre corto (~46"), eje muy atrás — con opción sleeper',r:'INT_9200'},{l:'Cofre mediano aerodinámico limpio, BBC 120"',r:'INT_9400'},{l:'Cofre "long-nose" BBC 120" con rejilla cromada cuadrada',r:'INT_9900'},{l:'Cofre "long-nose" extra largo BBC 130"',r:'INT_9900IX'}]},
-  ]},
+  ]
+}
 };
 
 // ═══════════════════════════════════════════════════
@@ -1643,6 +1646,7 @@ function hideSplash() {
 }
 
 function initApp() {
+  try {
   // Construir índice limpio desde window.CATALOG_DATA — sin aliases que mezclen modelos
   const rawData = window.CATALOG_DATA || [];
   CATALOG.length = 0;
@@ -1673,6 +1677,12 @@ function initApp() {
   const allMods = [...DATA.FRT.modelos,...DATA.KW.modelos,...DATA.INT.modelos];
   const total = allMods.length;
 
+  if (total === 0) {
+    setSplash(100, '¡Todo listo!');
+    setTimeout(hideSplash, 400);
+    return;
+  }
+
   allMods.forEach(mod => {
     const img = new Image();
     // Sin crossOrigin — evita bloqueos/CORS en producción (Vercel)
@@ -1690,6 +1700,11 @@ function initApp() {
   });
 
   setTimeout(hideSplash, 5000);
+  } catch (e) {
+    console.error('[initApp]', e);
+    setSplash(100, 'Error al cargar — recarga la página');
+    setTimeout(hideSplash, 2200);
+  }
 }
 
 // ══ CATALOG ENGINE ══════════════════════════════════════
@@ -1698,22 +1713,43 @@ const CATALOG_BY_MODEL = {};
 let CATALOG = [];
 
 // Init — catalog.js carga con defer
-if(typeof CATALOG_DATA !== 'undefined') {
-  initApp();
-} else {
+(function bootstrap(){
+  if(typeof CATALOG_DATA !== 'undefined') {
+    initApp();
+    return;
+  }
   setSplash(8, 'Descargando catálogo (8 MB)…');
-  const catScript = document.querySelector('script[src="catalog.js"]');
+  const catScript = document.querySelector('script[src="catalog.js"], script[src*="catalog.js"]');
   let _catalogTimer = null;
+  let _catalogTries = 0;
   const _tryInit = () => {
     if(typeof CATALOG_DATA !== 'undefined'){
       if(_catalogTimer) clearInterval(_catalogTimer);
       _catalogTimer = null;
       initApp();
+      return;
+    }
+    _catalogTries++;
+    if(_catalogTries > 200) {
+      if(_catalogTimer) clearInterval(_catalogTimer);
+      _catalogTimer = null;
+      console.warn('[Pulido] Catálogo no disponible a tiempo — continuando sin piezas.');
+      window.CATALOG_DATA = window.CATALOG_DATA || [];
+      initApp();
     }
   };
-  if(catScript) catScript.addEventListener('load', _tryInit);
+  if(catScript) {
+    catScript.addEventListener('load', _tryInit);
+    catScript.addEventListener('error', ()=>{
+      console.warn('[Pulido] Falló la carga de catalog.js — modo sin catálogo.');
+      window.CATALOG_DATA = [];
+      if(_catalogTimer) clearInterval(_catalogTimer);
+      _catalogTimer = null;
+      initApp();
+    });
+  }
   _catalogTimer = setInterval(_tryInit, 100);
-}
+})();
 
 // State per open detail panel
 let catState = {modelId:null, filter:'ALL', search:'', page:0};
