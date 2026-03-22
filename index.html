@@ -2050,11 +2050,25 @@ function lbDeleteSelected(){
   });
 }
 
+function _imgKey(url) {
+  if (!url) return url;
+  // Extrae solo el filename sin extensión para comparar
+  // Soporta: /thumb/hash/file/1200px-file  Y  /hash/file
+  const m = url.match(/\/([^\/]+\.(?:jpg|jpeg|png|webp|JPG))(?:\/|$)/i);
+  return m ? m[1].toLowerCase().replace(/%[0-9a-f]{2}/gi, c => decodeURIComponent(c)) : url;
+}
+
 function openLightbox(mainSrc, caption, modelId){
   const extras = (modelId && GALLERY[modelId]) ? GALLERY[modelId] : [];
-  const seen = new Set([mainSrc]);
+  const seen = new Set([_imgKey(mainSrc)]);
   _lbUrls = [mainSrc];
-  for(const u of extras){ if(!seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
+  for(const u of extras){
+    const key = _imgKey(u);
+    if(!seen.has(key)){
+      seen.add(key);
+      _lbUrls.push(u);
+    }
+  }
   _lbIdx = 0;
   _lbSelected.clear();
   document.getElementById('lightbox-caption').textContent = caption||'';
