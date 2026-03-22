@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Guía visual interactiva de cofres para tractocamión — Freightliner, Kenworth e International. Catálogo 2025 con 4,475 piezas, especificaciones técnicas y glosario.">
 <meta name="referrer" content="no-referrer">
 <title>Guía Visual de Cofres — Pulido Trucks & Parts</title>
 <link rel="preconnect" href="https://wsrv.nl" crossorigin>
@@ -22,6 +23,7 @@
   --rad:8px;--rad-lg:12px;--rad-xl:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;}
 
 /* ── HEADER ── */
@@ -41,14 +43,14 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── MODO BAR ── */
 .modo-bar{display:flex;gap:5px;margin-bottom:2.5rem;background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:4px;}
-.modo-btn{flex:1;padding:9px 12px;border-radius:var(--rad);border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;white-space:nowrap;}
+.modo-btn{flex:1;padding:9px 12px;border-radius:var(--rad);border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:color .2s ease,background .2s ease;white-space:nowrap;}
 .modo-btn:hover{color:var(--txt);background:var(--sur2);}
 .modo-btn.active{background:var(--sur3);color:#42a5f5;box-shadow:0 1px 3px rgba(0,0,0,.4);}
 
 /* ── MARCA BUTTONS ── */
 .marca-row{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
-.marca-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;border-radius:var(--rad);border:1px solid var(--bor);background:var(--sur);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;}
-.marca-btn:hover{border-color:var(--bor2);color:var(--txt);}
+.marca-btn{display:flex;align-items:center;gap:9px;padding:10px 18px;border-radius:var(--rad);border:1px solid var(--bor);background:var(--sur);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:border-color .2s ease,color .2s ease,background .2s ease,transform .15s ease;}
+.marca-btn:hover{border-color:var(--bor2);color:var(--txt);transform:translateY(-1px);}
 .marca-btn.af{background:var(--frt-bg2);border-color:var(--frt);color:var(--frt-li);}
 .marca-btn.ak{background:var(--kw-bg);border-color:var(--kw);color:var(--kw-li);}
 .marca-btn.ai{background:var(--int-bg);border-color:var(--int);color:var(--int-li);}
@@ -73,8 +75,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── GRID ── */
 .modelos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:2rem;}
-.mod-card{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;cursor:pointer;transition:border-color .18s,transform .18s;position:relative;}
-.mod-card:hover{border-color:var(--bor3);transform:translateY(-3px);}
+.mod-card{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;cursor:pointer;transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease;position:relative;}
+.mod-card:hover{border-color:var(--bor3);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.35);}
 .mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;opacity:0;transition:opacity .18s;}
 .mod-card:hover::before,.mod-card.sel::before{opacity:1;}
 .mod-card.cf::before{background:var(--frt);}.mod-card.ck::before{background:var(--kw);}.mod-card.ci::before{background:var(--int);}
@@ -84,8 +86,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── FOTO CARD ── */
 .mod-photo{height:165px;overflow:hidden;position:relative;background:#0a0a0a;}
-.mod-photo img{width:100%;height:100%;object-fit:contain;object-position:center 40%;display:block;transition:transform .45s;}
-.mod-card:hover .mod-photo img{transform:scale(1.06);}
+.mod-photo img{width:100%;height:100%;object-fit:contain;object-position:center 40%;display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);}
+.mod-card:hover .mod-photo img{transform:scale(1.07);}
 .mod-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.82) 0%,rgba(8,8,8,.1) 50%,transparent 100%);pointer-events:none;z-index:1;}
 .mod-badges{position:absolute;bottom:9px;left:10px;right:10px;display:flex;gap:5px;flex-wrap:wrap;z-index:3;}
 .badge{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;padding:2px 7px;border-radius:20px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.72);color:rgba(255,255,255,.72);white-space:nowrap;}
@@ -100,7 +102,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 /* ── PANEL DETALLE ── */
 .det{display:none;border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;margin-bottom:2rem;animation:fadeUp .22s ease;}
 .det.vis{display:block;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
 .det-photo{width:100%;height:300px;overflow:hidden;position:relative;background:#080e1a;cursor:zoom-in;}
@@ -108,9 +110,9 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 /* Hover: overlay en pseudo-elemento — evita filter: en la imagen (artefactos con blur/luminancia) */
 .det-photo::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:rgba(255,255,255,0);opacity:0;transition:opacity .28s ease;
+  background:rgba(255,255,255,0);opacity:0;transition:opacity .3s ease;
 }
-.det-photo:hover::after{opacity:1;background:rgba(255,255,255,.06);}
+.det-photo:hover::after{opacity:1;background:rgba(255,255,255,.05);}
 .det-photo-ovl{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(8,14,26,.85) 0%,rgba(8,14,26,.1) 50%,transparent 100%);pointer-events:none;}
 .det-info-row{display:flex;gap:1.25rem;align-items:flex-start;padding:1.25rem 1.75rem;}
 .det-info{flex:1;min-width:0;}
@@ -162,8 +164,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .vpreg{font-size:15px;font-weight:500;color:var(--txt);line-height:1.4;margin-bottom:4px;}
 .vdet{font-size:12.5px;color:var(--muted);line-height:1.65;margin-top:5px;padding-top:5px;border-top:1px solid var(--bor);}
 .qopciones{display:flex;flex-direction:column;gap:7px;padding-left:46px;}
-.qopcion{padding:10px 14px;border:1px solid var(--bor);border-radius:var(--rad);background:var(--sur2);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:all .13s;line-height:1.5;display:flex;align-items:center;gap:10px;}
-.qopcion:hover{border-color:var(--bor2);background:var(--sur3);}
+.qopcion{padding:10px 14px;border:1px solid var(--bor);border-radius:var(--rad);background:var(--sur2);color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:border-color .2s ease,background .2s ease,transform .15s ease;line-height:1.5;display:flex;align-items:center;gap:10px;}
+.qopcion:hover{border-color:var(--bor2);background:var(--sur3);transform:translateX(3px);}
 .oletra{width:21px;height:21px;border-radius:50%;background:var(--bor);font-size:10.5px;font-weight:600;font-family:'DM Mono',monospace;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0;}
 .rbox{display:none;animation:fadeUp .25s ease;}.rbox.vis{display:block;}
 .rsuc{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-xl);overflow:hidden;}
@@ -188,8 +190,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .glos-toc{background:var(--sur);border:1px solid var(--bor);border-radius:var(--rad-lg);padding:1.25rem 1.5rem;margin-bottom:2.5rem;}
 .glos-toc-title{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:.75rem;}
 .glos-toc-list{display:flex;flex-wrap:wrap;gap:6px;}
-.glos-toc-item{font-size:12px;color:var(--muted);padding:4px 12px;background:var(--sur2);border:1px solid var(--bor);border-radius:20px;cursor:pointer;transition:all .13s;font-family:'DM Mono',monospace;}
-.glos-toc-item:hover{color:var(--txt);border-color:var(--bor2);}
+.glos-toc-item{font-size:12px;color:var(--muted);padding:4px 12px;background:var(--sur2);border:1px solid var(--bor);border-radius:20px;cursor:pointer;transition:color .2s ease,border-color .2s ease,background .2s ease;font-family:'DM Mono',monospace;}
+.glos-toc-item:hover{color:var(--txt);border-color:var(--bor2);background:var(--sur3);}
 .glos-entry{margin-bottom:3rem;}
 .glos-anchor{scroll-margin-top:70px;}
 .glos-entry-hdr{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;padding-bottom:.75rem;border-bottom:2px solid var(--bor);margin-bottom:1.25rem;}
@@ -410,6 +412,124 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 
 #lightbox.open #lb-main{transform:scale(1);}
+
+/* ── LIGHTBOX DELETE BTN ── */
+#lb-delete-btn{
+  position:absolute;top:10px;left:10px;z-index:10;
+  background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.35);
+  color:rgba(255,110,110,.85);border-radius:8px;
+  width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  opacity:0;transition:opacity .3s ease .1s;
+}
+#lightbox.open #lb-delete-btn{opacity:1;}
+#lb-delete-btn:hover{background:rgba(220,50,50,.32);color:#ff7070;border-color:rgba(220,50,50,.65);}
+
+/* ── CONFIRM DIALOG ── */
+#lb-confirm-overlay{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,8,.72);
+  align-items:center;justify-content:center;
+}
+#lb-confirm-overlay.vis{display:flex;}
+#lb-confirm-box{
+  background:#0d1626;border:1px solid #1a2d47;border-radius:14px;
+  padding:24px 28px;max-width:360px;width:90%;
+  box-shadow:0 8px 48px rgba(0,0,0,.85);
+}
+#lb-confirm-box p{font-size:14px;color:#e8edf5;line-height:1.65;margin-bottom:20px;}
+.lb-confirm-actions{display:flex;gap:10px;justify-content:flex-end;}
+.lb-confirm-actions button{
+  padding:8px 18px;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all .15s;border:1px solid;
+}
+#lb-confirm-cancel{background:transparent;border-color:#1a2d47;color:#7a90b0;}
+#lb-confirm-cancel:hover{border-color:#2a4a72;color:#e8edf5;}
+#lb-confirm-ok{background:rgba(220,50,50,.15);border-color:rgba(220,50,50,.45);color:#ff7070;}
+#lb-confirm-ok:hover{background:rgba(220,50,50,.3);color:#ff9090;}
+
+/* ── THUMBNAIL CHECKBOXES ── */
+.lb-thumb-wrap{position:relative;display:inline-block;flex-shrink:0;}
+.lb-thumb-cb{
+  position:absolute;top:4px;left:4px;z-index:4;
+  width:15px;height:15px;
+  accent-color:#ef5350;cursor:pointer;
+  opacity:0;transition:opacity .12s;
+}
+.lb-thumb-wrap:hover .lb-thumb-cb,.lb-thumb-cb:checked{opacity:1;}
+
+/* ── BULK DELETE BAR ── */
+#lb-bulk-bar{
+  display:none;gap:12px;align-items:center;
+  margin-top:4px;padding:8px 16px;
+  background:rgba(220,50,50,.08);
+  border:1px solid rgba(220,50,50,.28);border-radius:8px;
+}
+#lb-bulk-bar.vis{display:flex;}
+#lb-bulk-count{font-size:12px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;}
+#lb-bulk-del-btn{
+  padding:7px 16px;border-radius:7px;
+  background:rgba(220,50,50,.18);border:1px solid rgba(220,50,50,.45);
+  color:#ff7070;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:all .15s;
+}
+#lb-bulk-del-btn:hover{background:rgba(220,50,50,.32);color:#ff9090;}
+
+/* ── IMAGE PROTECTION ── */
+.mod-photo img,.det-photo img{
+  user-select:none;-webkit-user-select:none;
+  -webkit-user-drag:none;
+}
+
+
+
+/* ── THUMBNAIL SKELETON ── */
+.lb-thumb-sk{
+  position:absolute;inset:0;z-index:3;border-radius:5px;
+  background:linear-gradient(90deg,#0a111e 25%,#162238 50%,#0a111e 75%);
+  background-size:200% 100%;
+  animation:skPulse 1.6s ease-in-out infinite;
+  pointer-events:none;
+}
+
+/* ── SKELETON LOADER ── */
+.img-skeleton{
+  position:absolute;inset:0;z-index:2;border-radius:inherit;
+  background:linear-gradient(90deg,#0b1422 25%,#162238 50%,#0b1422 75%);
+  background-size:200% 100%;
+  animation:skPulse 1.6s ease-in-out infinite;
+}
+@keyframes skPulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── SPECS TOOLTIP ── */
+.mod-specs-tip{
+  position:absolute;inset:0;z-index:5;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:14px 14px;
+  background:rgba(5,10,20,.88);
+  backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;
+  transition:opacity .2s ease;
+}
+.mod-card:hover .mod-specs-tip{opacity:1;}
+.mod-specs-tip-row{
+  display:flex;gap:6px;align-items:baseline;
+  font-size:11px;line-height:1.55;
+}
+.mod-specs-tip-k{
+  font-family:'DM Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.38);white-space:nowrap;min-width:60px;
+}
+.mod-specs-tip-v{color:rgba(255,255,255,.82);font-size:11px;}
+.mod-specs-tip-engines{
+  margin-top:7px;padding-top:7px;
+  border-top:1px solid rgba(255,255,255,.1);
+  font-family:'DM Mono',monospace;font-size:9.5px;
+  color:rgba(255,255,255,.5);line-height:1.6;
+}
 </style>
 </head>
 <body>
@@ -865,7 +985,7 @@ const _lazyImgIO = !_lazyNative ? new IntersectionObserver((ents,o)=>{
 // ══════════════════════════════════════════════════
 function px(path){
   try { path = decodeURIComponent(path); } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=900&output=webp&q=86';
+  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=1200&output=webp&q=92&we';
 }
 
 const DATA={
@@ -873,7 +993,7 @@ FRT:{marca:'FLN',col:'frt',
   modelos:[
   {id:'FLD112',nombre:'FLD112',anios:'1987–2003',bbc:'112"',long:'52.5"',
    tag:'Cofre corto, motores medianos, eje setback',
-   foto:px('/wikipedia/commons/thumb/1/18/Freightliner_FLD_112_Dump_truck.jpg/1200px-Freightliner_FLD_112_Dump_truck.jpg'),
+   foto:px('/wikipedia/commons/thumb/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg/1200px-Freightliner_FLD_112_1994_%2816013425830%29.jpg'),
    motores:['Cummins M11','CAT C10','CAT C12','Detroit 6V92','Detroit Series 40'],
    specs:[['BBC','112"'],['Long. cofre','52.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
    cofre:'Cofre de <strong>52.5 pulgadas</strong>, diseño aerodinámico. Cabina de aluminio que abre completamente hacia adelante. Diseñado para motores de desplazamiento mediano. Apertura de rueda más pequeña que el FLD120.',
@@ -882,7 +1002,7 @@ FRT:{marca:'FLN',col:'frt',
    pos:'center 50%'},
   {id:'FLD120',nombre:'FLD120',anios:'1989–2010',bbc:'120"',long:'60.5"',
    tag:'Cofre largo curvado, motor grande',
-   foto:px('/wikipedia/commons/thumb/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg/1200px-15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg'),
+   foto:px('/wikipedia/commons/thumb/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg/1200px-Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg'),
    motores:['Detroit Series 60','Cummins N14','CAT 3406','CAT C15'],
    specs:[['BBC','120"'],['Long. cofre','60.5"'],['Eje delantero','Set-back'],['Faros','Rectangulares integrados'],['Cabina','Aluminio']],
    cofre:'Cofre largo de <strong>60.5 pulgadas</strong> con diseño curvado aerodinámico. Para los motores más grandes de la época: Detroit Series 60, N14 y CAT 3406. El cofre abre completamente hacia adelante.',
@@ -891,7 +1011,7 @@ FRT:{marca:'FLN',col:'frt',
    pos:'center 40%'},
   {id:'FLD120XL',nombre:'FLD120 Classic XL',anios:'1991–2010',bbc:'132"',long:'~70"',
    tag:'Long-nose clásico — filtros de aire externos laterales',
-   foto:px('/wikipedia/commons/thumb/5/54/Freightliner_FLD120_photo1.JPG/1200px-Freightliner_FLD120_photo1.JPG'),
+   foto:px('/wikipedia/commons/thumb/0/01/Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg/1200px-Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg'),
    motores:['Detroit Series 60','Cummins N14','CAT 3406','CAT C15','CAT C16'],
    specs:[['BBC','132"'],['Long. cofre','~70"'],['Filtros aire','Dobles externos laterales'],['Rejilla','Rectangular grande'],['BBC','El más largo de los FLD']],
    cofre:'Versión "long-nose" del FLD120. Característica clave: <strong>filtros de aire dobles externos a los lados del cofre</strong> y rejilla frontal rectangular grande. BBC de 132", el más largo de la línea FLD.',
@@ -900,7 +1020,7 @@ FRT:{marca:'FLN',col:'frt',
    pos:'center 45%'},
   {id:'CENTURY_C112',nombre:'Century C112',anios:'1996–2010',bbc:'112"',long:'~46"',
    tag:'Diseño Daimler — 4 faros cuadrados, cofre corto',
-   foto:px('/wikipedia/commons/thumb/f/f6/FREIGHTLINER_120_CENTURY_1999.JPG/1200px-FREIGHTLINER_120_CENTURY_1999.JPG'),
+   foto:px('/wikipedia/commons/thumb/d/d9/Freightliner_cst_112_12l._Blokha.jpg/1200px-Freightliner_cst_112_12l._Blokha.jpg'),
    motores:['Detroit Series 60','Cummins N14','CAT C15','Mercedes MBE4000','Cummins ISX'],
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['Diferenciador','vs Columbia: faros cuadrados']],
    cofre:'Primer modelo FLN diseñado bajo Daimler AG. Cofre aerodinámico de una pieza. Característica visual más notable: <strong>cuatro faros rectangulares separados</strong>. Versión BBC corto (112").',
@@ -918,7 +1038,7 @@ FRT:{marca:'FLN',col:'frt',
    pos:'center 45%'},
   {id:'COLUMBIA',nombre:'Columbia 120',anios:'2001–2011',bbc:'120"',long:'57"',
    tag:'Flotilla — faros ovalados tipo gota',
-   foto:px('/wikipedia/commons/thumb/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg/1200px-2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg'),
+   foto:px('/wikipedia/commons/thumb/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg/1200px-Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg'),
    motores:['Detroit Series 60','Cummins ISX','Mercedes MBE4000','CAT C15','Detroit DD15'],
    specs:[['BBC','120"'],['Long. cofre','57"'],['Eje delantero','Set-back'],['Faros','Ovalados tipo gota'],['Rejilla','Pequeña integrada']],
    cofre:'Comparte estructura de cabina con el Century Class pero los <strong>faros son ovalados en forma de gota</strong>. Rejilla frontal más pequeña. Fue el camión de flotilla más económico de FLN.',
@@ -995,7 +1115,7 @@ KW:{marca:'KW',col:'kw',
    pos:'center 42%'},
   {id:'W900L',nombre:'W900L',anios:'1979–Presente',bbc:'130"',long:'~72"',
    tag:'Long-nose extremo — cofre 12" más largo que el W900',
-   foto:px('/wikipedia/commons/thumb/1/17/2002_Kenworth_W900L_1.jpg/1200px-2002_Kenworth_W900L_1.jpg'),
+   foto:px('/wikipedia/commons/thumb/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg/1200px-2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg'),
    motores:['Cummins N14','Cummins ISX / X15','CAT 3406','CAT C15','PACCAR MX-13'],
    specs:[['BBC','130"'],['Long. cofre','~72"'],['vs W900','+10" BBC / +12" cofre'],['Eje delantero','Set-back centrado'],['Rejilla','Cromada grande — igual al W900']],
    cofre:'Versión "L" (Long) del W900 con cofre de ~72" y BBC de 130". El camión KW de cofre más largo disponible. Visualmente igual al W900 pero el cofre es notablemente más extenso.',
@@ -1013,7 +1133,7 @@ KW:{marca:'KW',col:'kw',
    pos:'center 38%'},
   {id:'T660',nombre:'T660',anios:'2008–2017',bbc:'116"',long:'~54"',
    tag:'Sucesor del T600 — perfil inclinado moderno',
-   foto:px('/wikipedia/commons/thumb/c/c9/Kenworth_T660_of_SRT.jpg/1200px-Kenworth_T660_of_SRT.jpg'),
+   foto:px('/wikipedia/commons/thumb/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg/1200px-Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg'),
    motores:['Cummins ISX','CAT C15','PACCAR MX-13','Detroit Series 60'],
    specs:[['BBC','116"'],['Long. cofre','~54"'],['vs T600','+4" BBC / +2" cofre'],['Eje delantero','Set-back (muy atrás)'],['Años','Sucesor del T600']],
    cofre:'Sucesor del T600 con cofre rediseñado de ~54" y BBC de 116". Mantuvo el perfil aerodinámico inclinado del T600 con un diseño más moderno. Cumple normas de emisiones 2010 con SCR.',
@@ -1022,7 +1142,7 @@ KW:{marca:'KW',col:'kw',
    pos:'center 38%'},
   {id:'T800',nombre:'T800',anios:'1987–Presente',bbc:'116–126"',long:'~56"',
    tag:'Vocacional todoterreno — fenders separados en vocacional',
-   foto:px('/wikipedia/commons/thumb/c/c9/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg/1200px-2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg'),
+   foto:px('/wikipedia/commons/thumb/b/b6/Kenworth_T800B_dump_truck_2.jpg/1200px-Kenworth_T800B_dump_truck_2.jpg'),
    motores:['Cummins N14','Cummins ISX / X15','CAT C13','CAT C15','PACCAR MX-13','Detroit Series 60'],
    specs:[['BBC','116–126"'],['Long. cofre','~56"'],['Eje delantero','Set-back o Set-forward'],['Fenders','Integrados o split'],['Uso','Vocacional / carretera']],
    cofre:'Cofre horizontal y cuadrado de ~56", sin el perfil inclinado del T600/T660. Puede tener <strong>fenders separados del cofre (split fender)</strong> en versiones vocacionales para volcadoras, revolvedoras y construcción.',
@@ -1031,7 +1151,7 @@ KW:{marca:'KW',col:'kw',
    pos:'center 40%'},
   {id:'T680',nombre:'T680',anios:'2013–2022',bbc:'122"',long:'~52"',
    tag:'Larga distancia moderno — parabrisas panorámico',
-   foto:px('/wikipedia/commons/thumb/9/96/2016_Kenworth_T680.jpg/1200px-2016_Kenworth_T680.jpg'),
+   foto:px('/wikipedia/commons/thumb/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg/1200px-2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg'),
    motores:['PACCAR MX-13','PACCAR MX-11','Cummins X15','Cummins X12'],
    specs:[['BBC','122"'],['Long. cofre','~52"'],['Parabrisas','1 pieza panorámica'],['Cabina','8" más ancha que T800'],['Uso','Larga distancia / flotilla']],
    cofre:'Cofre aerodinámico de ~52" con <strong>parabrisas de una sola pieza panorámico</strong>. Cabina 8 pulgadas más ancha que el T800. El modelo más eficiente de KW en carretera.',
@@ -1040,7 +1160,7 @@ KW:{marca:'KW',col:'kw',
    pos:'center 35%'},
   {id:'T680_NG',nombre:'T680 Next Gen',anios:'2023–Presente',bbc:'122"',long:'~52"',
    tag:'Nueva generación 2023 — frente rediseñado, cofre angosto, faros full LED, espejos digitales',
-   foto:px('/wikipedia/commons/thumb/7/72/The_National_Christmas_Tree_Event_at_Cap_Rock_(51772622422).jpg/1200px-The_National_Christmas_Tree_Event_at_Cap_Rock_(51772622422).jpg'),
+   foto:px('/wikipedia/commons/thumb/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg/1200px-2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg'),
    motores:['PACCAR MX-13 (510 HP)','PACCAR MX-11','Cummins X15'],
    specs:[['BBC','122"'],['Long. cofre','~52"'],['Faros','Full LED de serie (estándar)'],['Frente','Rediseñado 2023 — más angosto'],['Parabrisas','1 pieza panorámica'],['Pantalla','Digital 15" de serie'],['Espejos','Digitales DVM (sin cristal)'],['Ahorro combustible','Hasta 6% vs T680 clásico'],['Diferencia clave','Cofre y defensas nuevas — NO compatibles con T680 clásico']],
    cofre:'Cofre de <strong>diseño completamente nuevo 2023</strong> — más angosto y aerodinámico que el T680 clásico. Frente rediseñado con deflectores de aire integrados, tomas de aire rediseñadas y guardafangos de nuevo perfil. Parabrisas panorámico de una pieza igual al T680 clásico pero cofre distinto.',
@@ -1072,7 +1192,7 @@ INT:{marca:'INTER',col:'int',
   modelos:[
   {id:'INT_9100',nombre:'9100i',anios:'1998–2003',bbc:'112"',long:'~46"',
    tag:'Solo day cab — regional, eje setback extremo',
-   foto:px('/wikipedia/commons/thumb/7/72/International_Eagle_farm_truck_VT.jpg/1200px-International_Eagle_farm_truck_VT.jpg'),
+   foto:px('/wikipedia/commons/thumb/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg/1200px-International_9200i_Eagle_1998_%2837455306834%29.jpg'),
    motores:['Cummins M11','INTER T444E','CAT C10','Detroit Series 60'],
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Cabina','Solo day cab (sin dormir)'],['Eje delantero','Set-back extremo'],['Diferencia vs 9200i','Sin opción sleeper']],
    cofre:'Versión day cab exclusivamente con cofre de ~46" y BBC 112". El eje delantero está muy desplazado hacia atrás (setback), haciendo que el cofre aparente ser más largo de lo que mide en BBC.',
@@ -1081,7 +1201,7 @@ INT:{marca:'INTER',col:'int',
    pos:'center 45%'},
   {id:'INT_9200',nombre:'9200i',anios:'1993–2007',bbc:'112"',long:'~46"',
    tag:'Serie 9000 BBC 112" — sleeper disponible',
-   foto:px('/wikipedia/commons/thumb/1/14/International_9200i_Eagle_1998_%2837455306834%29.jpg/1200px-International_9200i_Eagle_1998_%2837455306834%29.jpg'),
+   foto:px('/wikipedia/commons/thumb/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg/1200px-International_9200i_Eagle_1998_%2837455306834%29.jpg'),
    motores:['Cummins N14','CAT 3406','Detroit Series 60','Cummins ISX','INTER DT466'],
    specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back extremo'],['Cabina','Day cab o sleeper'],['vs 9100i','Disponible con sleeper']],
    cofre:'Cofre de ~46" con BBC 112". Eje delantero muy desplazado hacia atrás. Disponible con dormidera a diferencia del 9100i. Motores hasta el N14 y CAT 3406.',
@@ -1107,7 +1227,7 @@ INT:{marca:'INTER',col:'int',
    pos:'center 40%'},
   {id:'INT_9900IX',nombre:'9900ix',anios:'2003–2017',bbc:'130"',long:'~64"',
    tag:'Long-nose extremo — BBC 130", el más largo de la serie',
-   foto:px('/wikipedia/commons/thumb/8/8a/Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg/1200px-Bois_d%27Arc_Bash_2016_46_%28parade%29.jpg'),
+   foto:px('/wikipedia/commons/thumb/a/a9/International_9900i_Eagle.jpg/1200px-International_9900i_Eagle.jpg'),
    motores:['Cummins ISX','CAT C15','CAT C16','Detroit Series 60'],
    specs:[['BBC','130"'],['Long. cofre','~64"'],['vs 9900i','+10" BBC / +10" cofre'],['Rejilla','Cromada cuadrada grande'],['Nombre completo','9900ix Eagle']],
    cofre:'La versión más larga de la serie 9000 con BBC de 130" y cofre de ~64". Es 10 pulgadas más largo que el 9900i. Rejilla cromada cuadrada aún más prominente.',
@@ -1326,20 +1446,25 @@ function maskTruckImage(imgEl) {
 }
 function px2(src,col,nombre,pos){
   const wrap=document.createElement('div');
-  wrap.style.cssText='width:100%;height:100%;';
+  wrap.style.cssText='width:100%;height:100%;position:relative;';
   if(!src){ wrap.innerHTML=makePH(col,nombre); return wrap; }
+  // Skeleton loader
+  const sk=document.createElement('div');
+  sk.className='img-skeleton';
+  wrap.appendChild(sk);
   const img=document.createElement('img');
   img.referrerPolicy='no-referrer';
-  img.crossOrigin='anonymous';
   img.alt=nombre||'';
   img.decoding='async';
+  img.draggable=false;
+  img.oncontextmenu=e=>e.preventDefault();
   img.setAttribute('width','800');
   img.setAttribute('height','500');
-  img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .4s;`;
-  img.onerror=()=>{wrap.innerHTML=makePH(col,nombre);};
+  img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;z-index:1;`;
+  img.onerror=()=>{ sk.remove(); wrap.innerHTML=makePH(col,nombre); };
   img.onload=()=>{
+    sk.remove();
     if(img.naturalWidth){ img.setAttribute('width',String(img.naturalWidth)); img.setAttribute('height',String(img.naturalHeight)); }
-    maskTruckImage(img);
   };
   if(_lazyNative){ img.loading='lazy'; img.src=src; }
   else {
@@ -1384,7 +1509,12 @@ function renderGrid(){
     const ov=document.createElement('div'); ov.className='mod-photo-ovl';
     const badges=document.createElement('div'); badges.className='mod-badges';
     badges.innerHTML=`<span class="badge">BBC ${mod.bbc}</span><span class="badge badge-long">⟷ ${mod.long}</span>`;
-    ph.appendChild(ov); ph.appendChild(badges); c.appendChild(ph);
+    // Specs tooltip
+    const tip=document.createElement('div'); tip.className='mod-specs-tip';
+    const specRows=(mod.specs||[]).slice(0,4).map(([k,v])=>`<div class="mod-specs-tip-row"><span class="mod-specs-tip-k">${k}</span><span class="mod-specs-tip-v">${v}</span></div>`).join('');
+    const engList=(mod.motores||[]).slice(0,3).join(' · ');
+    tip.innerHTML=specRows+(engList?`<div class="mod-specs-tip-engines">${engList}</div>`:'');
+    ph.appendChild(ov); ph.appendChild(badges); ph.appendChild(tip); c.appendChild(ph);
     const inf=document.createElement('div'); inf.className='mod-info';
     inf.innerHTML=`<div class="mod-nombre">${mod.nombre}</div><div class="mod-anios">${mod.anios}</div><div class="mod-tag">${mod.tag}</div>`;
     c.appendChild(inf);
@@ -1532,7 +1662,6 @@ function initApp() {
 
   allMods.forEach(mod => {
     const img = new Image();
-    img.crossOrigin = 'anonymous';
     img.decoding = 'async';
     img.onload = img.onerror = () => {
       loaded++;
@@ -1560,8 +1689,16 @@ if(typeof CATALOG_DATA !== 'undefined') {
 } else {
   setSplash(8, 'Descargando catálogo (8 MB)…');
   const catScript = document.querySelector('script[src="catalog.js"]');
-  if(catScript) catScript.addEventListener('load', initApp);
-  let _p = setInterval(()=>{ if(typeof CATALOG_DATA!=='undefined'){ clearInterval(_p); initApp(); }}, 150);
+  let _catalogTimer = null;
+  const _tryInit = () => {
+    if(typeof CATALOG_DATA !== 'undefined'){
+      if(_catalogTimer) clearInterval(_catalogTimer);
+      _catalogTimer = null;
+      initApp();
+    }
+  };
+  if(catScript) catScript.addEventListener('load', _tryInit);
+  _catalogTimer = setInterval(_tryInit, 100);
 }
 
 // State per open detail panel
@@ -1766,14 +1903,9 @@ function openCatImgZoom(src, title) {
 function setCatFilter(cat) {
   catState.filter = cat;
   catState.page = 0;
-  document.querySelectorAll('.cat-filter-btn').forEach(b=>{
-    b.classList.toggle('active', b.textContent.includes(cat==='ALL'?'🔍':cat) && (cat==='ALL'||b.textContent.trim().startsWith(CAT_ICONS[cat]||cat)));
-    if(cat==='ALL') b.classList.toggle('active', b.textContent.includes('🔍'));
-  });
-  // Simpler: re-match by data
-  document.querySelectorAll('.cat-filter-btn').forEach(b=>{
-    const txt = b.getAttribute('onclick');
-    b.classList.toggle('active', txt && txt.includes(`'${cat}'`));
+  document.querySelectorAll('.cat-filter-btn').forEach(b => {
+    const onclick = b.getAttribute('onclick') || '';
+    b.classList.toggle('active', onclick.includes(`'${cat}'`));
   });
   renderCatGrid();
 }
@@ -1791,19 +1923,75 @@ function catPage(p) {
 }
 
 // ── GALLERY DATA ─────────────────────────────────────────
-const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg","https://upload.wikimedia.org/wikipedia/commons/5/54/Freightliner_FLD120_photo1.JPG"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/5/54/Freightliner_FLD120_photo1.JPG","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg"],"CENTURY_C112":["https://upload.wikimedia.org/wikipedia/commons/f/f6/FREIGHTLINER_120_CENTURY_1999.JPG","https://upload.wikimedia.org/wikipedia/commons/d/d9/Freightliner_cst_112_12l._Blokha.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"CENTURY_C120":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/a/a7/A_2020_Cascadia_126_Shown_in_Green.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6f/Kenworth_W900_%28MSP16%29.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/KW_W900_Logging_Truck.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b6/Kenworth_T800B_dump_truck_2.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Kenworth_T-800_flatbed_truck.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ab/2017_Kenworth_T680_in_White%2C_Front_Right%2C_09-12-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/7/72/The_National_Christmas_Tree_Event_at_Cap_Rock_%2851772622422%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/c/ce/International_Eagle_farm_truck_VT.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg","https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/International_Eagle_farm_truck_VT.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg","https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/8/8d/International_ProStar%2B_2013_%2814252059680%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5c/International_ProStar_2007_%2814069027870%29.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a3/International_ProStar%2B_Premium_2012_%2814252060050%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG"]};
+const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/0/01/Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Freightliner_FLD_132_Classic_XL_1999_%289193958719%29.jpg"],"CENTURY_C112":["https://upload.wikimedia.org/wikipedia/commons/d/d9/Freightliner_cst_112_12l._Blokha.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"CENTURY_C120":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/a/a7/A_2020_Cascadia_126_Shown_in_Green.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6f/Kenworth_W900_%28MSP16%29.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/KW_W900_Logging_Truck.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b6/Kenworth_T800B_dump_truck_2.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Kenworth_T-800_flatbed_truck.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ab/2017_Kenworth_T680_in_White%2C_Front_Right%2C_09-12-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5d/International_9200i_2001_%2814421593343%29.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg"],"INT_9900":["https://upload.wikimedia.org/wikipedia/commons/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg"],"INT_9900IX":["https://upload.wikimedia.org/wikipedia/commons/a/a9/International_9900i_Eagle.jpg"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/8/8d/International_ProStar%2B_2013_%2814252059680%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5c/International_ProStar_2007_%2814069027870%29.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a3/International_ProStar%2B_Premium_2012_%2814252060050%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg"]};
 
 // ── LIGHTBOX + CAROUSEL ──────────────────────────────────
-let _lbUrls=[], _lbIdx=0;
+let _lbUrls=[], _lbIdx=0, _lbSelected=new Set();
 
-function _wsrv(url, fmt){
+function _wsrv(url, fmt, w){
   if(!url) return '';
   let clean = url;
   try { clean = decodeURIComponent(url); } catch(e) {}
   const out = (fmt === 'jpg') ? 'jpg' : 'webp';
-  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace('https://',''))+'&w=1100&output='+out+'&q=85';
+  const width = w || 1400;
+  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace('https://',''))+'&w='+width+'&output='+out+'&q=92&we';
 }
 function _wsrvJpg(url){ return _wsrv(url, 'jpg'); }
+function _wsrvThumb(url){ return _wsrv(url, 'webp', 144); }
+function _wsrvThumbJpg(url){ return _wsrv(url, 'jpg', 144); }
+// Inline SVG placeholders — shown when ALL network fallbacks fail
+const _THUMB_PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='48'%3E%3Crect width='72' height='48' fill='%230a111e'/%3E%3Cpath d='M24 22h16l3 5h2v7H21v-7h2Z' stroke='%231f3759' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='27' cy='34' r='3' stroke='%231f3759' stroke-width='1.2' fill='none'/%3E%3Ccircle cx='45' cy='34' r='3' stroke='%231f3759' stroke-width='1.2' fill='none'/%3E%3Ctext x='36' y='44' text-anchor='middle' font-size='5' font-family='monospace' fill='%231f3759'%3Esin imagen%3C/text%3E%3C/svg%3E";
+const _MAIN_PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500'%3E%3Crect width='800' height='500' fill='%230d1626'/%3E%3Cpath d='M340 215h120l18 35h14v55H322v-55h14Z' stroke='%231f3759' stroke-width='2' fill='none'/%3E%3Ccircle cx='352' cy='308' r='18' stroke='%231f3759' stroke-width='2' fill='none'/%3E%3Ccircle cx='448' cy='308' r='18' stroke='%231f3759' stroke-width='2' fill='none'/%3E%3Ctext x='400' y='350' text-anchor='middle' font-family='monospace' font-size='13' fill='%232a4a72'%3EImagen no disponible%3C/text%3E%3C/svg%3E";
+
+function _updateBulkBar(){
+  const bar=document.getElementById('lb-bulk-bar');
+  if(!bar) return;
+  const n=_lbSelected.size;
+  bar.classList.toggle('vis', n>0);
+  const c=document.getElementById('lb-bulk-count');
+  if(c) c.textContent=n+' seleccionada'+(n!==1?'s':'');
+}
+
+function _lbConfirm(msg, onOk){
+  const ov=document.getElementById('lb-confirm-overlay');
+  document.getElementById('lb-confirm-msg').textContent=msg;
+  ov._onOk=onOk;
+  ov.classList.add('vis');
+}
+function _lbConfirmOk(){
+  const ov=document.getElementById('lb-confirm-overlay');
+  ov.classList.remove('vis');
+  if(ov._onOk){ ov._onOk(); ov._onOk=null; }
+}
+function _lbConfirmCancel(){
+  document.getElementById('lb-confirm-overlay').classList.remove('vis');
+}
+
+function lbDeleteCurrent(){
+  _lbConfirm('¿Eliminar esta imagen? Esta acción no se puede deshacer.', ()=>{
+    const url=_lbUrls[_lbIdx];
+    _lbUrls.splice(_lbIdx,1);
+    _lbSelected.delete(url);
+    // NOTE: This is a static site — no backend API exists for image deletion.
+    // If an API is added, call: fetch('/api/images/'+encodeURIComponent(url),{method:'DELETE'})
+    if(!_lbUrls.length){ closeLightbox(); return; }
+    if(_lbIdx>=_lbUrls.length) _lbIdx=_lbUrls.length-1;
+    _renderCarousel();
+  });
+}
+
+function lbDeleteSelected(){
+  const n=_lbSelected.size;
+  if(!n) return;
+  const label='imagen'+(n!==1?'es':'')+' seleccionada'+(n!==1?'s':'');
+  _lbConfirm('¿Eliminar '+n+' '+label+'? Esta acción no se puede deshacer.', ()=>{
+    _lbUrls=_lbUrls.filter(u=>!_lbSelected.has(u));
+    _lbSelected.clear();
+    if(!_lbUrls.length){ closeLightbox(); return; }
+    if(_lbIdx>=_lbUrls.length) _lbIdx=_lbUrls.length-1;
+    _renderCarousel();
+  });
+}
 
 function openLightbox(mainSrc, caption, modelId){
   const extras = (modelId && GALLERY[modelId]) ? GALLERY[modelId] : [];
@@ -1811,6 +1999,7 @@ function openLightbox(mainSrc, caption, modelId){
   _lbUrls = [mainSrc];
   for(const u of extras){ if(!seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
   _lbIdx = 0;
+  _lbSelected.clear();
   document.getElementById('lightbox-caption').textContent = caption||'';
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1841,10 +2030,18 @@ function _renderCarousel(){
   main.onload = onDone;
   main.onerror = ()=>{
     if(main.dataset.wsrvFmt !== 'jpg'){
+      // 1st failure: wsrv WebP → try wsrv JPG
       main.dataset.wsrvFmt = 'jpg';
       main.src = _wsrvJpg(url);
-    } else {
-      main.onerror = null;
+    } else if(!main.dataset.wsrvDirect){
+      // 2nd failure: wsrv JPG → try original URL directly
+      main.dataset.wsrvDirect = '1';
+      main.onerror = ()=>{
+        // 3rd failure: all sources failed — show placeholder, unblock UI
+        main.onerror = null;
+        main.src = _MAIN_PH;
+        onDone();
+      };
       main.src = url;
     }
   };
@@ -1856,20 +2053,49 @@ function _renderCarousel(){
   thumbs.innerHTML='';
   if(_lbUrls.length>1){
     _lbUrls.forEach((u,i)=>{
+      const tw=document.createElement('div');
+      tw.className='lb-thumb-wrap';
+      // Skeleton — removed on first successful load or final error
+      const tsk=document.createElement('div');
+      tsk.className='lb-thumb-sk';
+      tw.appendChild(tsk);
       const t=document.createElement('img');
       t.className='lb-thumb'+(i===_lbIdx?' active':'');
       t.width=72; t.height=48;
       t.setAttribute('width','72'); t.setAttribute('height','48');
-      t.loading='lazy'; t.decoding='async'; t.alt='';
-      t.src=_wsrv(u);
+      t.loading='eager'; t.decoding='async'; t.alt=''; // eager: lightbox is already open
+      t.src=_wsrvThumb(u); // 144px — 2× for retina thumbnails
+      t.onload=()=>{ tsk.remove(); };
       t.onerror=function(){
-        if(!this.dataset._wsrvFb){ this.dataset._wsrvFb='1'; this.src=_wsrvJpg(u); return; }
-        this.onerror=null; this.src=u;
+        if(!this.dataset._wsrvFb){
+          // 1st failure: wsrv WebP → try wsrv JPG (144px)
+          this.dataset._wsrvFb='1';
+          this.src=_wsrvThumbJpg(u);
+          return;
+        }
+        if(!this.dataset._wsrvDirect){
+          // 2nd failure: wsrv JPG → try original URL directly
+          this.dataset._wsrvDirect='1';
+          this.onerror=()=>{
+            // 3rd failure: all sources failed — show placeholder
+            this.onerror=null;
+            tsk.remove();
+            this.src=_THUMB_PH;
+          };
+          this.src=u;
+          return;
+        }
       };
       t.onclick=(e)=>{e.stopPropagation();_lbIdx=i;_renderCarousel();};
-      thumbs.appendChild(t);
+      const cb=document.createElement('input');
+      cb.type='checkbox'; cb.className='lb-thumb-cb';
+      cb.checked=_lbSelected.has(u);
+      cb.onclick=(e)=>{e.stopPropagation();if(cb.checked)_lbSelected.add(u);else _lbSelected.delete(u);_updateBulkBar();};
+      tw.appendChild(t); tw.appendChild(cb);
+      thumbs.appendChild(tw);
     });
   }
+  _updateBulkBar();
   const arrowVis = _lbUrls.length>1?'visible':'hidden';
   document.querySelector('.lb-prev').style.visibility=arrowVis;
   document.querySelector('.lb-next').style.visibility=arrowVis;
@@ -1881,7 +2107,7 @@ function lbNav(dir){
 }
 
 function closeLightbox(e){
-  if(e && (e.target.id==='lb-main'||e.target.classList.contains('lb-thumb'))) return;
+  if(e && (e.target.id==='lb-main'||e.target.classList.contains('lb-thumb')||e.target.classList.contains('lb-thumb-wrap'))) return;
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow='';
   setTimeout(()=>{
@@ -1904,17 +2130,30 @@ document.addEventListener('keydown',e=>{
 
 <div id="lightbox" onclick="closeLightbox(event)">
   <div id="lightbox-zoom-hint">ESC · ← → navegar · clic fuera para cerrar</div>
-  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button id="lightbox-close" onclick="closeLightbox()" type="button">✕</button>
   <div style="position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;max-width:92vw;">
     <button class="lb-prev lb-nav" onclick="lbNav(-1);event.stopPropagation()">‹</button>
     <button class="lb-next lb-nav" onclick="lbNav(1);event.stopPropagation()">›</button>
     <div id="lb-main-wrap" class="lb-loading">
-    <img id="lb-main" src="" alt="" width="1100" height="733" decoding="async" fetchpriority="high" style="max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:opacity .32s ease;opacity:0;vertical-align:middle;">
+    <img id="lb-main" src="" alt="" width="1100" height="733" decoding="async" fetchpriority="high" draggable="false" oncontextmenu="return false" style="max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:opacity .32s ease;opacity:0;vertical-align:middle;user-select:none;-webkit-user-select:none;">
+    <button id="lb-delete-btn" onclick="lbDeleteCurrent();event.stopPropagation()" title="Eliminar imagen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
     </div>
     <div id="lb-thumbs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:90vw;"></div>
+    <div id="lb-bulk-bar"><span id="lb-bulk-count"></span><button id="lb-bulk-del-btn" onclick="lbDeleteSelected();event.stopPropagation()">Eliminar seleccionadas</button></div>
     <div id="lb-counter" style="font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;"></div>
   </div>
   <div id="lightbox-caption"></div>
+</div>
+
+
+<div id="lb-confirm-overlay" onclick="if(event.target===this)_lbConfirmCancel()">
+  <div id="lb-confirm-box">
+    <p id="lb-confirm-msg"></p>
+    <div class="lb-confirm-actions">
+      <button id="lb-confirm-cancel" onclick="_lbConfirmCancel()">Cancelar</button>
+      <button id="lb-confirm-ok" onclick="_lbConfirmOk()">Eliminar</button>
+    </div>
+  </div>
 </div>
 
 </body>
