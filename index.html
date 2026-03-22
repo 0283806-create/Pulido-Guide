@@ -1456,6 +1456,49 @@ function maskTruckImage(imgEl) {
     imgEl.dataset.masked = '1';
   } catch(e) {}
 }
+const LOGO_ZONES = {
+  'Freightliner_FLD_112_1994': { x: 0.36, y: 0.42, w: 0.28, h: 0.09 },
+  'Freightliner_FLD_120': { x: 0.08, y: 0.44, w: 0.18, h: 0.10 },
+  'Freightliner_FLD_132_Classic': { x: 0.28, y: 0.45, w: 0.22, h: 0.10 },
+  'Chatham_Steel_Freightliner': { x: 0.40, y: 0.44, w: 0.22, h: 0.09 },
+  'Columbia_112_in_GFL': { x: 0.68, y: 0.46, w: 0.18, h: 0.10 },
+  'FL_CasacadiaAtLV': { x: 0.35, y: 0.38, w: 0.22, h: 0.09 },
+  'A_2020_Cascadia_126': { x: 0.28, y: 0.28, w: 0.20, h: 0.12 },
+  'Business_Class_M2_box': { x: 0.72, y: 0.42, w: 0.16, h: 0.10 },
+  'Business_Class_Crew': { x: 0.36, y: 0.40, w: 0.20, h: 0.10 },
+  'Kenworth_W900_semi': { x: 0.32, y: 0.42, w: 0.18, h: 0.10 },
+  'Kenworth_W900_%28MSP': { x: 0.35, y: 0.43, w: 0.18, h: 0.09 },
+  'Kenworth_W900_(MSP': { x: 0.35, y: 0.43, w: 0.18, h: 0.09 },
+  'KW_W900_Logging': { x: 0.38, y: 0.42, w: 0.18, h: 0.10 },
+  '2002_Kenworth_W900L': { x: 0.36, y: 0.42, w: 0.18, h: 0.10 },
+  '2019_Kenworth_W900L': { x: 0.38, y: 0.40, w: 0.18, h: 0.10 },
+  '2020_Kenworth_W900L': { x: 0.36, y: 0.42, w: 0.18, h: 0.10 },
+  '1995_Kenworth_T600': { x: 0.42, y: 0.38, w: 0.18, h: 0.10 },
+  'Kenworth_T660': { x: 0.42, y: 0.40, w: 0.18, h: 0.10 },
+  'T660_Aerocab': { x: 0.42, y: 0.40, w: 0.18, h: 0.10 },
+  'Kenworth_T800B_dump': { x: 0.42, y: 0.40, w: 0.18, h: 0.10 },
+  '2020_Kenworth_T680': { x: 0.44, y: 0.36, w: 0.16, h: 0.09 },
+  '2022_Kenworth_T680': { x: 0.40, y: 0.36, w: 0.16, h: 0.09 },
+  '2020_Kenworth_T880': { x: 0.40, y: 0.38, w: 0.16, h: 0.09 },
+  'International_9200i_Eagle_1998': { x: 0.36, y: 0.44, w: 0.20, h: 0.10 },
+  'International_9200i_%289609': { x: 0.42, y: 0.44, w: 0.18, h: 0.10 },
+  'International_9200i_(9609': { x: 0.42, y: 0.44, w: 0.18, h: 0.10 },
+  '2015_International_Semi': { x: 0.38, y: 0.38, w: 0.18, h: 0.10 },
+  '9900i_EAGLE': { x: 0.36, y: 0.42, w: 0.20, h: 0.10 },
+  '9900i_Eagle': { x: 0.36, y: 0.42, w: 0.20, h: 0.10 },
+  'International_ProStar': { x: 0.38, y: 0.38, w: 0.18, h: 0.10 },
+  'International_LT_625': { x: 0.38, y: 0.36, w: 0.18, h: 0.10 },
+  '2017_Freightliner_Cascadia': { x: 0.36, y: 0.36, w: 0.20, h: 0.09 },
+  '2013_Freightliner_Cascadia': { x: 0.36, y: 0.36, w: 0.20, h: 0.09 },
+};
+function _getLogoZone(imgSrc) {
+  let filename = imgSrc;
+  try { filename = decodeURIComponent(imgSrc); } catch(e) {}
+  for (const key of Object.keys(LOGO_ZONES)) {
+    if (filename.includes(key)) return LOGO_ZONES[key];
+  }
+  return { x: 0.32, y: 0.40, w: 0.18, h: 0.09 };
+}
 function blurTruckLogo(imgEl) {
   if (!imgEl || imgEl.naturalWidth < 200) return;
   if (imgEl.dataset.logoBlurred === '1') return;
@@ -1470,9 +1513,11 @@ function blurTruckLogo(imgEl) {
     } catch(e) { return; }
   }
 
+  const zone = _getLogoZone(originalUrl);
+
   const corsUrl = 'https://wsrv.nl/?url=' +
     encodeURIComponent(originalUrl.replace(/^https?:\/\//, '')) +
-    '&w=400&output=jpg&q=80';
+    '&w=600&output=jpg&q=82';
 
   const proxy = new Image();
   proxy.crossOrigin = 'anonymous';
@@ -1487,74 +1532,18 @@ function blurTruckLogo(imgEl) {
     canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    try {
-      ctx.drawImage(proxy, 0, 0, W, H);
-    } catch(e) { return; }
-
-    const searchX = Math.round(W * 0.20);
-    const searchY = Math.round(H * 0.38);
-    const searchW = Math.round(W * 0.60);
-    const searchH = Math.round(H * 0.36);
-
-    let regionData;
-    try { regionData = ctx.getImageData(searchX, searchY, searchW, searchH); }
+    try { ctx.drawImage(proxy, 0, 0, W, H); }
     catch(e) { return; }
 
-    const d = regionData.data;
-    const rW = regionData.width;
-    const rH = regionData.height;
-
-    const cellSize = Math.max(5, Math.round(Math.min(rW, rH) * 0.09));
-    const cols = Math.floor(rW / cellSize);
-    const rows = Math.floor(rH / cellSize);
-    let bestScore = -1, bestCX = W * 0.5, bestCY = H * 0.55;
-
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        const x0 = col * cellSize;
-        const y0 = row * cellSize;
-        let sum = 0, sum2 = 0, n = 0;
-        let sumR = 0, sumG = 0, sumB = 0;
-
-        for (let py = y0; py < Math.min(y0 + cellSize, rH); py++) {
-          for (let px = x0; px < Math.min(x0 + cellSize, rW); px++) {
-            const i = (py * rW + px) * 4;
-            const lum = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000;
-            sum += lum; sum2 += lum*lum;
-            sumR += d[i]; sumG += d[i+1]; sumB += d[i+2]; n++;
-          }
-        }
-        if (!n) continue;
-
-        const avg = sum / n;
-        const avgR = sumR/n, avgG = sumG/n, avgB = sumB/n;
-        const stdDev = Math.sqrt(Math.max(0, sum2/n - avg*avg));
-        const colorBalance = 1 - (Math.abs(avgR-avgG) + Math.abs(avgG-avgB) + Math.abs(avgR-avgB)) / (3*255);
-        const isMetallic = avg > 120 && colorBalance > 0.78;
-
-        let score = stdDev * 0.5;
-        if (isMetallic) score += 22;
-        if (avg > 150 && avg < 235) score += 15;
-        if (avg > 242) score *= 0.25;
-        if (avg < 50) score *= 0.15;
-
-        const relCol = (col + 0.5) / cols;
-        score *= (1 - Math.abs(relCol - 0.5) * 0.55);
-
-        if (score > bestScore) {
-          bestScore = score;
-          bestCX = searchX + x0 + cellSize/2;
-          bestCY = searchY + y0 + cellSize/2;
-        }
-      }
-    }
-
-    const logoW = Math.round(W * 0.24);
-    const logoH = Math.round(H * 0.18);
-    const lx = Math.max(0, Math.round(bestCX - logoW/2));
-    const ly = Math.max(0, Math.round(bestCY - logoH/2));
-    const lw = Math.min(W - lx, logoW);
-    const lh = Math.min(H - ly, logoH);
+    let lx = Math.round(zone.x * W);
+    let ly = Math.round(zone.y * H);
+    let lw = Math.round(zone.w * W);
+    let lh = Math.round(zone.h * H);
+    lx = Math.max(0, Math.min(lx, W - 1));
+    ly = Math.max(0, Math.min(ly, H - 1));
+    lw = Math.min(lw, W - lx);
+    lh = Math.min(lh, H - ly);
+    if (lw < 1 || lh < 1) return;
 
     let snap;
     try { snap = ctx.getImageData(lx, ly, lw, lh); }
@@ -1562,15 +1551,15 @@ function blurTruckLogo(imgEl) {
 
     const sd = snap.data;
     const sw = snap.width, sh = snap.height;
-    const radius = 5;
+    const radius = 3;
 
-    for (let pass = 0; pass < 5; pass++) {
+    for (let pass = 0; pass < 3; pass++) {
       const tmp = new Uint8ClampedArray(sd.length);
       for (let y = 0; y < sh; y++) {
         for (let x = 0; x < sw; x++) {
           let r=0,g=0,b=0,c=0;
           for (let dx=-radius; dx<=radius; dx++) {
-            const xx = Math.min(sw-1, Math.max(0, x+dx));
+            const xx = Math.min(sw-1,Math.max(0,x+dx));
             const i=(y*sw+xx)*4;
             r+=sd[i]; g+=sd[i+1]; b+=sd[i+2]; c++;
           }
@@ -1582,7 +1571,7 @@ function blurTruckLogo(imgEl) {
         for (let y = 0; y < sh; y++) {
           let r=0,g=0,b=0,c=0;
           for (let dy=-radius; dy<=radius; dy++) {
-            const yy = Math.min(sh-1, Math.max(0, y+dy));
+            const yy = Math.min(sh-1,Math.max(0,y+dy));
             const i=(yy*sw+x)*4;
             r+=tmp[i]; g+=tmp[i+1]; b+=tmp[i+2]; c++;
           }
@@ -1599,7 +1588,7 @@ function blurTruckLogo(imgEl) {
       if (dataUrl && dataUrl.length > 500) {
         imgEl.src = dataUrl;
       }
-    } catch(e) { /* fallo silencioso */ }
+    } catch(e) {}
   };
 
   proxy.onerror = () => {};
