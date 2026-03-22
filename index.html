@@ -981,11 +981,24 @@ const _lazyImgIO = !_lazyNative ? new IntersectionObserver((ents,o)=>{
   });
 },{rootMargin:'140px'}) : null;
 // ══════════════════════════════════════════════════
-// FOTOS — ángulo 3/4 frontal via wsrv.nl proxy (WebP)
+// FOTOS — URL directa Wikimedia (más fiable en prod); wsrv solo como fallback en px2/lightbox
 // ══════════════════════════════════════════════════
 function px(path){
   try { path = decodeURIComponent(path); } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=1200&output=webp&q=92';
+  return 'https://upload.wikimedia.org' + path;
+}
+function _pxDirectSrc(pathOrUrl){
+  const s = String(pathOrUrl);
+  const m = s.match(/upload\.wikimedia\.org(.+)/i);
+  return m ? ('https://upload.wikimedia.org' + m[1]) : (s.indexOf('http')===0 ? s : s);
+}
+function _pxWsrvWebp(url){
+  let clean = url; try { clean = decodeURIComponent(url); } catch(e) {}
+  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace(/^https?:\/\//,''))+'&w=1200&output=webp&q=90';
+}
+function _pxWsrvJpg(url){
+  let clean = url; try { clean = decodeURIComponent(url); } catch(e) {}
+  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace(/^https?:\/\//,''))+'&w=1200&output=jpg&q=85';
 }
 
 const DATA={
@@ -1427,6 +1440,7 @@ function applyLogoZones(ctx, zones) {
   });
 }
 function maskTruckImage(imgEl) {
+  /* Sin crossOrigin: canvas puede quedar “tainted”; el try/catch omite el enmascarado */
   if (!imgEl || imgEl.naturalWidth < 400) return;
   if (imgEl.dataset.masked === '1') return;
   const w = imgEl.naturalWidth;
@@ -1448,7 +1462,6 @@ function px2(src,col,nombre,pos){
   const wrap=document.createElement('div');
   wrap.style.cssText='width:100%;height:100%;position:relative;';
   if(!src){ wrap.innerHTML=makePH(col,nombre); return wrap; }
-  // Skeleton loader
   const sk=document.createElement('div');
   sk.className='img-skeleton';
   wrap.appendChild(sk);
@@ -1461,16 +1474,20 @@ function px2(src,col,nombre,pos){
   img.setAttribute('width','800');
   img.setAttribute('height','500');
   img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;z-index:1;`;
-  img.onerror=()=>{ sk.remove(); wrap.innerHTML=makePH(col,nombre); };
+  const urls=[_pxDirectSrc(src), _pxWsrvWebp(src), _pxWsrvJpg(src)];
+  let attempt=0;
+  img.onerror=()=>{
+    attempt++;
+    if(attempt<urls.length){ img.src=urls[attempt]; }
+    else { sk.remove(); wrap.innerHTML=makePH(col,nombre); }
+  };
   img.onload=()=>{
     sk.remove();
     if(img.naturalWidth){ img.setAttribute('width',String(img.naturalWidth)); img.setAttribute('height',String(img.naturalHeight)); }
+    maskTruckImage(img);
   };
-  if(_lazyNative){ img.loading='lazy'; img.src=src; }
-  else {
-    img.setAttribute('data-defer-src',src);
-    if(_lazyImgIO) _lazyImgIO.observe(img); else { img.src=src; img.removeAttribute('data-defer-src'); }
-  }
+  img.loading='lazy';
+  img.src=urls[0];
   wrap.appendChild(img);
   return wrap;
 }
@@ -1662,6 +1679,7 @@ function initApp() {
 
   allMods.forEach(mod => {
     const img = new Image();
+    // Sin crossOrigin — evita bloqueos/CORS en producción (Vercel)
     img.decoding = 'async';
     img.onload = img.onerror = () => {
       loaded++;
@@ -1932,9 +1950,13 @@ function _wsrv(url, fmt, w){
   if(!url) return '';
   let clean = url;
   try { clean = decodeURIComponent(url); } catch(e) {}
+  if(fmt === undefined && w === undefined){
+    return /^https?:\/\//i.test(clean) ? clean : ('https://' + clean.replace(/^\/\//,''));
+  }
   const out = (fmt === 'jpg') ? 'jpg' : 'webp';
-  const width = w || 1400;
-  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace('https://',''))+'&w='+width+'&output='+out+'&q=92';
+  const width = (w != null && w !== '') ? w : 1400;
+  const hostPath = clean.replace(/^https?:\/\//,'');
+  return 'https://wsrv.nl/?url='+encodeURIComponent(hostPath)+'&w='+width+'&output='+out+'&q=92';
 }
 function _wsrvJpg(url){ return _wsrv(url, 'jpg'); }
 function _wsrvThumb(url){ return _wsrv(url, 'webp', 144); }
@@ -2018,7 +2040,6 @@ function _renderCarousel(){
     wrap.classList.add('lb-loading');
   }
   main.style.opacity = '0';
-  delete main.dataset.wsrvFmt;
   const onDone = ()=>{
     main.style.opacity = '1';
     if(wrap){ wrap.classList.remove('lb-loading'); wrap.classList.add('lb-loaded'); }
@@ -2027,27 +2048,22 @@ function _renderCarousel(){
       main.setAttribute('height', String(main.naturalHeight));
     }
   };
+  const mainChain = [_wsrv(url), _wsrv(url, 'webp', 1400), _wsrv(url, 'jpg', 1400), _MAIN_PH];
+  let mainAttempt = 0;
   main.onload = onDone;
   main.onerror = ()=>{
-    if(main.dataset.wsrvFmt !== 'jpg'){
-      // 1st failure: wsrv WebP → try wsrv JPG
-      main.dataset.wsrvFmt = 'jpg';
-      main.src = _wsrvJpg(url);
-    } else if(!main.dataset.wsrvDirect){
-      // 2nd failure: wsrv JPG → try original URL directly
-      main.dataset.wsrvDirect = '1';
-      main.onerror = ()=>{
-        // 3rd failure: all sources failed — show placeholder, unblock UI
-        main.onerror = null;
-        main.src = _MAIN_PH;
-        onDone();
-      };
-      main.src = url;
+    mainAttempt++;
+    if(mainAttempt < mainChain.length){
+      main.src = mainChain[mainAttempt];
+    } else {
+      main.onerror = null;
+      main.src = _MAIN_PH;
+      onDone();
     }
   };
   main.decoding = 'async';
   main.loading = 'eager';
-  main.src = _wsrv(url);
+  main.src = mainChain[0];
   if(main.complete && main.naturalWidth) onDone();
   counter.textContent = _lbUrls.length>1 ? (_lbIdx+1)+' / '+_lbUrls.length : '';
   thumbs.innerHTML='';
@@ -2064,28 +2080,15 @@ function _renderCarousel(){
       t.width=72; t.height=48;
       t.setAttribute('width','72'); t.setAttribute('height','48');
       t.loading='eager'; t.decoding='async'; t.alt=''; // eager: lightbox is already open
-      t.src=_wsrvThumb(u); // 144px — 2× for retina thumbnails
+      const thumbChain=[_wsrv(u),_wsrvThumb(u),_wsrvThumbJpg(u),_THUMB_PH];
+      let ti=0;
       t.onload=()=>{ tsk.remove(); };
       t.onerror=function(){
-        if(!this.dataset._wsrvFb){
-          // 1st failure: wsrv WebP → try wsrv JPG (144px)
-          this.dataset._wsrvFb='1';
-          this.src=_wsrvThumbJpg(u);
-          return;
-        }
-        if(!this.dataset._wsrvDirect){
-          // 2nd failure: wsrv JPG → try original URL directly
-          this.dataset._wsrvDirect='1';
-          this.onerror=()=>{
-            // 3rd failure: all sources failed — show placeholder
-            this.onerror=null;
-            tsk.remove();
-            this.src=_THUMB_PH;
-          };
-          this.src=u;
-          return;
-        }
+        ti++;
+        if(ti<thumbChain.length){ this.src=thumbChain[ti]; }
+        else { this.onerror=null; tsk.remove(); this.src=_THUMB_PH; }
       };
+      t.src=thumbChain[0];
       t.onclick=(e)=>{e.stopPropagation();_lbIdx=i;_renderCarousel();};
       const cb=document.createElement('input');
       cb.type='checkbox'; cb.className='lb-thumb-cb';
