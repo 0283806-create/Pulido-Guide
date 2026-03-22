@@ -1457,137 +1457,153 @@ function maskTruckImage(imgEl) {
   } catch(e) {}
 }
 function blurTruckLogo(imgEl) {
-  if (!imgEl || imgEl.naturalWidth < 200 || imgEl.dataset.logoBlurred === '1') return;
+  if (!imgEl || imgEl.naturalWidth < 200) return;
+  if (imgEl.dataset.logoBlurred === '1') return;
+  imgEl.dataset.logoBlurred = '1';
 
-  const canvas = document.createElement('canvas');
-  const W = imgEl.naturalWidth;
-  const H = imgEl.naturalHeight;
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-
-  try { ctx.drawImage(imgEl, 0, 0, W, H); }
-  catch(e) { return; }
-
-  const searchX = Math.round(W * 0.20);
-  const searchY = Math.round(H * 0.40);
-  const searchW = Math.round(W * 0.60);
-  const searchH = Math.round(H * 0.38);
-
-  let regionData;
-  try { regionData = ctx.getImageData(searchX, searchY, searchW, searchH); }
-  catch(e) { return; }
-
-  const d = regionData.data;
-  const rW = regionData.width;
-  const rH = regionData.height;
-
-  const cellSize = Math.max(6, Math.round(Math.min(rW, rH) * 0.08));
-  const cols = Math.floor(rW / cellSize);
-  const rows = Math.floor(rH / cellSize);
-  if (cols < 1 || rows < 1) return;
-
-  let bestScore = 0, bestCX = 0, bestCY = 0;
-
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const x0 = col * cellSize;
-      const y0 = row * cellSize;
-      let sum = 0, sum2 = 0, n = 0;
-      let sumR = 0, sumG = 0, sumB = 0;
-
-      for (let py = y0; py < Math.min(y0 + cellSize, rH); py++) {
-        for (let px = x0; px < Math.min(x0 + cellSize, rW); px++) {
-          const i = (py * rW + px) * 4;
-          const lum = (d[i] * 299 + d[i+1] * 587 + d[i+2] * 114) / 1000;
-          sum += lum; sum2 += lum * lum;
-          sumR += d[i]; sumG += d[i+1]; sumB += d[i+2];
-          n++;
-        }
-      }
-      if (n === 0) continue;
-
-      const avg = sum / n;
-      const avgR = sumR / n, avgG = sumG / n, avgB = sumB / n;
-      const variance = sum2 / n - avg * avg;
-      const stdDev = Math.sqrt(Math.max(0, variance));
-
-      const colorBalance = 1 - (Math.abs(avgR-avgG) + Math.abs(avgG-avgB) + Math.abs(avgR-avgB)) / (3 * 255);
-      const isMetallic = avg > 130 && colorBalance > 0.80;
-
-      let score = stdDev * 0.5;
-      if (isMetallic) score += 20;
-      if (avg > 160 && avg < 230) score += 15;
-      if (avg > 240) score *= 0.3;
-      if (avg < 60) score *= 0.2;
-
-      const relCol = (col + 0.5) / cols;
-      const centerPenalty = Math.abs(relCol - 0.5);
-      score *= (1 - centerPenalty * 0.6);
-
-      if (score > bestScore) {
-        bestScore = score;
-        bestCX = searchX + x0 + cellSize / 2;
-        bestCY = searchY + y0 + cellSize / 2;
-      }
-    }
+  let originalUrl = imgEl.src;
+  if (originalUrl.includes('wsrv.nl')) {
+    try {
+      const match = originalUrl.match(/[?&]url=([^&]+)/);
+      if (match) originalUrl = decodeURIComponent(match[1]);
+      if (!originalUrl.startsWith('http')) originalUrl = 'https://' + originalUrl;
+    } catch(e) { return; }
   }
 
-  if (bestScore < 1) return;
+  const corsUrl = 'https://wsrv.nl/?url=' +
+    encodeURIComponent(originalUrl.replace(/^https?:\/\//, '')) +
+    '&w=400&output=jpg&q=80';
 
-  const logoW = Math.round(W * 0.22);
-  const logoH = Math.round(H * 0.16);
-  const lx = Math.max(0, Math.round(bestCX - logoW / 2));
-  const ly = Math.max(0, Math.round(bestCY - logoH / 2));
-  const lw = Math.min(W - lx, logoW);
-  const lh = Math.min(H - ly, logoH);
+  const proxy = new Image();
+  proxy.crossOrigin = 'anonymous';
 
-  let snap;
-  try { snap = ctx.getImageData(lx, ly, lw, lh); }
-  catch(e) { return; }
+  proxy.onload = () => {
+    const W = proxy.naturalWidth;
+    const H = proxy.naturalHeight;
+    if (W < 100 || H < 100) return;
 
-  const sd = snap.data;
-  const sw = snap.width;
-  const sh = snap.height;
-  const radius = 4;
+    const canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext('2d');
 
-  for (let pass = 0; pass < 4; pass++) {
-    const tmp = new Uint8ClampedArray(sd.length);
-    for (let y = 0; y < sh; y++) {
-      for (let x = 0; x < sw; x++) {
-        let r=0,g=0,b=0,c=0;
-        for (let dx = -radius; dx <= radius; dx++) {
-          const xx = Math.min(sw-1, Math.max(0, x+dx));
-          const i = (y*sw+xx)*4;
-          r+=sd[i]; g+=sd[i+1]; b+=sd[i+2]; c++;
+    try {
+      ctx.drawImage(proxy, 0, 0, W, H);
+    } catch(e) { return; }
+
+    const searchX = Math.round(W * 0.20);
+    const searchY = Math.round(H * 0.38);
+    const searchW = Math.round(W * 0.60);
+    const searchH = Math.round(H * 0.36);
+
+    let regionData;
+    try { regionData = ctx.getImageData(searchX, searchY, searchW, searchH); }
+    catch(e) { return; }
+
+    const d = regionData.data;
+    const rW = regionData.width;
+    const rH = regionData.height;
+
+    const cellSize = Math.max(5, Math.round(Math.min(rW, rH) * 0.09));
+    const cols = Math.floor(rW / cellSize);
+    const rows = Math.floor(rH / cellSize);
+    let bestScore = -1, bestCX = W * 0.5, bestCY = H * 0.55;
+
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        const x0 = col * cellSize;
+        const y0 = row * cellSize;
+        let sum = 0, sum2 = 0, n = 0;
+        let sumR = 0, sumG = 0, sumB = 0;
+
+        for (let py = y0; py < Math.min(y0 + cellSize, rH); py++) {
+          for (let px = x0; px < Math.min(x0 + cellSize, rW); px++) {
+            const i = (py * rW + px) * 4;
+            const lum = (d[i]*299 + d[i+1]*587 + d[i+2]*114) / 1000;
+            sum += lum; sum2 += lum*lum;
+            sumR += d[i]; sumG += d[i+1]; sumB += d[i+2]; n++;
+          }
         }
-        const i=(y*sw+x)*4;
-        tmp[i]=r/c|0; tmp[i+1]=g/c|0; tmp[i+2]=b/c|0; tmp[i+3]=sd[i+3];
+        if (!n) continue;
+
+        const avg = sum / n;
+        const avgR = sumR/n, avgG = sumG/n, avgB = sumB/n;
+        const stdDev = Math.sqrt(Math.max(0, sum2/n - avg*avg));
+        const colorBalance = 1 - (Math.abs(avgR-avgG) + Math.abs(avgG-avgB) + Math.abs(avgR-avgB)) / (3*255);
+        const isMetallic = avg > 120 && colorBalance > 0.78;
+
+        let score = stdDev * 0.5;
+        if (isMetallic) score += 22;
+        if (avg > 150 && avg < 235) score += 15;
+        if (avg > 242) score *= 0.25;
+        if (avg < 50) score *= 0.15;
+
+        const relCol = (col + 0.5) / cols;
+        score *= (1 - Math.abs(relCol - 0.5) * 0.55);
+
+        if (score > bestScore) {
+          bestScore = score;
+          bestCX = searchX + x0 + cellSize/2;
+          bestCY = searchY + y0 + cellSize/2;
+        }
       }
     }
-    for (let x = 0; x < sw; x++) {
+
+    const logoW = Math.round(W * 0.24);
+    const logoH = Math.round(H * 0.18);
+    const lx = Math.max(0, Math.round(bestCX - logoW/2));
+    const ly = Math.max(0, Math.round(bestCY - logoH/2));
+    const lw = Math.min(W - lx, logoW);
+    const lh = Math.min(H - ly, logoH);
+
+    let snap;
+    try { snap = ctx.getImageData(lx, ly, lw, lh); }
+    catch(e) { return; }
+
+    const sd = snap.data;
+    const sw = snap.width, sh = snap.height;
+    const radius = 5;
+
+    for (let pass = 0; pass < 5; pass++) {
+      const tmp = new Uint8ClampedArray(sd.length);
       for (let y = 0; y < sh; y++) {
-        let r=0,g=0,b=0,c=0;
-        for (let dy = -radius; dy <= radius; dy++) {
-          const yy = Math.min(sh-1, Math.max(0, y+dy));
-          const i = (yy*sw+x)*4;
-          r+=tmp[i]; g+=tmp[i+1]; b+=tmp[i+2]; c++;
+        for (let x = 0; x < sw; x++) {
+          let r=0,g=0,b=0,c=0;
+          for (let dx=-radius; dx<=radius; dx++) {
+            const xx = Math.min(sw-1, Math.max(0, x+dx));
+            const i=(y*sw+xx)*4;
+            r+=sd[i]; g+=sd[i+1]; b+=sd[i+2]; c++;
+          }
+          const i=(y*sw+x)*4;
+          tmp[i]=r/c|0; tmp[i+1]=g/c|0; tmp[i+2]=b/c|0; tmp[i+3]=255;
         }
-        const i=(y*sw+x)*4;
-        sd[i]=r/c|0; sd[i+1]=g/c|0; sd[i+2]=b/c|0;
+      }
+      for (let x = 0; x < sw; x++) {
+        for (let y = 0; y < sh; y++) {
+          let r=0,g=0,b=0,c=0;
+          for (let dy=-radius; dy<=radius; dy++) {
+            const yy = Math.min(sh-1, Math.max(0, y+dy));
+            const i=(yy*sw+x)*4;
+            r+=tmp[i]; g+=tmp[i+1]; b+=tmp[i+2]; c++;
+          }
+          const i=(y*sw+x)*4;
+          sd[i]=r/c|0; sd[i+1]=g/c|0; sd[i+2]=b/c|0;
+        }
       }
     }
-  }
 
-  ctx.putImageData(snap, lx, ly);
+    ctx.putImageData(snap, lx, ly);
 
-  try {
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.90);
-    if (dataUrl && dataUrl.length > 200) {
-      imgEl.src = dataUrl;
-      imgEl.dataset.logoBlurred = '1';
-    }
-  } catch(e) { /* CORS tainted — skip */ }
+    try {
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+      if (dataUrl && dataUrl.length > 500) {
+        imgEl.src = dataUrl;
+      }
+    } catch(e) { /* fallo silencioso */ }
+  };
+
+  proxy.onerror = () => {};
+  proxy.src = corsUrl;
 }
 function px2(src,col,nombre,pos){
   const wrap=document.createElement('div');
