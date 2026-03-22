@@ -987,20 +987,6 @@ function px(path){
   try { path = decodeURIComponent(path); } catch(e) {}
   return 'https://upload.wikimedia.org' + path;
 }
-function _pxDirectSrc(pathOrUrl){
-  const s = String(pathOrUrl);
-  const m = s.match(/upload\.wikimedia\.org(.+)/i);
-  return m ? ('https://upload.wikimedia.org' + m[1]) : (s.indexOf('http')===0 ? s : s);
-}
-function _pxWsrvWebp(url){
-  let clean = url; try { clean = decodeURIComponent(url); } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace(/^https?:\/\//,''))+'&w=1200&output=webp&q=90';
-}
-function _pxWsrvJpg(url){
-  let clean = url; try { clean = decodeURIComponent(url); } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace(/^https?:\/\//,''))+'&w=1200&output=jpg&q=85';
-}
-
 const DATA={
 FRT:{marca:'FLN',col:'frt',
   modelos:[
@@ -1031,27 +1017,32 @@ FRT:{marca:'FLN',col:'frt',
    nota:'<strong>Filtros de aire dobles a los lados del cofre</strong> + rejilla rectangular grande = Classic XL. Cofre rectangular (no curvado) confirma Classic XL. Ningún otro FLN tiene esos filtros externos.',
    ident:[['📏','<strong>Cofre ~70" el más largo FLD</strong> — BBC 132" inconfundible'],['🌬️','<strong>Filtros de aire EXTERNOS</strong> a los lados del cofre — característica única'],['👑','Rejilla clásica cromada grande, look "classic" inconfundible'],['🔩','<strong>Eje set-FORWARD</strong> — llanta casi al nivel del bumper'],['🎯','Si ves los filtros de aire cromados en los flancos = es un Classic XL']],
    pos:'center 45%'},
-  {id:'CENTURY_C112',nombre:'Century C112',anios:'1996–2010',bbc:'112"',long:'~46"',
-   tag:'Diseño Daimler — 4 faros cuadrados, cofre corto',
-   foto:'/images/century-c112.png',
-   motores:['Detroit Series 60','Cummins N14','CAT C15','Mercedes MBE4000','Cummins ISX'],
-   specs:[['BBC','112"'],['Long. cofre','~46"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['Diferenciador','vs Columbia: faros cuadrados']],
-   cofre:'Primer modelo FLN diseñado bajo Daimler AG. Cofre aerodinámico de una pieza. Característica visual más notable: <strong>cuatro faros rectangulares separados</strong>. Versión BBC corto (112").',
-   nota:'<strong>4 faros rectangulares separados + BBC 112"</strong> = Century C112. El cofre es visiblemente más corto que el C120. Año 1996–2010. Diferencia clave vs Columbia: faros cuadrados vs ovalados.',
-   ident:[['💡','<strong>4 faros rectangulares en 2 grupos</strong> separados por parrilla — distintivo Century'],['📏','<strong>Cofre corto ~46"</strong> — el más corto de los FLN con BBC 112"'],['🔄','Cabina <strong>más redonda y aerodinámica</strong> que FLD (mismo año)'],['🔩','Eje setback — llanta bajo la cabina'],['⚠️','Verificar año: <strong>1996-2004 = C112</strong>, cofre diferente al C120']],
-   pos:'center 40%'},
-  {id:'CENTURY_C120',nombre:'Century C120',anios:'1996–2010',bbc:'120"',long:'~54"',
-   tag:'Diseño Daimler — 4 faros cuadrados, cofre largo',
+  {id:'CENTURY',nombre:'Century Class',anios:'1996–2010',bbc:'112" / 120"',
+   long:'~46" (C112) · ~54" (C120)',
+   tag:'Diseño Daimler — 4 faros cuadrados. BBC 112" cofre corto, BBC 120" cofre largo',
    foto:px('/wikipedia/commons/thumb/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg/1200px-2009-07-05_Chatham_Steel_Freightliner.jpg'),
    motores:['Detroit Series 60','Cummins N14','CAT C15','Mercedes MBE4000','Cummins ISX'],
-   specs:[['BBC','120"'],['Long. cofre','~54"'],['Eje delantero','Set-back'],['Faros','4 rectangulares separados'],['BBC','120" — más largo que el C112']],
-   cofre:'Versión BBC largo del Century Class. Mismo diseño que el C112 pero con cofre de ~54" para motores más grandes. <strong>Cuatro faros rectangulares separados</strong> igual que el C112.',
-   nota:'<strong>4 faros cuadrados + BBC 120"</strong> = Century C120. Cofre más largo que el C112. El más usado por operadores independientes en carretera larga dentro de la línea Century.',
-   ident:[['💡','<strong>4 faros en 2 grupos</strong> (igual C112 pero cofre más largo)'],['📏','<strong>Cofre ~54"</strong> — 8" más largo que C112, BBC 120"'],['🔄','Cabina aerodinámica redondeada, distinta a la FLD cuadrada'],['🔩','Eje set-back estándar en carretera'],['🎯','Si el cofre es largo y tiene 4 faros en 2 grupos = Century C120']],
-   pos:'center 45%'},
+   specs:[
+    ['BBC C112','112"'],
+    ['BBC C120','120"'],
+    ['Long. cofre C112','~46"'],
+    ['Long. cofre C120','~54"'],
+    ['Eje delantero','Set-back'],
+    ['Faros','4 rectangulares separados']
+   ],
+   cofre:'Mismo diseño de cabina Daimler en dos versiones: <strong>C112 con cofre de ~46"</strong> (BBC 112") para motores medianos, y <strong>C120 con cofre de ~54"</strong> (BBC 120") para motores grandes como el Detroit Series 60. La diferencia son 8 pulgadas de cofre — visibles a simple vista. Ambos tienen los mismos <strong>4 faros rectangulares separados</strong> como señal visual principal.',
+   nota:'<strong>4 faros rectangulares en 2 grupos = Century Class.</strong> Para identificar C112 vs C120: mide o estima el cofre. BBC 112" (~46") = C112; BBC 120" (~54") = C120. El motor ayuda: M11 o C12 → C112; Detroit 60 o N14 → casi siempre C120.',
+   ident:[
+    ['💡','<strong>4 faros rectangulares en 2 grupos</strong> — señal definitiva del Century, no lo tiene ningún otro FLN'],
+    ['📏','<strong>C112: cofre ~46"</strong> más corto · <strong>C120: cofre ~54"</strong> más largo — 8" de diferencia visible'],
+    ['🔧','Motor M11/C12 → C112 · Motor Detroit 60/N14 → C120'],
+    ['🔩','Eje set-back en ambas versiones'],
+    ['🎯','Si dudas entre C112 y C120: observa el largo del cofre relativo a la cabina']
+   ],
+   pos:'center 40%'},
   {id:'COLUMBIA',nombre:'Columbia 120',anios:'2001–2011',bbc:'120"',long:'57"',
    tag:'Flotilla — faros ovalados tipo gota',
-   foto:px('/wikipedia/commons/thumb/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg/1200px-Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg'),
+   foto:px('/wikipedia/commons/thumb/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg/1200px-2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg'),
    motores:['Detroit Series 60','Cummins ISX','Mercedes MBE4000','CAT C15','Detroit DD15'],
    specs:[['BBC','120"'],['Long. cofre','57"'],['Eje delantero','Set-back'],['Faros','Ovalados tipo gota'],['Rejilla','Pequeña integrada']],
    cofre:'Comparte estructura de cabina con el Century Class pero los <strong>faros son ovalados en forma de gota</strong>. Rejilla frontal más pequeña. Fue el camión de flotilla más económico de FLN.',
@@ -1091,7 +1082,9 @@ FRT:{marca:'FLN',col:'frt',
    motores:['Detroit DD8','Cummins ISL 9','CAT C9','CAT C13','Mercedes MBE4000'],
    specs:[['BBC','112"'],['Long. cofre','43.5"'],['Diferencia vs M2 106','4.5" más de cofre'],['Clase','Clase 7–8 mediano'],['Motor típico','Cummins ISL 9 / CAT C13']],
    cofre:'Versión BBC ampliado del M2 con cofre de <strong>43.5 pulgadas</strong>, 4.5 pulgadas más largo que el M2 106. Permite motores más grandes como el CAT C13. Misma cabina Business Class.',
-   nota:'Si el M2 parece ligeramente más largo en el cofre = M2 112 (BBC 112" vs 106"). Motor <strong>CAT C13 o Cummins ISL 9</strong> en un M2 confirma que es el 112. Diferencia visual entre M2 106 y 112 es sutil.'},
+   nota:'Si el M2 parece ligeramente más largo en el cofre = M2 112 (BBC 112" vs 106"). Motor <strong>CAT C13 o Cummins ISL 9</strong> en un M2 confirma que es el 112. Diferencia visual entre M2 106 y 112 es sutil.',
+   ident:[['📏','<strong>Cofre 43.5"</strong> — 4.5" más largo que M2 106, visible en nariz'],['🔧','Motor más grande: <strong>Detroit DD13, Cummins ISL, CAT C9</strong>'],['💡','Misma cabina cuadrada M2 pero nariz ligeramente más larga'],['🎯','Medir cofre: <strong>39" = M2 106</strong>, <strong>43.5" = M2 112</strong> — única diferencia'],['⚠️','El número de pieza cambia entre 106 y 112 — confirmar antes de pedir']],
+   pos:'center 40%'},
   ],
   quiz:[
     {id:0,preg:'¿Aproximadamente en qué año es el FLN?',det:'El año es el filtro más directo y confiable.',
@@ -1108,13 +1101,11 @@ FRT:{marca:'FLN',col:'frt',
      opc:[{l:'Sí — cilindros de filtro externos a los lados del cofre',r:'FLD120XL'},{l:'No — cofre curvado liso sin filtros externos',r:'FLD120'}]},
     {id:20,preg:'¿Qué tan corto se ve el cofre?',det:'M2 106 tiene 39" y el M2 112 tiene 43.5" — ambos se ven muy cortos vs camiones de carretera.',
      opc:[{l:'Muy corto (~39"), motor pequeño, basura o distribución local',r:'M2_106'},{l:'Corto (~43.5"), motor mediano ISL9 o C13',r:'M2_112'}]},
-    {id:30,preg:'El Century tiene 4 faros cuadrados — ¿el BBC es 112" o 120"?',det:'El cofre del C112 es visiblemente más corto que el del C120.',
-     opc:[{l:'BBC 112" — cofre más corto (~46"), cabina compacta',r:'CENTURY_C112'},{l:'BBC 120" — cofre más largo (~54"), carretera larga',r:'CENTURY_C120'}]},
+    {id:30,preg:'Century Class — BBC 112" (cofre ~46") o BBC 120" (cofre ~54")',det:'Incluye C112 y C120: misma cabina Daimler, distinto largo de cofre.',
+     opc:[{l:'Century Class — 4 faros en 2 grupos; BBC 112" o 120"',r:'CENTURY'}]},
     {id:31,preg:'El Cascadia moderno — ¿qué año es?',det:'Gen1 y Gen2 tienen cofres distintos con 1" de BBC de diferencia y extensiones de cabina diferentes.',
      opc:[{l:'2008–2017 (Gen1 — extensiones de cabina cortas, BBC 125")',r:'CASCADIA_G1'},{l:'2018 en adelante (Gen2/P4 — extensiones largas, BBC 126")',r:'CASCADIA_G2'}]},
   ],
-   ident:[['📏','<strong>Cofre 43.5"</strong> — 4.5" más largo que M2 106, visible en nariz'],['🔧','Motor más grande: <strong>Detroit DD13, Cummins ISL, CAT C9</strong>'],['💡','Misma cabina cuadrada M2 pero nariz ligeramente más larga'],['🎯','Medir cofre: <strong>39" = M2 106</strong>, <strong>43.5" = M2 112</strong> — única diferencia'],['⚠️','El número de pieza cambia entre 106 y 112 — confirmar antes de pedir']],
-   pos:'center 40%'},
 KW:{marca:'KW',col:'kw',
   modelos:[
   {id:'W900',nombre:'W900',anios:'1961–Presente',bbc:'120"',long:'~60"',
@@ -1474,11 +1465,16 @@ function px2(src,col,nombre,pos){
   img.setAttribute('width','800');
   img.setAttribute('height','500');
   img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;z-index:1;`;
-  const urls=[_pxDirectSrc(src), _pxWsrvWebp(src), _pxWsrvJpg(src)];
-  let attempt=0;
+  let _attempt=0;
+  const _host=String(src).replace(/^https?:\/\//,'');
+  const _fallbacks=[
+    src,
+    'https://wsrv.nl/?url='+encodeURIComponent(_host)+'&w=900&output=webp&q=85',
+    'https://wsrv.nl/?url='+encodeURIComponent(_host)+'&w=900&output=jpg&q=80'
+  ];
   img.onerror=()=>{
-    attempt++;
-    if(attempt<urls.length){ img.src=urls[attempt]; }
+    _attempt++;
+    if(_attempt<_fallbacks.length){ img.src=_fallbacks[_attempt]; }
     else { sk.remove(); wrap.innerHTML=makePH(col,nombre); }
   };
   img.onload=()=>{
@@ -1487,7 +1483,7 @@ function px2(src,col,nombre,pos){
     maskTruckImage(img);
   };
   img.loading='lazy';
-  img.src=urls[0];
+  img.src=_fallbacks[0];
   wrap.appendChild(img);
   return wrap;
 }
@@ -1659,12 +1655,12 @@ function initApp() {
     if (!CATALOG_BY_MODEL[modelId]) CATALOG_BY_MODEL[modelId] = [];
     CATALOG_BY_MODEL[modelId].push(p);
   }
-  // Mapeos explícitos solo si catalog.js usara un ID distinto al id en DATA (uno a uno, sin mezclar modelos)
-  const exactMap = {};
+  // Legacy: piezas con m CENTURY_C112 / CENTURY_C120 → índice CENTURY (fusión de modelos)
+  const exactMap = { CENTURY_C112: 'CENTURY', CENTURY_C120: 'CENTURY' };
   Object.entries(exactMap).forEach(([from, to]) => {
-    if (CATALOG_BY_MODEL[from] && !CATALOG_BY_MODEL[to]) {
-      CATALOG_BY_MODEL[to] = CATALOG_BY_MODEL[from];
-    }
+    if (!CATALOG_BY_MODEL[from]) return;
+    if (!CATALOG_BY_MODEL[to]) CATALOG_BY_MODEL[to] = CATALOG_BY_MODEL[from].slice();
+    else CATALOG_BY_MODEL[to] = CATALOG_BY_MODEL[to].concat(CATALOG_BY_MODEL[from]);
   });
   console.log('[Catalog] Modelos indexados:', Object.entries(CATALOG_BY_MODEL).map(([k,v]) => `${k}:${v.length}`).join(', '));
   setSplash(20, 'Construyendo vista de modelos…');
@@ -1761,7 +1757,7 @@ function renderCatalogSection(modelId, col) {
 // ════════════════════════════════════════════════════════════
 
 const BRAND_FAMILIES = {
-  FLD112:'FLN', FLD120:'FLN', FLD120XL:'FLN', CENTURY_C112:'FLN', CENTURY_C120:'FLN', COLUMBIA:'FLN',
+  FLD112:'FLN', FLD120:'FLN', FLD120XL:'FLN', CENTURY:'FLN', COLUMBIA:'FLN',
   CASCADIA_G1:'FLN', CASCADIA_G2:'FLN', M2_106:'FLN', M2_112:'FLN',
   W900:'KW', W900L:'KW', T600:'KW', T660:'KW', T800:'KW', T680:'KW', T680_NG:'KW', T880:'KW',
   INT_9100:'INT', INT_9200:'INT', INT_9400:'INT', PROSTAR:'INT', LT:'INT',
@@ -1777,8 +1773,7 @@ const MODEL_KEYWORDS = {
   FLD112:      ['FLD112','FLD 112','FLD-112','FLC112','FLC-112','FLC 112'],
   FLD120:      ['FLD120','FLD 120','FLD-120'],
   FLD120XL:    ['FLD120XL','CLASSIC XL','FLD CLASSIC','CLASSIC FL','132 BBC'],
-  CENTURY_C112:['CENTURY','CENTURY C112','CST112','CST-112','C-112'],
-  CENTURY_C120:['CENTURY','CENTURY C120','CST120','CST-120','C-120'],
+  CENTURY:['CENTURY','CENTURY C112','CENTURY C120','CST112','CST120','CST-112','CST-120','C-112','C-120'],
   COLUMBIA:    ['COLUMBIA'],
   CASCADIA_G1: ['CASCADIA'],
   CASCADIA_G2: ['CASCADIA','EVOLUTION','P4'],
@@ -1941,7 +1936,7 @@ function catPage(p) {
 }
 
 // ── GALLERY DATA ─────────────────────────────────────────
-const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/0/01/Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Freightliner_FLD_132_Classic_XL_1999_%289193958719%29.jpg"],"CENTURY_C112":[],"CENTURY_C120":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/a/a7/A_2020_Cascadia_126_Shown_in_Green.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6f/Kenworth_W900_%28MSP16%29.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/KW_W900_Logging_Truck.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b6/Kenworth_T800B_dump_truck_2.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Kenworth_T-800_flatbed_truck.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ab/2017_Kenworth_T680_in_White%2C_Front_Right%2C_09-12-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5d/International_9200i_2001_%2814421593343%29.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg"],"INT_9900":["https://upload.wikimedia.org/wikipedia/commons/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg"],"INT_9900IX":["https://upload.wikimedia.org/wikipedia/commons/a/a9/International_9900i_Eagle.jpg"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/8/8d/International_ProStar%2B_2013_%2814252059680%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5c/International_ProStar_2007_%2814069027870%29.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a3/International_ProStar%2B_Premium_2012_%2814252060050%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg"]};
+const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/0/01/Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Freightliner_FLD_132_Classic_XL_1999_%289193958719%29.jpg"],"CENTURY":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/a/a7/A_2020_Cascadia_126_Shown_in_Green.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6f/Kenworth_W900_%28MSP16%29.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/KW_W900_Logging_Truck.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b6/Kenworth_T800B_dump_truck_2.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Kenworth_T-800_flatbed_truck.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ab/2017_Kenworth_T680_in_White%2C_Front_Right%2C_09-12-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5d/International_9200i_2001_%2814421593343%29.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg"],"INT_9900":["https://upload.wikimedia.org/wikipedia/commons/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg"],"INT_9900IX":["https://upload.wikimedia.org/wikipedia/commons/a/a9/International_9900i_Eagle.jpg"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/8/8d/International_ProStar%2B_2013_%2814252059680%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5c/International_ProStar_2007_%2814069027870%29.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a3/International_ProStar%2B_Premium_2012_%2814252060050%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg"]};
 
 // ── LIGHTBOX + CAROUSEL ──────────────────────────────────
 let _lbUrls=[], _lbIdx=0, _lbSelected=new Set();
