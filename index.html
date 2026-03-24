@@ -86,7 +86,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 /* ── FOTO CARD ── */
 .mod-photo{height:165px;overflow:hidden;position:relative;background:#0a0a0a;}
-.mod-photo img{width:100%;height:100%;object-fit:contain;object-position:center 40%;display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);}
+.mod-photo img{width:100%;height:100%;object-fit:cover;object-position:center 40%;display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);}
 .mod-card:hover .mod-photo img{transform:scale(1.07);}
 .mod-photo-ovl{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.82) 0%,rgba(8,8,8,.1) 50%,transparent 100%);pointer-events:none;z-index:1;}
 .mod-badges{position:absolute;bottom:9px;left:10px;right:10px;display:flex;gap:5px;flex-wrap:wrap;z-index:3;}
@@ -106,7 +106,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .det-hdr{border-bottom:1px solid var(--bor);display:flex;flex-direction:column;gap:0;}
 .det-photo{width:100%;height:300px;overflow:hidden;position:relative;background:#080e1a;cursor:zoom-in;}
-.det-photo img{width:100%;height:100%;object-fit:contain;object-position:center center;display:block;background:#080e1a;position:relative;z-index:0;}
+.det-photo img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;background:#080e1a;position:relative;z-index:0;}
 /* Hover: overlay en pseudo-elemento — evita filter: en la imagen (artefactos con blur/luminancia) */
 .det-photo::after{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
@@ -1536,7 +1536,7 @@ function px2(src,col,nombre,pos){
   img.oncontextmenu=e=>e.preventDefault();
   img.setAttribute('width','800');
   img.setAttribute('height','500');
-  img.style.cssText=`width:100%;height:100%;object-fit:contain;object-position:${pos||'center 35%'};display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;z-index:1;`;
+  img.style.cssText=`width:100%;height:100%;object-fit:cover;object-position:${pos||'center 35%'};display:block;transition:transform .5s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;z-index:1;`;
   img.onerror=()=>{ sk.remove(); wrap.innerHTML=makePH(col,nombre); };
   img.onload=()=>{
     sk.remove();
