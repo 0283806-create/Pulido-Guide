@@ -2,9 +2,11 @@
   "version": 2,
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.js",   "use": "@vercel/static" }
+    { "src": "*.js", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/images/(.*)", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/images/$1" },
     { "src": "/catalog.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog.js" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
