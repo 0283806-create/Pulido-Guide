@@ -469,6 +469,100 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
   font-family:'DM Mono',monospace;font-size:9.5px;
   color:rgba(255,255,255,.5);line-height:1.6;
 }
+/* ── BRAND TIMELINE ── */
+.brand-timeline {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem 0 .5rem;
+  border-top: 1px solid var(--bor);
+}
+.tl-label {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 1.25rem;
+  padding-left: 2px;
+}
+.tl-track {
+  position: relative;
+  overflow-x: auto;
+  padding-bottom: .75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bor) transparent;
+}
+.tl-line {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 2px;
+  z-index: 0;
+}
+.tl-items {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  min-width: max-content;
+  padding: 0 8px;
+}
+.tl-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 82px;
+  max-width: 100px;
+  cursor: pointer;
+  padding: 0 6px;
+  transition: transform .18s ease;
+  position: relative;
+}
+.tl-item:hover {
+  transform: translateY(-3px);
+}
+.tl-item:hover .tl-name {
+  color: var(--txt);
+}
+.tl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-bottom: 7px;
+  transition: transform .18s ease;
+}
+.tl-item:hover .tl-dot {
+  transform: scale(1.4);
+}
+.tl-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  white-space: nowrap;
+}
+.tl-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: .05em;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.2;
+  transition: color .18s;
+  white-space: nowrap;
+}
+.tl-end {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--dim);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -1537,6 +1631,52 @@ function renderGrid(){
     grid.appendChild(c);
   });
   const g=document.getElementById('mod-grid'); g.innerHTML=''; g.appendChild(grid);
+
+  // ── TIMELINE ──────────────────────────────────────────
+  function renderTimeline(marca) {
+    const d = DATA[marca];
+    const col = { frt: 'var(--frt)', kw: 'var(--kw)', int: 'var(--int)' }[d.col];
+    const colBg = { frt: 'var(--frt-bor)', kw: 'var(--kw-bor)', int: 'var(--int-bor)' }[d.col];
+
+    // Ordenar modelos por año de inicio
+    const sorted = [...d.modelos].sort((a, b) => {
+      const getYear = s => parseInt((s.anios || '9999').toString().replace(/[^0-9].*$/, ''));
+      return getYear(a) - getYear(b);
+    });
+
+    const wrap = document.createElement('div');
+    wrap.className = 'brand-timeline';
+    wrap.innerHTML = `
+      <div class="tl-label">Línea de tiempo · ${d.marca}</div>
+      <div class="tl-track">
+        <div class="tl-line" style="background:${col}22"></div>
+        <div class="tl-items">
+          ${sorted.map(mod => {
+            const yr = (mod.anios || '').split('–')[0].trim();
+            const isPresent = (mod.anios || '').toLowerCase().includes('presente') ||
+                              (mod.anios || '').toLowerCase().includes('hoy');
+            const endYr = isPresent ? 'hoy' : (mod.anios || '').split('–')[1]?.trim() || '';
+            return `
+              <div class="tl-item" onclick="Array.from(document.querySelectorAll('.mod-card')).find(el=>el.querySelector('.mod-nombre')?.textContent.trim()==='${mod.nombre}')?.click()" title="${mod.nombre} · ${mod.anios}">
+                <div class="tl-dot" style="background:${col};box-shadow:0 0 0 3px ${colBg}"></div>
+                <div class="tl-year" style="color:${col}">${yr}</div>
+                <div class="tl-name">${mod.nombre}</div>
+                ${endYr ? `<div class="tl-end">${endYr}</div>` : ''}
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    `;
+    return wrap;
+  }
+
+  // Eliminar timeline anterior si existe
+  const oldTl = document.querySelector('.brand-timeline');
+  if (oldTl) oldTl.remove();
+
+  // Insertar nueva timeline después del grid
+  g.appendChild(renderTimeline(marca));
 }
 function selMod(mod,card,grid,d){
   grid.querySelectorAll('.mod-card').forEach(c=>c.classList.remove('sel','cf','ck','ci'));
