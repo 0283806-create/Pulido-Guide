@@ -413,69 +413,8 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 
 #lightbox.open #lb-main{transform:scale(1);}
 
-/* ── LIGHTBOX DELETE BTN ── */
-#lb-delete-btn{
-  position:absolute;top:10px;left:10px;z-index:10;
-  background:rgba(220,50,50,.15);border:1px solid rgba(220,50,50,.35);
-  color:rgba(255,110,110,.85);border-radius:8px;
-  width:36px;height:36px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  opacity:0;transition:opacity .3s ease .1s;
-}
-#lightbox.open #lb-delete-btn{opacity:1;}
-#lb-delete-btn:hover{background:rgba(220,50,50,.32);color:#ff7070;border-color:rgba(220,50,50,.65);}
-
-/* ── CONFIRM DIALOG ── */
-#lb-confirm-overlay{
-  display:none;position:fixed;inset:0;z-index:10000;
-  background:rgba(0,0,8,.72);
-  align-items:center;justify-content:center;
-}
-#lb-confirm-overlay.vis{display:flex;}
-#lb-confirm-box{
-  background:#0d1626;border:1px solid #1a2d47;border-radius:14px;
-  padding:24px 28px;max-width:360px;width:90%;
-  box-shadow:0 8px 48px rgba(0,0,0,.85);
-}
-#lb-confirm-box p{font-size:14px;color:#e8edf5;line-height:1.65;margin-bottom:20px;}
-.lb-confirm-actions{display:flex;gap:10px;justify-content:flex-end;}
-.lb-confirm-actions button{
-  padding:8px 18px;border-radius:8px;
-  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
-  cursor:pointer;transition:all .15s;border:1px solid;
-}
-#lb-confirm-cancel{background:transparent;border-color:#1a2d47;color:#7a90b0;}
-#lb-confirm-cancel:hover{border-color:#2a4a72;color:#e8edf5;}
-#lb-confirm-ok{background:rgba(220,50,50,.15);border-color:rgba(220,50,50,.45);color:#ff7070;}
-#lb-confirm-ok:hover{background:rgba(220,50,50,.3);color:#ff9090;}
-
-/* ── THUMBNAIL CHECKBOXES ── */
+/* ── LIGHTBOX THUMB WRAP ── */
 .lb-thumb-wrap{position:relative;display:inline-block;flex-shrink:0;}
-.lb-thumb-cb{
-  position:absolute;top:4px;left:4px;z-index:4;
-  width:15px;height:15px;
-  accent-color:#ef5350;cursor:pointer;
-  opacity:0;transition:opacity .12s;
-}
-.lb-thumb-wrap:hover .lb-thumb-cb,.lb-thumb-cb:checked{opacity:1;}
-
-/* ── BULK DELETE BAR ── */
-#lb-bulk-bar{
-  display:none;gap:12px;align-items:center;
-  margin-top:4px;padding:8px 16px;
-  background:rgba(220,50,50,.08);
-  border:1px solid rgba(220,50,50,.28);border-radius:8px;
-}
-#lb-bulk-bar.vis{display:flex;}
-#lb-bulk-count{font-size:12px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;}
-#lb-bulk-del-btn{
-  padding:7px 16px;border-radius:7px;
-  background:rgba(220,50,50,.18);border:1px solid rgba(220,50,50,.45);
-  color:#ff7070;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
-  cursor:pointer;transition:all .15s;
-}
-#lb-bulk-del-btn:hover{background:rgba(220,50,50,.32);color:#ff9090;}
 
 /* ── IMAGE PROTECTION ── */
 .mod-photo img,.det-photo img{
@@ -1612,9 +1551,10 @@ function selMod(mod,card,grid,d){
   dp.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
   const povl=document.createElement('div'); povl.className='det-photo-ovl'; dp.appendChild(povl);
   // Click to open lightbox
-  dp.onclick=()=>{
-    const img=dp.querySelector('img');
-    if(img && img.src) openLightbox(img.src, mod.nombre+' · '+mod.anios, mod.id);
+  dp.onclick = () => {
+    if (mod.foto) {
+      openLightbox([mod.foto], mod.nombre + ' · ' + mod.anios, mod.id);
+    }
   };
   // Info row below photo
   const infoRow=document.createElement('div'); infoRow.className='det-info-row'; infoRow.style.background=bg;
@@ -2002,7 +1942,7 @@ function catPage(p) {
 const GALLERY={"FLD112":["https://upload.wikimedia.org/wikipedia/commons/e/e9/Freightliner_FLC-112_-_02.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3b/Freightliner_FLC-112_-_03.jpg","https://upload.wikimedia.org/wikipedia/commons/1/18/Freightliner_FLD_112_Dump_truck.jpg","https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_FLD_112_1994_%2816013425830%29.jpg"],"FLD120":["https://upload.wikimedia.org/wikipedia/commons/1/11/Freightliner_FLD_120_%22Boogie_Man%22_%2814451402871%29.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f0/15-07-12-Mexico-D-F-RalfR-N3S_9076.jpg"],"FLD120XL":["https://upload.wikimedia.org/wikipedia/commons/0/01/Freightliner_FLD_132_Classic_XL_1999_%2818508818573%29.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e8/Freightliner_FLD_132_Classic_XL_1999_%289193958719%29.jpg"],"CENTURY_C112":["https://upload.wikimedia.org/wikipedia/commons/d/d9/Freightliner_cst_112_12l._Blokha.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ec/2008_Freightliner_Century_in_White%2C_Front_Right%2C_04-24-2022.jpg"],"CENTURY_C120":["https://upload.wikimedia.org/wikipedia/commons/3/36/2009-07-05_Chatham_Steel_Freightliner.jpg","https://upload.wikimedia.org/wikipedia/commons/e/e1/2009-07-05_Chatham_Steel_Freightliners.jpg"],"COLUMBIA":["https://upload.wikimedia.org/wikipedia/commons/f/f1/Freightliner_Columbia%2C_North_Fremantle%2C_2020_%2801%29.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/2005_Freightliner_Columbia_112_in_GFL_Lime_Green%2C_Front_Right%2C_09-26-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/6/64/Freightliner_Columbia_CL120_2010_%289656822741%29.jpg"],"CASCADIA_G1":["https://upload.wikimedia.org/wikipedia/commons/c/c2/FL_CasacadiaAtLV_NV.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9e/2013_Freightliner_Cascadia_113_in_White%2C_Front_Left%2C_08-20-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/4/45/2017_Freightliner_Cascadia_113_in_Blue%2C_Front_Right%2C_04-24-2022.jpg"],"CASCADIA_G2":["https://upload.wikimedia.org/wikipedia/commons/a/a7/A_2020_Cascadia_126_Shown_in_Green.jpg"],"M2_106":["https://upload.wikimedia.org/wikipedia/commons/5/5a/Freightliner_Business_Class_M2_box_rigid.jpg","https://upload.wikimedia.org/wikipedia/commons/9/90/24_Penske_Trucks_%2841916507594%29.jpg"],"M2_112":["https://upload.wikimedia.org/wikipedia/commons/8/84/Freightliner_Business_Class_Crew_Cab.jpg"],"W900":["https://upload.wikimedia.org/wikipedia/commons/e/e7/Kenworth_W900_semi_in_red.jpg","https://upload.wikimedia.org/wikipedia/commons/6/6f/Kenworth_W900_%28MSP16%29.jpg","https://upload.wikimedia.org/wikipedia/commons/3/3c/KW_W900_Logging_Truck.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0e/Kenworth_Truck_in_Lyon_Confluence.JPG"],"W900L":["https://upload.wikimedia.org/wikipedia/commons/0/03/2002_Kenworth_W900L_1.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ae/2019_Kenworth_W900L_Studio_Sleeper_in_White%2C_Front_Left%2C_04-21-2022.jpg","https://upload.wikimedia.org/wikipedia/commons/e/ef/2020_Kenworth_W900L_Aerodyne_in_White%2C_Front_Right%2C_01-26-2023.jpg","https://upload.wikimedia.org/wikipedia/commons/2/24/Tweed_Transport_Kenworth_W900L_Front.jpg"],"T600":["https://upload.wikimedia.org/wikipedia/commons/e/ef/1995_Kenworth_T600B_Aerocab_6x4_Class_8_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/2/2f/Kenworth_T600B%2C_Marten_transportation%2C_Venice_CA.jpg"],"T660":["https://upload.wikimedia.org/wikipedia/commons/e/eb/Kenworth_T660_of_SRT.jpg","https://upload.wikimedia.org/wikipedia/commons/8/82/Kenworth_T660_SouthernRT.jpg","https://upload.wikimedia.org/wikipedia/commons/c/cf/Kenworth_T660_Aerocab_6x4_2014_%2814091618160%29.jpg","https://upload.wikimedia.org/wikipedia/commons/9/9b/Kenworth_T660_Aerocab_2014_%2814260995904%29.jpg"],"T800":["https://upload.wikimedia.org/wikipedia/commons/4/48/2011_Kenworth_T800_Aerocab_6x4_conventional_tractor.jpg","https://upload.wikimedia.org/wikipedia/commons/b/b6/Kenworth_T800B_dump_truck_2.jpg","https://upload.wikimedia.org/wikipedia/commons/c/ce/Kenworth_T-800_flatbed_truck.jpg"],"T680":["https://upload.wikimedia.org/wikipedia/commons/9/96/2016_Kenworth_T680.jpg","https://upload.wikimedia.org/wikipedia/commons/a/ab/2017_Kenworth_T680_in_White%2C_Front_Right%2C_09-12-2021.jpg","https://upload.wikimedia.org/wikipedia/commons/f/f4/2020_Kenworth_T680_in_Silver%2C_Front_Right%2C_04-24-2022.jpg"],"T680_NG":["https://upload.wikimedia.org/wikipedia/commons/5/5e/2022_Kenworth_T680_in_White%2C_Front_Right%2C_10-05-2022.jpg"],"T880":["https://upload.wikimedia.org/wikipedia/commons/5/59/2020_Kenworth_T880_in_White%2C_Front_Left%2C_04-03-2022.jpg"],"INT_9100":["https://upload.wikimedia.org/wikipedia/commons/d/d4/International_9200i_Eagle_1998_%2837455306834%29.jpg"],"INT_9200":["https://upload.wikimedia.org/wikipedia/commons/7/72/International_9200i_%289609150097%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5d/International_9200i_2001_%2814421593343%29.jpg"],"INT_9400":["https://upload.wikimedia.org/wikipedia/commons/1/1f/2015_International_Semi_Tractor_%2818197014603%29.jpg"],"INT_9900":["https://upload.wikimedia.org/wikipedia/commons/7/7c/2005_INTERNATIONAL_9900i_EAGLE_%2829961817262%29.jpg"],"INT_9900IX":["https://upload.wikimedia.org/wikipedia/commons/a/a9/International_9900i_Eagle.jpg"],"PROSTAR":["https://upload.wikimedia.org/wikipedia/commons/c/ca/International_ProStar.JPG","https://upload.wikimedia.org/wikipedia/commons/8/8d/International_ProStar%2B_2013_%2814252059680%29.jpg","https://upload.wikimedia.org/wikipedia/commons/5/5c/International_ProStar_2007_%2814069027870%29.jpg","https://upload.wikimedia.org/wikipedia/commons/a/a3/International_ProStar%2B_Premium_2012_%2814252060050%29.jpg"],"LT":["https://upload.wikimedia.org/wikipedia/commons/0/06/2019_International_LT_625_trailer_truck%2C_front_left.jpg"]};
 
 // ── LIGHTBOX + CAROUSEL ──────────────────────────────────
-let _lbUrls=[], _lbIdx=0, _lbSelected=new Set();
+let _lbUrls=[], _lbIdx=0, _lbSelected=new Set(), _lbCaption='';
 
 function _wsrv(url, fmt, w){
   if(!url) return '';
@@ -2070,111 +2010,87 @@ function lbDeleteSelected(){
 }
 
 function openLightbox(mainSrc, caption, modelId){
-  const extras = (modelId && GALLERY[modelId]) ? GALLERY[modelId] : [];
-  const seen = new Set([mainSrc]);
-  _lbUrls = [mainSrc];
-  for(const u of extras){ if(!seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
+  const isArray = Array.isArray(mainSrc);
+  const baseUrls = isArray ? (mainSrc || []) : [mainSrc];
+  // Si se pasa un array, se asume que ya incluye TODAS las imágenes (sin extras de GALLERY).
+  const extras = isArray ? [] : ((modelId && GALLERY[modelId]) ? GALLERY[modelId] : []);
+
+  const seen = new Set();
+  _lbUrls = [];
+  for(const u of baseUrls){ if(u && !seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
+  for(const u of extras){ if(u && !seen.has(u)){ seen.add(u); _lbUrls.push(u); } }
   _lbIdx = 0;
   _lbSelected.clear();
-  document.getElementById('lightbox-caption').textContent = caption||'';
+  _lbCaption = caption||'';
+  document.getElementById('lightbox-caption').textContent = _lbCaption;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
   // Small delay so the open transition plays before image loads
   setTimeout(_renderCarousel, 30);
 }
 
-function _renderCarousel(){
-  const wrap = document.getElementById('lb-main-wrap');
+function _renderCarousel() {
   const main = document.getElementById('lb-main');
-  const thumbs = document.getElementById('lb-thumbs');
+  const wrap = document.getElementById('lb-main-wrap');
   const counter = document.getElementById('lb-counter');
+  const thumbs = document.getElementById('lb-thumbs');
+  const caption = document.getElementById('lightbox-caption');
+
+  if (!main || !wrap || !thumbs) return;
+
   const url = _lbUrls[_lbIdx];
-  if(wrap){
-    wrap.classList.remove('lb-loaded');
-    wrap.classList.add('lb-loading');
-  }
+  if (caption) caption.textContent = _lbCaption || '';
+
+  wrap.classList.remove('lb-loaded');
+  wrap.classList.add('lb-loading');
   main.style.opacity = '0';
-  delete main.dataset.wsrvFmt;
-  const onDone = ()=>{
+
+  function onDone() {
+    wrap.classList.remove('lb-loading');
+    wrap.classList.add('lb-loaded');
     main.style.opacity = '1';
-    if(wrap){ wrap.classList.remove('lb-loading'); wrap.classList.add('lb-loaded'); }
-    if(main.naturalWidth){
-      main.setAttribute('width', String(main.naturalWidth));
-      main.setAttribute('height', String(main.naturalHeight));
-    }
-  };
+  }
+
   main.onload = onDone;
-  main.onerror = ()=>{
-    if(main.dataset.wsrvFmt !== 'jpg'){
-      // 1st failure: wsrv WebP → try wsrv JPG
-      main.dataset.wsrvFmt = 'jpg';
-      main.src = _wsrvJpg(url);
-    } else if(!main.dataset.wsrvDirect){
-      // 2nd failure: wsrv JPG → try original URL directly
-      main.dataset.wsrvDirect = '1';
-      main.onerror = ()=>{
-        // 3rd failure: all sources failed — show placeholder, unblock UI
-        main.onerror = null;
-        main.src = _MAIN_PH;
-        onDone();
-      };
-      main.src = url;
-    }
-  };
+  main.onerror = onDone;
+
   main.decoding = 'async';
   main.loading = 'eager';
-  main.src = _wsrv(url);
-  if(main.complete && main.naturalWidth) onDone();
-  counter.textContent = _lbUrls.length>1 ? (_lbIdx+1)+' / '+_lbUrls.length : '';
-  thumbs.innerHTML='';
-  if(_lbUrls.length>1){
-    _lbUrls.forEach((u,i)=>{
-      const tw=document.createElement('div');
-      tw.className='lb-thumb-wrap';
-      // Skeleton — removed on first successful load or final error
-      const tsk=document.createElement('div');
-      tsk.className='lb-thumb-sk';
-      tw.appendChild(tsk);
-      const t=document.createElement('img');
-      t.className='lb-thumb'+(i===_lbIdx?' active':'');
-      t.width=72; t.height=48;
-      t.setAttribute('width','72'); t.setAttribute('height','48');
-      t.loading='eager'; t.decoding='async'; t.alt=''; // eager: lightbox is already open
-      t.src=_wsrvThumb(u); // 144px — 2× for retina thumbnails
-      t.onload=()=>{ tsk.remove(); };
-      t.onerror=function(){
-        if(!this.dataset._wsrvFb){
-          // 1st failure: wsrv WebP → try wsrv JPG (144px)
-          this.dataset._wsrvFb='1';
-          this.src=_wsrvThumbJpg(u);
-          return;
-        }
-        if(!this.dataset._wsrvDirect){
-          // 2nd failure: wsrv JPG → try original URL directly
-          this.dataset._wsrvDirect='1';
-          this.onerror=()=>{
-            // 3rd failure: all sources failed — show placeholder
-            this.onerror=null;
-            tsk.remove();
-            this.src=_THUMB_PH;
-          };
-          this.src=u;
-          return;
-        }
-      };
-      t.onclick=(e)=>{e.stopPropagation();_lbIdx=i;_renderCarousel();};
-      const cb=document.createElement('input');
-      cb.type='checkbox'; cb.className='lb-thumb-cb';
-      cb.checked=_lbSelected.has(u);
-      cb.onclick=(e)=>{e.stopPropagation();if(cb.checked)_lbSelected.add(u);else _lbSelected.delete(u);_updateBulkBar();};
-      tw.appendChild(t); tw.appendChild(cb);
+
+  if (url && !url.startsWith('http')) {
+    main.src = url;
+  } else {
+    main.src = _wsrv ? _wsrv(url) : url;
+  }
+
+  if (main.complete && main.naturalWidth) {
+    onDone();
+  }
+
+  if (counter) counter.textContent = _lbUrls.length > 1 ? (_lbIdx + 1) + ' / ' + _lbUrls.length : '';
+
+  thumbs.innerHTML = '';
+  if (_lbUrls.length > 1) {
+    _lbUrls.forEach((u, i) => {
+      const tw = document.createElement('div');
+      tw.className = 'lb-thumb-wrap';
+      const t = document.createElement('img');
+      t.className = 'lb-thumb' + (i === _lbIdx ? ' active' : '');
+      t.width = 72; t.height = 48;
+      t.loading = 'eager'; t.decoding = 'async'; t.alt = '';
+      t.src = (u && !u.startsWith('http')) ? u : (_wsrvThumb ? _wsrvThumb(u) : u);
+      t.onerror = function() { this.onerror = null; };
+      t.onclick = (e) => { e.stopPropagation(); _lbIdx = i; _renderCarousel(); };
+      tw.appendChild(t);
       thumbs.appendChild(tw);
     });
   }
-  _updateBulkBar();
-  const arrowVis = _lbUrls.length>1?'visible':'hidden';
-  document.querySelector('.lb-prev').style.visibility=arrowVis;
-  document.querySelector('.lb-next').style.visibility=arrowVis;
+
+  const arrowVis = _lbUrls.length > 1 ? 'visible' : 'hidden';
+  const prev = document.querySelector('.lb-prev');
+  const next = document.querySelector('.lb-next');
+  if (prev) prev.style.visibility = arrowVis;
+  if (next) next.style.visibility = arrowVis;
 }
 
 function lbNav(dir){
@@ -2212,24 +2128,11 @@ document.addEventListener('keydown',e=>{
     <button class="lb-next lb-nav" onclick="lbNav(1);event.stopPropagation()">›</button>
     <div id="lb-main-wrap" class="lb-loading">
     <img id="lb-main" src="" alt="" width="1100" height="733" decoding="async" fetchpriority="high" draggable="false" oncontextmenu="return false" style="max-width:94vw;max-height:88vh;width:auto;height:auto;border-radius:12px;object-fit:contain;display:block;box-shadow:0 0 80px rgba(0,0,0,.8);transition:opacity .32s ease;opacity:0;vertical-align:middle;user-select:none;-webkit-user-select:none;">
-    <button id="lb-delete-btn" onclick="lbDeleteCurrent();event.stopPropagation()" title="Eliminar imagen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
     </div>
     <div id="lb-thumbs" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:90vw;"></div>
-    <div id="lb-bulk-bar"><span id="lb-bulk-count"></span><button id="lb-bulk-del-btn" onclick="lbDeleteSelected();event.stopPropagation()">Eliminar seleccionadas</button></div>
     <div id="lb-counter" style="font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;"></div>
   </div>
   <div id="lightbox-caption"></div>
-</div>
-
-
-<div id="lb-confirm-overlay" onclick="if(event.target===this)_lbConfirmCancel()">
-  <div id="lb-confirm-box">
-    <p id="lb-confirm-msg"></p>
-    <div class="lb-confirm-actions">
-      <button id="lb-confirm-cancel" onclick="_lbConfirmCancel()">Cancelar</button>
-      <button id="lb-confirm-ok" onclick="_lbConfirmOk()">Eliminar</button>
-    </div>
-  </div>
 </div>
 
 </body>
