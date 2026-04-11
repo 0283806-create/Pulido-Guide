@@ -1,15 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.js", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" },
-    { "src": "truck_images/**", "use": "@vercel/static" }
+    { "src": "index.html", "use": "@vercel/static" },
+    { "src": "catalog.js", "use": "@vercel/static" },
+    { "src": "catalog_cdn.js", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/images/(.*)", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/images/$1" },
-    { "src": "/truck_images/(.*)", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/truck_images/$1" },
     { "src": "/catalog.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog.js" },
+    { "src": "/catalog_cdn.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog_cdn.js" },
+    { "src": "/images/(.*)", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/images/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
