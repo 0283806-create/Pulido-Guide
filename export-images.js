@@ -1,13 +1,13 @@
 // export-images.js
 // Ejecutar con: node export-images.js
-// Descarga todas las fotos de camiones a ./truck-images/
+// Descarga todas las fotos de camiones a ./truck_images/
 
 const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const OUTPUT_DIR = './truck-images';
+const OUTPUT_DIR = './truck_images';
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
 // Lista de todas las imágenes por modelo — URLs alineadas con DATA / GALLERY en index.html
