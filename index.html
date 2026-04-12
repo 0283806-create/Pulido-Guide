@@ -1504,6 +1504,60 @@ function maskTruckImage(imgEl) {
     imgEl.dataset.masked = '1';
   } catch(e) {}
 }
+
+// ══ IMÁGENES LOCALES DE CAMIONES ═════════════════════════════════════════
+const LOCAL_TRUCK_IMGS = {
+  'FLD112':      '/truck_images/FLD112_main.jpg',
+  'FLD120':      '/truck_images/FLD120_main.jpg',
+  'FLD120XL':    '/truck_images/FLD120XL_main.jpg',
+  'CENTURY_C112':'/truck_images/CENTURY_C112_main.jpg',
+  'CENTURY_C120':'/truck_images/CENTURY_C120_main.jpg',
+  'COLUMBIA':    '/truck_images/COLUMBIA_main.jpg',
+  'CASCADIA_G1': '/truck_images/CASCADIA_G1_main.jpg',
+  'CASCADIA_G2': '/truck_images/CASCADIA_G2_main.jpg',
+  'M2_106':      '/truck_images/M2_106_main.jpg',
+  'M2_112':      '/truck_images/M2_112_main.jpg',
+  'CORONADO':    '/truck_images/CORONADO_main.jpg',
+  'FL80':        '/truck_images/FL80_main.jpg',
+  'W900':        '/truck_images/W900_main.jpg',
+  'W900L':       '/truck_images/W900L_main.jpg',
+  'W900A':       '/truck_images/W900A_main.jpg',
+  'W900B':       '/truck_images/W900B_main.jpg',
+  'W990':        '/truck_images/W990_main.jpg',
+  'T600':        '/truck_images/T600_main.jpg',
+  'T660':        '/truck_images/T660_main.jpg',
+  'T800':        '/truck_images/T800_main.jpg',
+  'T880':        '/truck_images/T880_main.jpg',
+  'T680':        '/truck_images/T680_main.jpg',
+  'T680_NG':     '/truck_images/T680_NG_main.jpg',
+  'T2000':       '/truck_images/T2000_main.jpg',
+  'T300':        '/truck_images/T300_main.jpg',
+  'T380_T480':   '/truck_images/T380_main.jpg',
+  'INT_9100':    '/truck_images/INT_9100_main.jpg',
+  'INT_9200':    '/truck_images/INT_9200_main.jpg',
+  'INT_9400':    '/truck_images/INT_9400_main.jpg',
+  'INT_9900':    '/truck_images/INT_9900_main.jpg',
+  'INT_9900IX':  '/truck_images/INT_9900IX_main.jpg',
+  'LONESTAR':    '/truck_images/LONESTAR_main.jpg',
+  'DURASTAR_4300':'/truck_images/INT_4300_DURASTAR_main.jpg',
+  'INT_7600':    '/truck_images/INT_7600_main.jpg',
+  'WORKSTAR':    '/truck_images/INT_WORKSTAR_main.jpg',
+  'TRANSTAR':    '/truck_images/INT_TRANSSTAR_main.jpg',
+  'QSP_4700':    '/truck_images/INT_4700_QSP_main.jpg',
+  'PROSTAR':     '/truck_images/PROSTAR_main.jpg',
+  'LT':          '/truck_images/LT_main.jpg',
+};
+
+function truckPrimarySrc(mod) {
+  if (!mod) return '';
+  // 1. Imagen local en truck_images/
+  if (LOCAL_TRUCK_IMGS[mod.id]) return LOCAL_TRUCK_IMGS[mod.id];
+  // 2. Foto asignada en el objeto DATA
+  if (mod.foto) return mod.foto;
+  return '';
+}
+// ══ FIN IMÁGENES LOCALES ══════════════════════════════════════════════════
+
 function px2(src,col,nombre,pos){
   const wrap=document.createElement('div');
   wrap.style.cssText='width:100%;height:100%;position:relative;';
@@ -1567,7 +1621,7 @@ function renderGrid(){
   d.modelos.forEach(mod=>{
     const c=document.createElement('div'); c.className='mod-card c'+d.col[0];
     const ph=document.createElement('div'); ph.className='mod-photo';
-    ph.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
+    ph.appendChild(px2(truckPrimarySrc(mod),d.col,mod.nombre,mod.pos));
     const ov=document.createElement('div'); ov.className='mod-photo-ovl';
     const badges=document.createElement('div'); badges.className='mod-badges';
     badges.innerHTML=`<span class="badge">BBC ${mod.bbc}</span><span class="badge badge-long">⟷ ${mod.long}</span>`;
@@ -1595,7 +1649,7 @@ function selMod(mod,card,grid,d){
   const hdr=document.createElement('div'); hdr.className='det-hdr';
   // Full-width hero photo
   const dp=document.createElement('div'); dp.className='det-photo';
-  dp.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
+  dp.appendChild(px2(truckPrimarySrc(mod),d.col,mod.nombre,mod.pos));
   const povl=document.createElement('div'); povl.className='det-photo-ovl'; dp.appendChild(povl);
   // Click to open lightbox
   dp.onclick=()=>{
@@ -1668,7 +1722,7 @@ function mostrarRes(id){
   const bg=d.col==='frt'?'var(--frt-bg2)':d.col==='kw'?'var(--kw-bg)':'var(--int-bg)';
   const rDiv=document.createElement('div'); rDiv.className='rsuc';
   const hdr=document.createElement('div'); hdr.className='rhdr'; hdr.style.background=bg; hdr.style.borderBottom='1px solid var(--bor)';
-  const rp=document.createElement('div'); rp.className='r-photo'; rp.appendChild(px2(mod.foto,d.col,mod.nombre,mod.pos));
+  const rp=document.createElement('div'); rp.className='r-photo'; rp.appendChild(px2(truckPrimarySrc(mod),d.col,mod.nombre,mod.pos));
   const ri=document.createElement('div'); ri.style.cssText='display:flex;align-items:flex-start;gap:12px;flex:1;';
   ri.innerHTML=`<div class="rcheck rc${d.col[0]}">✓</div><div><div class="rlabel">Cofre identificado — ${d.marca}</div><div class="rtitle c${d.col[0]}2">${mod.nombre}</div><div class="rsub">${mod.anios} · BBC ${mod.bbc} · Long. cofre ${mod.long}</div></div>`;
   hdr.appendChild(rp); hdr.appendChild(ri); rDiv.appendChild(hdr);
