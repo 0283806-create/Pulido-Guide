@@ -2248,7 +2248,7 @@ function _gsRender(q){
   }).slice(0,_GS_MAX-byCode.length);
   const total=byCode.length+byDesc.length;
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-  function hl(text,q){return esc(text).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\]/g,'\$&'),'gi'),m=>'<mark>'+m+'</mark>');}
+  function hl(text,q){return esc(text).replace(q,'<mark>'+q+'</mark>');}
   if(total===0){
     panel.innerHTML='<div class="grp-header"><span class="grp-count">0 resultados</span></div><div class="grp-empty">Sin resultados para &ldquo;'+esc(q)+'&rdquo;</div>';
     panel.classList.add('open');
