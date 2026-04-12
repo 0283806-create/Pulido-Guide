@@ -2570,7 +2570,7 @@ const MODEL_KEYWORDS = {
   CENTURY_C120:['CENTURY','CENTURY C120','CST120','CST-120','C-120'],
   COLUMBIA:    ['COLUMBIA'],
   CASCADIA_G1: ['CASCADIA'],
-  CASCADIA_G2: ['CASCADIA','EVOLUTION','P4'],
+  CASCADIA_G2: ["EVOLUTION","2018","2019","2020","2021","2022","2023","2DA GEN","GEN 2","NEW CASCADIA","CASCADIA 126","P4"],
   M2_106:      ['M2 106','M2-106','M2_106','BUSINESS CLASS'],
   M2_112:      ['M2 112','M2-112','M2_112','CREW CAB'],
   W900:        ['W900','W-900'], W900L: ['W900L','W-900L'],
@@ -2579,6 +2579,10 @@ const MODEL_KEYWORDS = {
   INT_9100:    ['9100','9100I'], INT_9200: ['9200','9200I'], INT_9400: ['9400','9400I'],
   PROSTAR:     ['PROSTAR','PRO STAR','PRO-STAR'],
   LT:          ['LT 625','LT625','LT-625','LONESTA','LONSTAR'],
+};
+const MODEL_NEGATIVE_KEYWORDS = {
+  CASCADIA_G1: ["EVOLUTION","EVO","2DA GEN","GEN 2","2018","2019","2020","2021","2022","2023","126","NEW CASCADIA","P4"],
+  CASCADIA_G2: ["CLASSIC","1ERA GEN","GEN 1","CASCADIA 113","CASCADIA 125"]
 };
 
 const RIVAL_BRAND_KEYWORDS = {
@@ -2591,6 +2595,28 @@ const RIVAL_BRAND_KEYWORDS = {
 function isCompatible(product, modelId) {
   const desc = ((product.d || '') + ' ' + (product.c || '')).toUpperCase();
   if (!desc.trim()) return true;
+  const negKws = (typeof MODEL_NEGATIVE_KEYWORDS !== 'undefined' && MODEL_NEGATIVE_KEYWORDS[modelId]) || [];
+  for (const kw of negKws) { if (desc.includes(kw)) return false; }
+  if (modelId === 'CASCADIA_G2') {
+    const rivals = RIVAL_BRAND_KEYWORDS['FLN'] || [];
+    if (rivals.some(kw => desc.includes(kw))) return false;
+    const g2Kws = MODEL_KEYWORDS['CASCADIA_G2'] || [];
+    if (g2Kws.some(kw => desc.includes(kw))) return true;
+    const otherModels = ['COLUMBIA','CENTURY','M2','BUSINESS CLASS','FLD','CORONADO','ARGOSY','CASCADIA 113','CASCADIA 125'];
+    if (otherModels.some(kw => desc.includes(kw))) return false;
+    if (desc.includes('CASCADIA')) return false;
+    if (/FREIGHTLINER|FLN/.test(desc)) return true;
+    return false;
+  }
+  if (modelId === 'CASCADIA_G1') {
+    const rivals = RIVAL_BRAND_KEYWORDS['FLN'] || [];
+    if (rivals.some(kw => desc.includes(kw))) return false;
+    if (desc.includes('CASCADIA')) return true;
+    const otherModelKws = ['COLUMBIA','CENTURY','M2','BUSINESS CLASS','FLD','CORONADO','ARGOSY'];
+    if (otherModelKws.some(kw => desc.includes(kw))) return false;
+    if (/FREIGHTLINER|FLN/.test(desc)) return true;
+    return false;
+  }
   const myFamily = BRAND_FAMILIES[modelId];
   if (!myFamily) return true;
   const rivalKws = RIVAL_BRAND_KEYWORDS[myFamily] || [];
