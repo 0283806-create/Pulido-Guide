@@ -1,22 +1,99 @@
 {
   "version": 2,
   "builds": [
-    { "src": "index.html", "use": "@vercel/static" },
-    { "src": "catalog_cdn4.js", "use": "@vercel/static" },
-    { "src": "catalog_cdn3.js", "use": "@vercel/static" },
-    { "src": "catalog_cdn2.js", "use": "@vercel/static" },
-    { "src": "catalog_cdn.js", "use": "@vercel/static" },
-    { "src": "catalog.js", "use": "@vercel/static" },
-    { "src": "truck_images/**", "use": "@vercel/static" }
+    {
+      "src": "buscador.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "catalog_cdn4.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "catalog_cdn3.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "catalog_cdn2.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "catalog_cdn.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "catalog.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "truck_images/**",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/index.html", "headers": { "Cache-Control": "no-cache, no-store, must-revalidate" }, "dest": "/index.html" },
-    { "src": "/catalog_cdn4.js", "headers": { "Cache-Control": "public, max-age=3600" }, "dest": "/catalog_cdn4.js" },
-    { "src": "/catalog_cdn3.js", "headers": { "Cache-Control": "public, max-age=3600" }, "dest": "/catalog_cdn3.js" },
-    { "src": "/catalog_cdn2.js", "headers": { "Cache-Control": "public, max-age=3600" }, "dest": "/catalog_cdn2.js" },
-    { "src": "/catalog_cdn.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog_cdn.js" },
-    { "src": "/catalog.js", "headers": { "Cache-Control": "public, max-age=86400" }, "dest": "/catalog.js" },
-    { "src": "/truck_images/(.*)", "headers": { "Cache-Control": "public, max-age=604800" }, "dest": "/truck_images/$1" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/buscador.js",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      },
+      "dest": "/buscador.js"
+    },
+    {
+      "src": "/index.html",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
+      "dest": "/index.html"
+    },
+    {
+      "src": "/catalog_cdn4.js",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      },
+      "dest": "/catalog_cdn4.js"
+    },
+    {
+      "src": "/catalog_cdn3.js",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      },
+      "dest": "/catalog_cdn3.js"
+    },
+    {
+      "src": "/catalog_cdn2.js",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      },
+      "dest": "/catalog_cdn2.js"
+    },
+    {
+      "src": "/catalog_cdn.js",
+      "headers": {
+        "Cache-Control": "public, max-age=86400"
+      },
+      "dest": "/catalog_cdn.js"
+    },
+    {
+      "src": "/catalog.js",
+      "headers": {
+        "Cache-Control": "public, max-age=86400"
+      },
+      "dest": "/catalog.js"
+    },
+    {
+      "src": "/truck_images/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      },
+      "dest": "/truck_images/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
