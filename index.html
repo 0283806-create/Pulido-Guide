@@ -1027,7 +1027,7 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
   Este catálogo es propiedad de Pulido Trucks &amp; Parts. Todos los derechos reservados.
 </footer>
 
-<script src="catalog.js" defer></script>
+<script src="catalog_cdn4.js" defer></script>
 <script>
 const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO": "🪞", "ZEPELIN": "💛", "PARRILLA": "🟫", "LODERA": "🛞", "SPOILER": "🌬️", "CUBIERTA": "📦", "VOLANTE": "🎯", "ADORNO": "✨", "TANQUE": "⛽", "MANIJA": "🚪", "PALANCA": "🕹️", "VICERA": "🧢", "CHAPA": "🔑", "ESCAPE": "💨", "ACCESORIO": "⚙️", "SALPICADERO": "🛡️", "PLAFON": "💡"};
 const _lazyNative = typeof HTMLImageElement !== 'undefined' && 'loading' in HTMLImageElement.prototype;
@@ -1777,7 +1777,7 @@ if(typeof CATALOG_DATA !== 'undefined') {
   initApp();
 } else {
   setSplash(8, 'Descargando catálogo (8 MB)…');
-  const catScript = document.querySelector('script[src="catalog.js"]');
+  const catScript = document.querySelector('script[src="catalog_cdn4.js"]');
   if(catScript) catScript.addEventListener('load', initApp);
   let _p = setInterval(()=>{ if(typeof CATALOG_DATA!=='undefined'){ clearInterval(_p); initApp(); }}, 150);
 }
