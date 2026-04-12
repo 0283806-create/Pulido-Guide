@@ -1043,9 +1043,7 @@ const _lazyImgIO = !_lazyNative ? new IntersectionObserver((ents,o)=>{
 // ══════════════════════════════════════════════════
 // FOTOS — ángulo 3/4 frontal via wsrv.nl proxy (WebP)
 // ══════════════════════════════════════════════════
-function px(path){ return ""; } catch(e) {}
-  return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=900&output=webp&q=86';
-}
+function px(path){ return ''; }
 
 const DATA={
 FRT:{marca:'FLN',col:'frt',
@@ -2020,8 +2018,6 @@ function _wsrv(url, fmt, w){
   try { clean = decodeURIComponent(url); } catch(e) {}
   const out = (fmt === 'jpg') ? 'jpg' : 'webp';
   const width = w || 1100;
-  return 'https://wsrv.nl/?url='+encodeURIComponent(clean.replace('https://',''))+'&w='+width+'&output='+out+'&q=85';
-}
 function _wsrvJpg(url){ return _wsrv(url, 'jpg'); }
 function _wsrvThumb(url){ return _wsrv(url, 'webp', 144); }
 function _wsrvThumbJpg(url){ return _wsrv(url, 'jpg', 144); }
