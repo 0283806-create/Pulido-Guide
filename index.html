@@ -2278,7 +2278,7 @@ function gsSelectPieza(modelId,codigo){
   const mod=allMods.find(m=>m.id===modelId);
   if(!mod)return;
   const bk=DATA.FRT.modelos.find(m=>m.id===modelId)?'FRT':DATA.KW.modelos.find(m=>m.id===modelId)?'KW':'INT';
-  const bb=document.querySelector('[onclick*="setMarca(''+bk+''"]');
+  const allBtns=Array.from(document.querySelectorAll('.marca-btn'));const bb=allBtns.find(function(b){return (b.getAttribute('onclick')||'').includes(bk);});
   if(bb)bb.click();
   setTimeout(()=>{
     let card=null;
