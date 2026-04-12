@@ -1043,8 +1043,7 @@ const _lazyImgIO = !_lazyNative ? new IntersectionObserver((ents,o)=>{
 // ══════════════════════════════════════════════════
 // FOTOS — ángulo 3/4 frontal via wsrv.nl proxy (WebP)
 // ══════════════════════════════════════════════════
-function px(path){
-  try { path = decodeURIComponent(path); } catch(e) {}
+function px(path){ return ""; } catch(e) {}
   return 'https://wsrv.nl/?url='+encodeURIComponent('upload.wikimedia.org'+path)+'&w=900&output=webp&q=86';
 }
 
@@ -1550,11 +1549,7 @@ const LOCAL_TRUCK_IMGS = {
 
 function truckPrimarySrc(mod) {
   if (!mod) return '';
-  // 1. Imagen local en truck_images/
-  if (LOCAL_TRUCK_IMGS[mod.id]) return LOCAL_TRUCK_IMGS[mod.id];
-  // 2. Foto asignada en el objeto DATA
-  if (mod.foto) return mod.foto;
-  return '';
+  return LOCAL_TRUCK_IMGS[mod.id] || '';
 }
 // ══ FIN IMÁGENES LOCALES ══════════════════════════════════════════════════
 
