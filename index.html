@@ -2209,141 +2209,113 @@ document.addEventListener('keydown',e=>{
 });
 
 
-// ══ BUSCADOR GLOBAL ═══════════════════════════════════════════════════════
+
+// ══ BUSCADOR GLOBAL ══════════════════════════════════════════════════
 let _gsTimer=null;
 const _GS_MAX=40;
 const _gsBrandClass={FLN:'fln',KW:'kw',INT:'int'};
-
 function globalSearchInput(q){
   const clear=document.getElementById('gs-clear');
   const icon=document.getElementById('gs-icon');
-  if(clear) clear.style.display=q.length>0?'block':'none';
-  if(icon)  icon.style.display=q.length>0?'none':'block';
+  if(clear)clear.style.display=q.length>0?'block':'none';
+  if(icon)icon.style.display=q.length>0?'none':'block';
   clearTimeout(_gsTimer);
   if(!q||q.trim().length<2){_gsClosePanelOnly();return;}
   _gsTimer=setTimeout(()=>_gsRender(q.trim()),180);
 }
-
 function _gsClosePanelOnly(){
-  const panel=document.getElementById('global-results-panel');
-  const overlay=document.getElementById('gs-overlay');
-  if(panel) panel.classList.remove('open');
-  if(overlay) overlay.classList.remove('open');
+  const p=document.getElementById('global-results-panel');
+  const o=document.getElementById('gs-overlay');
+  if(p)p.classList.remove('open');
+  if(o)o.classList.remove('open');
 }
-
 function _gsRender(q){
   const panel=document.getElementById('global-results-panel');
   const overlay=document.getElementById('gs-overlay');
-  if(!panel) return;
+  if(!panel)return;
   const qu=q.toUpperCase();
   const cat=window.CATALOG_DATA||[];
-  const seenCodes=new Set();
+  const seen=new Set();
   const byCode=cat.filter(p=>{
-    if(seenCodes.has(p.c)) return false;
-    if(p.c&&String(p.c).toUpperCase().includes(qu)){seenCodes.add(p.c);return true;}
+    if(seen.has(p.c))return false;
+    if(p.c&&String(p.c).toUpperCase().includes(qu)){seen.add(p.c);return true;}
     return false;
   }).slice(0,10);
   const byDesc=cat.filter(p=>{
-    if(seenCodes.has(p.c)) return false;
-    if((p.d||'').toUpperCase().includes(qu)){seenCodes.add(p.c);return true;}
+    if(seen.has(p.c))return false;
+    if((p.d||'').toUpperCase().includes(qu)){seen.add(p.c);return true;}
     return false;
   }).slice(0,_GS_MAX-byCode.length);
   const total=byCode.length+byDesc.length;
-
   function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-  function hl(text,q){
-    const rx=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-    return esc(text).replace(rx,m=>`<mark>${m}</mark>`);
-  }
-
+  function hl(text,q){return esc(text).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\]/g,'\$&'),'gi'),m=>'<mark>'+m+'</mark>');}
   if(total===0){
-    panel.innerHTML=`<div class="grp-header"><span class="grp-count">0 resultados</span></div><div class="grp-empty">Sin resultados para &ldquo;${esc(q)}&rdquo;</div>`;
+    panel.innerHTML='<div class="grp-header"><span class="grp-count">0 resultados</span></div><div class="grp-empty">Sin resultados para &ldquo;'+esc(q)+'&rdquo;</div>';
     panel.classList.add('open');
-    if(overlay) overlay.classList.add('open');
+    if(overlay)overlay.classList.add('open');
     return;
   }
-
   function renderItem(p){
-    const catIcon=(typeof CAT_ICONS!=='undefined'&&CAT_ICONS[p.k])||'⚙️';
+    const ci=(typeof CAT_ICONS!=='undefined'&&CAT_ICONS[p.k])||'⚙️';
     const bc=_gsBrandClass[p.b]||'fln';
-    const cEsc=esc(JSON.stringify(p.c));
-    const mEsc=esc(JSON.stringify(p.m||''));
-    const imgHTML=p.i
-      ?`<img src="${esc(p.i)}" loading="lazy" onerror="this.parentNode.innerHTML='<span class=grp-img-ph>${catIcon}</span>'">`
-      :`<span class="grp-img-ph">${catIcon}</span>`;
-    return `<div class="grp-item" onclick="gsSelectPieza(${mEsc},${cEsc})">
-      <div class="grp-img">${imgHTML}</div>
-      <div class="grp-info">
-        <div class="grp-code ${bc}">#${hl(String(p.c),q)}</div>
-        <div class="grp-desc">${hl(p.d||'',q)}</div>
-      </div>
-      <div class="grp-meta">
-        <span class="grp-cat">${catIcon} ${esc(p.k||'')}</span>
-        <span class="grp-model">${esc(p.m||'')}</span>
-      </div>
-    </div>`;
+    const cE=esc(JSON.stringify(p.c));
+    const mE=esc(JSON.stringify(p.m||''));
+    const imgH=p.i?'<img src="'+esc(p.i)+'" loading="lazy" onerror="this.parentNode.innerHTML='<span class=grp-img-ph>'+ci+'</span>'">':'<span class="grp-img-ph">'+ci+'</span>';
+    return '<div class="grp-item" onclick="gsSelectPieza('+mE+','+cE+')"><div class="grp-img">'+imgH+'</div><div class="grp-info"><div class="grp-code '+bc+'">#'+hl(String(p.c),q)+'</div><div class="grp-desc">'+hl(p.d||'',q)+'</div></div><div class="grp-meta"><span class="grp-cat">'+ci+' '+esc(p.k||'')+'</span><span class="grp-model">'+esc(p.m||'')+'</span></div></div>';
   }
-
-  let html2=`<div class="grp-header">
-    <span class="grp-count">${total} resultado${total!==1?'s':''} de ${cat.length.toLocaleString('es-MX')}</span>
-    <span class="grp-hint">clic → ir al modelo</span>
-  </div><div class="grp-list">`;
-  if(byCode.length>0){html2+=`<div class="grp-section-label">por código</div>`;html2+=byCode.map(renderItem).join('');}
-  if(byDesc.length>0){html2+=`<div class="grp-section-label">por descripción</div>`;html2+=byDesc.map(renderItem).join('');}
-  html2+='</div>';
-  panel.innerHTML=html2;
+  let html='<div class="grp-header"><span class="grp-count">'+total+' resultado'+(total!==1?'s':'')+' de '+cat.length.toLocaleString('es-MX')+'</span><span class="grp-hint">clic → ir al modelo</span></div><div class="grp-list">';
+  if(byCode.length>0){html+='<div class="grp-section-label">por código</div>';html+=byCode.map(renderItem).join('');}
+  if(byDesc.length>0){html+='<div class="grp-section-label">por descripción</div>';html+=byDesc.map(renderItem).join('');}
+  html+='</div>';
+  panel.innerHTML=html;
   panel.classList.add('open');
-  if(overlay) overlay.classList.add('open');
+  if(overlay)overlay.classList.add('open');
 }
-
 function gsSelectPieza(modelId,codigo){
   globalSearchClear();
-  if(!modelId) return;
+  if(!modelId)return;
   const allMods=[...DATA.FRT.modelos,...DATA.KW.modelos,...DATA.INT.modelos];
   const mod=allMods.find(m=>m.id===modelId);
-  if(!mod) return;
-  const brandKey=DATA.FRT.modelos.find(m=>m.id===modelId)?'FRT':DATA.KW.modelos.find(m=>m.id===modelId)?'KW':'INT';
-  const brandBtn=document.querySelector(`[onclick*="setMarca('${brandKey}'"]`);
-  if(brandBtn) brandBtn.click();
+  if(!mod)return;
+  const bk=DATA.FRT.modelos.find(m=>m.id===modelId)?'FRT':DATA.KW.modelos.find(m=>m.id===modelId)?'KW':'INT';
+  const bb=document.querySelector('[onclick*="setMarca(''+bk+''"]');
+  if(bb)bb.click();
   setTimeout(()=>{
     let card=null;
-    try{card=document.querySelector(`.mod-card[data-id="${CSS.escape(modelId)}"]`);}catch(e){}
-    if(!card) card=document.querySelector(`.mod-card[data-id="${modelId}"]`);
+    try{card=document.querySelector('.mod-card[data-id="'+CSS.escape(modelId)+'"]');}catch(e){}
+    if(!card)card=document.querySelector('.mod-card[data-id="'+modelId+'"]');
     if(card){card.click();card.scrollIntoView({behavior:'smooth',block:'center'});}
-    else if(typeof selMod==='function') selMod(mod);
+    else if(typeof selMod==='function')selMod(mod);
     setTimeout(()=>{
-      const catInput=document.getElementById('cat-search')||document.getElementById('cat-search-input');
-      if(catInput){catInput.value=String(codigo);if(typeof catSearch==='function') catSearch(String(codigo));}
-      const catSection=document.querySelector('.cat-section');
-      if(catSection) catSection.scrollIntoView({behavior:'smooth',block:'start'});
+      const ci=document.getElementById('cat-search')||document.getElementById('cat-search-input');
+      if(ci){ci.value=String(codigo);if(typeof catSearch==='function')catSearch(String(codigo));}
+      const cs=document.querySelector('.cat-section');
+      if(cs)cs.scrollIntoView({behavior:'smooth',block:'start'});
     },550);
   },150);
 }
-
 function globalSearchFocus(){
   const input=document.getElementById('global-search-input');
-  const q=input?.value?.trim();
-  if(q&&q.length>=2) _gsRender(q);
+  const q=input&&input.value&&input.value.trim();
+  if(q&&q.length>=2)_gsRender(q);
 }
-
 function globalSearchClear(){
-  const input=document.getElementById('global-search-input');
-  const panel=document.getElementById('global-results-panel');
-  const overlay=document.getElementById('gs-overlay');
-  const clear=document.getElementById('gs-clear');
-  const icon=document.getElementById('gs-icon');
-  if(input) input.value='';
-  if(panel) panel.classList.remove('open');
-  if(overlay) overlay.classList.remove('open');
-  if(clear) clear.style.display='none';
-  if(icon) icon.style.display='block';
+  const i=document.getElementById('global-search-input');
+  const p=document.getElementById('global-results-panel');
+  const o=document.getElementById('gs-overlay');
+  const c=document.getElementById('gs-clear');
+  const ic=document.getElementById('gs-icon');
+  if(i)i.value='';
+  if(p)p.classList.remove('open');
+  if(o)o.classList.remove('open');
+  if(c)c.style.display='none';
+  if(ic)ic.style.display='block';
 }
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') globalSearchClear();
-  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();document.getElementById('global-search-input')?.focus();}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')globalSearchClear();
+  if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();var el=document.getElementById('global-search-input');if(el)el.focus();}
 });
-// ══ FIN BUSCADOR GLOBAL ════════════════════════════════════════════════
+// ══ FIN BUSCADOR GLOBAL ══════════════════════════════════════════════════
 
 </script>
 
