@@ -1504,54 +1504,31 @@ function maskTruckImage(imgEl) {
   } catch(e) {}
 }
 
-// ══ IMÁGENES LOCALES DE CAMIONES ═════════════════════════════════════════
-const LOCAL_TRUCK_IMGS = {
-  'FLD112':      '/truck_images/FLD112_main.jpg',
-  'FLD120':      '/truck_images/FLD120_main.jpg',
-  'FLD120XL':    '/truck_images/FLD120XL_main.jpg',
-  'CENTURY_C112':'/truck_images/CENTURY_C112_main.jpg',
-  'CENTURY_C120':'/truck_images/CENTURY_C120_main.jpg',
-  'COLUMBIA':    '/truck_images/COLUMBIA_main.jpg',
-  'CASCADIA_G1': '/truck_images/CASCADIA_G1_main.jpg',
-  'CASCADIA_G2': '/truck_images/CASCADIA_G2_main.jpg',
-  'M2_106':      '/truck_images/M2_106_main.jpg',
-  'M2_112':      '/truck_images/M2_112_main.jpg',
-  'CORONADO':    '/truck_images/CORONADO_main.jpg',
-  'FL80':        '/truck_images/FL80_main.jpg',
-  'W900':        '/truck_images/W900_main.jpg',
-  'W900L':       '/truck_images/W900L_main.jpg',
-  'W900A':       '/truck_images/W900A_main.jpg',
-  'W900B':       '/truck_images/W900B_main.jpg',
-  'W990':        '/truck_images/W990_main.jpg',
-  'T600':        '/truck_images/T600_main.jpg',
-  'T660':        '/truck_images/T660_main.jpg',
-  'T800':        '/truck_images/T800_main.jpg',
-  'T880':        '/truck_images/T880_main.jpg',
-  'T680':        '/truck_images/T680_main.jpg',
-  'T680_NG':     '/truck_images/T680_NG_main.jpg',
-  'T2000':       '/truck_images/T2000_main.jpg',
-  'T300':        '/truck_images/T300_main.jpg',
-  'T380_T480':   '/truck_images/T380_main.jpg',
-  'INT_9100':    '/truck_images/INT_9100_main.jpg',
-  'INT_9200':    '/truck_images/INT_9200_main.jpg',
-  'INT_9400':    '/truck_images/INT_9400_main.jpg',
-  'INT_9900':    '/truck_images/INT_9900_main.jpg',
-  'INT_9900IX':  '/truck_images/INT_9900IX_main.jpg',
-  'LONESTAR':    '/truck_images/LONESTAR_main.jpg',
-  'DURASTAR_4300':'/truck_images/INT_4300_DURASTAR_main.jpg',
-  'INT_7600':    '/truck_images/INT_7600_main.jpg',
-  'WORKSTAR':    '/truck_images/INT_WORKSTAR_main.jpg',
-  'TRANSTAR':    '/truck_images/INT_TRANSSTAR_main.jpg',
-  'QSP_4700':    '/truck_images/INT_4700_QSP_main.jpg',
-  'PROSTAR':     '/truck_images/PROSTAR_main.jpg',
-  'LT':          '/truck_images/LT_main.jpg',
-};
 
-function truckPrimarySrc(mod) {
-  if (!mod) return '';
-  return LOCAL_TRUCK_IMGS[mod.id] || '';
-}
-// ══ FIN IMÁGENES LOCALES ══════════════════════════════════════════════════
+
+const LOCAL_TRUCK_IMGS = {
+  FLD112:'/truck_images/FLD112_main.jpg',FLD120:'/truck_images/FLD120_main.jpg',
+  FLD120XL:'/truck_images/FLD120XL_main.jpg',CENTURY_C112:'/truck_images/CENTURY_C112_main.jpg',
+  CENTURY_C120:'/truck_images/CENTURY_C120_main.jpg',COLUMBIA:'/truck_images/COLUMBIA_main.jpg',
+  CASCADIA_G1:'/truck_images/CASCADIA_G1_main.jpg',CASCADIA_G2:'/truck_images/CASCADIA_G2_main.jpg',
+  M2_106:'/truck_images/M2_106_main.jpg',M2_112:'/truck_images/M2_112_main.jpg',
+  W900:'/truck_images/W900_main.jpg',W900L:'/truck_images/W900L_main.jpg',
+  W900A:'/truck_images/W900A_main.jpg',W900B:'/truck_images/W900B_main.jpg',
+  W990:'/truck_images/W990_main.jpg',T600:'/truck_images/T600_main.jpg',
+  T660:'/truck_images/T660_main.jpg',T800:'/truck_images/T800_main.jpg',
+  T880:'/truck_images/T880_main.jpg',T680:'/truck_images/T680_main.jpg',
+  T680_NG:'/truck_images/T680_NG_main.jpg',T2000:'/truck_images/T2000_main.jpg',
+  T300:'/truck_images/T300_main.jpg',T380_T480:'/truck_images/T380_main.jpg',
+  INT_9100:'/truck_images/INT_9100_main.jpg',INT_9200:'/truck_images/INT_9200_main.jpg',
+  INT_9400:'/truck_images/INT_9400_main.jpg',INT_9900:'/truck_images/INT_9900_main.jpg',
+  INT_9900IX:'/truck_images/INT_9900IX_main.jpg',LONESTAR:'/truck_images/LONESTAR_main.jpg',
+  DURASTAR_4300:'/truck_images/INT_4300_DURASTAR_main.jpg',INT_7600:'/truck_images/INT_7600_main.jpg',
+  WORKSTAR:'/truck_images/INT_WORKSTAR_main.jpg',TRANSTAR:'/truck_images/INT_TRANSSTAR_main.jpg',
+  QSP_4700:'/truck_images/INT_4700_QSP_main.jpg',PROSTAR:'/truck_images/PROSTAR_main.jpg',
+  LT:'/truck_images/LT_main.jpg',CORONADO:'/truck_images/CORONADO_main.jpg',
+  FL80:'/truck_images/FL80_main.jpg'
+};
+function truckPrimarySrc(mod){ return mod ? (LOCAL_TRUCK_IMGS[mod.id]||'') : ''; }
 
 function px2(src,col,nombre,pos){
   const wrap=document.createElement('div');
