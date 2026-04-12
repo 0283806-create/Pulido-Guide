@@ -2260,7 +2260,7 @@ function _gsRender(q){
     const bc=_gsBrandClass[p.b]||'fln';
     const cE=esc(JSON.stringify(p.c));
     const mE=esc(JSON.stringify(p.m||''));
-    const imgH=p.i?'<img src="'+esc(p.i)+'" loading="lazy" onerror="this.parentNode.innerHTML='<span class=grp-img-ph>'+ci+'</span>'">':'<span class="grp-img-ph">'+ci+'</span>';
+    const imgH=p.i?('<img src="'+esc(p.i)+'" loading="lazy">'):('<span class="grp-img-ph">'+ci+'</span>');
     return '<div class="grp-item" onclick="gsSelectPieza('+mE+','+cE+')"><div class="grp-img">'+imgH+'</div><div class="grp-info"><div class="grp-code '+bc+'">#'+hl(String(p.c),q)+'</div><div class="grp-desc">'+hl(p.d||'',q)+'</div></div><div class="grp-meta"><span class="grp-cat">'+ci+' '+esc(p.k||'')+'</span><span class="grp-model">'+esc(p.m||'')+'</span></div></div>';
   }
   let html='<div class="grp-header"><span class="grp-count">'+total+' resultado'+(total!==1?'s':'')+' de '+cat.length.toLocaleString('es-MX')+'</span><span class="grp-hint">clic → ir al modelo</span></div><div class="grp-list">';
