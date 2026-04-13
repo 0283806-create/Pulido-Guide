@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "buscador2.js",
+      "use": "@vercel/static"
+    },
+    {
       "src": "buscador.js",
       "use": "@vercel/static"
     },
@@ -35,6 +39,13 @@
     }
   ],
   "routes": [
+    {
+      "src": "/buscador2.js",
+      "headers": {
+        "Cache-Control": "public, max-age=3600"
+      },
+      "dest": "/buscador2.js"
+    },
     {
       "src": "/buscador.js",
       "headers": {
