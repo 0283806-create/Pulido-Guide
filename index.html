@@ -578,6 +578,30 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 .global-search-overlay{display:none;position:fixed;inset:0;z-index:499;}
 .global-search-overlay.open{display:block;}
 
+
+/* ══ ZOOM IMAGEN CAMIÓN ══ */
+#truck-zoom-overlay{
+  display:none;position:fixed;inset:0;z-index:900;
+  background:rgba(0,0,0,.92);
+  align-items:center;justify-content:center;
+  cursor:zoom-out;
+}
+#truck-zoom-overlay.open{display:flex;}
+#truck-zoom-overlay img{
+  max-width:92vw;max-height:92vh;
+  object-fit:contain;border-radius:8px;
+  box-shadow:0 24px 80px rgba(0,0,0,.7);
+}
+#truck-zoom-close{
+  position:fixed;top:20px;right:24px;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:50%;width:40px;height:40px;
+  font-size:20px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;
+  transition:background .2s;z-index:901;
+}
+#truck-zoom-close:hover{background:rgba(255,255,255,.22);}
+
 </style>
 </head>
 <body>
@@ -2230,6 +2254,30 @@ document.addEventListener('keydown',e=>{
   </div>
 </div>
 
-<script src="buscador.js"></script>
+<script src="buscador.js">
+function openTruckZoom(src){
+  var ov=document.getElementById('truck-zoom-overlay');
+  var img=document.getElementById('truck-zoom-img');
+  if(!ov||!img||!src)return;
+  img.src=src;
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeTruckZoom(){
+  var ov=document.getElementById('truck-zoom-overlay');
+  if(ov)ov.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')closeTruckZoom();
+});
+
+</script>
+
+<div id="truck-zoom-overlay" onclick="closeTruckZoom()">
+  <button id="truck-zoom-close" onclick="closeTruckZoom()">✕</button>
+  <img id="truck-zoom-img" src="" alt="">
+</div>
+
 </body>
 </html>
