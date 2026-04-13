@@ -7,3 +7,16 @@ function gsSelectPieza(modelId,codigo){globalSearchClear();if(!modelId)return;va
 function globalSearchFocus(){var input=document.getElementById("global-search-input"),q=input&&input.value?input.value.trim():"";if(q.length>=2)_gsRender(q);}
 function globalSearchClear(){var i=document.getElementById("global-search-input"),p=document.getElementById("global-results-panel");var o=document.getElementById("gs-overlay"),c=document.getElementById("gs-clear"),ic=document.getElementById("gs-icon");if(i)i.value="";if(p)p.classList.remove("open");if(o)o.classList.remove("open");if(c)c.style.display="none";if(ic)ic.style.display="block";}
 document.addEventListener("keydown",function(e){if(e.key==="Escape")globalSearchClear();if((e.ctrlKey||e.metaKey)&&e.key==="k"){e.preventDefault();var el=document.getElementById("global-search-input");if(el)el.focus();}});
+function openTruckZoom(src){
+  var ov=document.getElementById('truck-zoom-overlay');
+  var img=document.getElementById('truck-zoom-img');
+  if(!ov||!img||!src)return;
+  img.src=src;
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeTruckZoom(){
+  var ov=document.getElementById('truck-zoom-overlay');
+  if(ov)ov.classList.remove('open');
+  document.body.style.overflow='';
+}
