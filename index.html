@@ -1639,7 +1639,7 @@ function selMod(mod,card,grid,d){
   // Click to open lightbox
   dp.onclick=()=>{
     const img=dp.querySelector('img');
-    if(img && img.src) openLightbox(img.src, mod.nombre+' · '+mod.anios, mod.id);
+    if(img && img.src) openTruckZoom(img.src, mod.nombre+' · '+mod.anios, mod.id);
   };
   // Info row below photo
   const infoRow=document.createElement('div'); infoRow.className='det-info-row'; infoRow.style.background=bg;
@@ -2090,7 +2090,7 @@ function lbDeleteSelected(){
   });
 }
 
-function openLightbox(mainSrc, caption, modelId){
+function openTruckZoom(mainSrc, caption, modelId){
   const extras = (modelId && GALLERY[modelId]) ? GALLERY[modelId] : [];
   const seen = new Set([mainSrc]);
   _lbUrls = [mainSrc];
