@@ -1030,16 +1030,6 @@ body{background:var(--bg);color:var(--txt);font-family:'DM Sans',sans-serif;font
 <script src="catalog_cdn4.js" defer></script>
 <script>
 const CAT_ICONS={"DEFENSA": "🛡️", "FARO": "💡", "COFRE": "🔧", "ESPEJO": "🪞", "ZEPELIN": "💛", "PARRILLA": "🟫", "LODERA": "🛞", "SPOILER": "🌬️", "CUBIERTA": "📦", "VOLANTE": "🎯", "ADORNO": "✨", "TANQUE": "⛽", "MANIJA": "🚪", "PALANCA": "🕹️", "VICERA": "🧢", "CHAPA": "🔑", "ESCAPE": "💨", "ACCESORIO": "⚙️", "SALPICADERO": "🛡️", "PLAFON": "💡"};
-const _lazyNative = typeof HTMLImageElement !== 'undefined' && 'loading' in HTMLImageElement.prototype;
-const _lazyImgIO = !_lazyNative ? new IntersectionObserver((ents,o)=>{
-  ents.forEach(e=>{
-    if(!e.isIntersecting) return;
-    const el=e.target;
-    const ds=el.getAttribute('data-defer-src');
-    if(ds){ el.src=ds; el.removeAttribute('data-defer-src'); }
-    o.unobserve(el);
-  });
-},{rootMargin:'140px'}) : null;
 // ══════════════════════════════════════════════════
 // FOTOS — ángulo 3/4 frontal via wsrv.nl proxy (WebP)
 // ══════════════════════════════════════════════════
