@@ -1730,9 +1730,29 @@ function hideSplash() {
   if(s){ s.classList.add('hide'); setTimeout(()=>s.remove(), 700); }
 }
 
+/** Una fila por (modelo m, código c). El export SAP puede repetir la misma pieza. */
+function dedupeCatalogRows(rawData) {
+  const seen = new Set();
+  const out = [];
+  for (const p of rawData) {
+    const code = String(p.c ?? '').trim();
+    const modelId = p.m ? String(p.m).trim().toUpperCase() : '';
+    if (modelId && code) {
+      const key = modelId + '\0' + code;
+      if (seen.has(key)) continue;
+      seen.add(key);
+    }
+    out.push(p);
+  }
+  return out;
+}
+
+let _catalogInited = false;
 function initApp() {
+  if (_catalogInited) return;
+  _catalogInited = true;
   // Construir índice limpio desde window.CATALOG_DATA — sin aliases que mezclen modelos
-  const rawData = window.CATALOG_DATA || [];
+  const rawData = dedupeCatalogRows(window.CATALOG_DATA || []);
   CATALOG.length = 0;
   for (const p of rawData) CATALOG.push(p);
   Object.keys(CATALOG_BY_MODEL).forEach(k => delete CATALOG_BY_MODEL[k]);
@@ -1791,8 +1811,13 @@ if(typeof CATALOG_DATA !== 'undefined') {
 } else {
   setSplash(8, 'Descargando catálogo (8 MB)…');
   const catScript = document.querySelector('script[src="catalog_cdn4.js"]');
-  if(catScript) catScript.addEventListener('load', initApp);
-  let _p = setInterval(()=>{ if(typeof CATALOG_DATA!=='undefined'){ clearInterval(_p); initApp(); }}, 150);
+  const _tryInit = () => {
+    if (typeof CATALOG_DATA === 'undefined') return false;
+    initApp();
+    return true;
+  };
+  if (catScript) catScript.addEventListener('load', _tryInit);
+  const _p = setInterval(() => { if (_tryInit()) clearInterval(_p); }, 150);
 }
 
 // State per open detail panel
